@@ -7,7 +7,7 @@ import { lusitana } from '@/app/ui/fonts';
 
 export default function SideNav() {
   return (
-    <div className="flex h-full flex-col px-3 py-4 md:px-2 bg-black">
+    <div className="flex h-full flex-col px-3 py-4 md:px-2 bg-gray-50 dark:bg-gray-800">
       <div className="w-32 text-white md:w-40">
         <div
           className={`${lusitana.className} flex flex-row items-center leading-none text-white`}

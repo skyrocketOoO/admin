@@ -34,7 +34,7 @@ export default function NavLinks() {
   };
 
   return (
-    <nav className="space-y-1">
+    <nav className="space-y-1 ">
       {links.map((link) => {
         const LinkIcon = link.icon;
         const isActive = openDropdown === link.name;
