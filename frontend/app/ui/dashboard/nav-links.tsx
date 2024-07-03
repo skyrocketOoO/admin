@@ -87,7 +87,7 @@ export default function NavLinks() {
                     key={subLink.name}
                     href={subLink.href}
                     className={clsx(
-                      'pl-8 block p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700',
+                      'pl-8 block p-2 text-base justify-between text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700',
                       {
                         'bg-gray-100 dark:bg-gray-700': pathname === subLink.href,
                       }

@@ -45,7 +45,7 @@ func NewDB(database string) (db *gorm.DB, err error) {
 	if err = db.AutoMigrate(
 		&model.Account{},
 		&model.Role{},
-		&model.Permission{},
+		&model.Store{},
 	); err != nil {
 		return
 	}

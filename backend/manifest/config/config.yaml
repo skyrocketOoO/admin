@@ -3,6 +3,6 @@ postgres:
   port: 5432
   user: postgres
   password: password
-  db: postgres
+  db: store
   sslmode: disable
   timezone: Asia/Taipei
