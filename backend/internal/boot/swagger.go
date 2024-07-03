@@ -1,7 +1,7 @@
 package boot
 
 import (
-	docs "web-server-template/docs/rest"
+	docs "admin/docs/rest"
 )
 
 func InitSwagger() {

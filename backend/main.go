@@ -1,7 +1,7 @@
 package main
 
 import (
-	"web-server-template/internal/cmd"
+	"admin/internal/cmd"
 )
 
 func main() {

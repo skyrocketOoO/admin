@@ -17,4 +17,7 @@ backup:
 	git push
 
 gen-rest-doc:
-	swag init -g internal/delivery/rest/*.go -o ./docs
+	swag init -g internal/delivery/rest/*.go -o ./
+	
+gen-proto:
+	protoc --go_out=. --go-grpc_out=. manifest/protobuf/*

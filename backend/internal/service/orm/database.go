@@ -3,7 +3,7 @@ package orm
 import (
 	"fmt"
 
-	"web-server-template/internal/service/orm/model"
+	"admin/internal/service/orm/model"
 
 	errors "github.com/rotisserie/eris"
 	"github.com/rs/zerolog/log"
@@ -13,7 +13,13 @@ import (
 	"gorm.io/gorm"
 )
 
-func NewDB(database string) (db *gorm.DB, err error) {
+var db *gorm.DB
+
+func GetDb() *gorm.DB {
+	return db
+}
+
+func InitDb(database string) (err error) {
 	switch database {
 	case "postgres":
 		log.Info().Msg("Connecting to Postgres")
@@ -40,7 +46,7 @@ func NewDB(database string) (db *gorm.DB, err error) {
 			return
 		}
 	default:
-		return nil, errors.New("database not supported")
+		return errors.New("database not supported")
 	}
 	if err = db.AutoMigrate(
 		&model.Account{},
@@ -50,5 +56,5 @@ func NewDB(database string) (db *gorm.DB, err error) {
 		return
 	}
 
-	return db, nil
+	return nil
 }

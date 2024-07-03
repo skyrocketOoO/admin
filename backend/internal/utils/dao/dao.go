@@ -18,12 +18,8 @@ type (
 	}
 )
 
-func NewDao(db *gorm.DB) *Dao {
-	return &Dao{db: db}
-}
-
 // Get page items with total count, src must pass the pointer of item
-func (d *Dao) ListWithPager(db *gorm.DB, pager Pager, src any) (total int64, err error) {
+func ListWithPager(db *gorm.DB, pager Pager, src any) (total int64, err error) {
 	if err = db.Count(&total).Error; err != nil {
 		return
 	}
@@ -31,7 +27,7 @@ func (d *Dao) ListWithPager(db *gorm.DB, pager Pager, src any) (total int64, err
 	return
 }
 
-func (d *Dao) Ping(ctx context.Context) error {
+func Ping(ctx context.Context) error {
 	db, err := d.db.DB()
 	if err != nil {
 		return err

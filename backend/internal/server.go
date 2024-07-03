@@ -1,13 +1,13 @@
 package internal
 
 import (
-	restapi "web-server-template/api/rest"
-	"web-server-template/internal/boot"
-	"web-server-template/internal/controller/rest"
-	"web-server-template/internal/controller/rest/middleware"
-	"web-server-template/internal/service/dao"
-	"web-server-template/internal/service/orm"
-	"web-server-template/internal/usecase"
+	restapi "admin/api/rest"
+	"admin/internal/boot"
+	"admin/internal/controller/rest"
+	"admin/internal/controller/rest/middleware"
+	"admin/internal/service/dao"
+	"admin/internal/service/orm"
+	"admin/internal/usecase"
 
 	errors "github.com/rotisserie/eris"
 

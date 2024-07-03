@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package api;
+option go_package = "./api";
+import "google/protobuf/empty.proto";
+
+service Account{
+  rpc CreateAccount(CreateAccountRequest) returns (google.protobuf.Empty);
+  // rpc ListAccount(ListAccountRequest) returns (google.protobuf.Empty);
+  // rpc UpdateAccount(UpdateAccountRequest) returns (google.protobuf.Empty);
+  // rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
+  // rpc InactiveAccount(InactiveAccountRequest) returns (google.protobuf.Empty);
+  // rpc ActiveAccount(ActiveAccountRequest) returns (google.protobuf.Empty);
+}
+
+message CreateAccountRequest{
+  string UserName = 1;
+  string Password = 2;
+  string DisplayName = 3;
+}
