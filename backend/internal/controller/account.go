@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"admin/api"
+	"admin/internal/service/orm"
 	"admin/internal/service/orm/model"
 	"admin/internal/utils/password"
 
@@ -25,7 +26,7 @@ func (s *AccountServer) CreateAccount(
 		return nil, Error.Internal.LogWithTrace(err)
 	}
 
-	u.db.Create(&model.Account{
+	orm.GetDb().Create(&model.Account{
 		UserName:    in.UserName,
 		Password:    in.Password,
 		DisplayName: in.DisplayName,
