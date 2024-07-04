@@ -9,8 +9,6 @@ import (
 	"admin/internal/utils/password"
 
 	"admin/internal/domain/Error"
-
-	"github.com/golang/protobuf/ptypes/empty"
 )
 
 type AccountServer struct {
@@ -20,7 +18,7 @@ type AccountServer struct {
 func (s *AccountServer) CreateAccount(
 	ctx context.Context,
 	req *api.CreateAccountRequest,
-) (empty *empty.Empty, err error) {
+) (empty *api.Empty, err error) {
 	salt, err := password.GenSalt()
 	if err != nil {
 		return nil, Error.Internal.LogWithTrace(err)

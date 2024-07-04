@@ -1,0 +1,53 @@
+# buf.gen.yaml
+version: v2
+
+managed:
+  enabled: true
+
+plugins:
+  - remote: buf.build/community/pseudomuto-doc
+    opt: markdown,README.md,source_relative
+    out: document
+
+  - remote: buf.build/protocolbuffers/go:v1.34.2
+    out: ../../backend/api
+    opt:
+      - paths=source_relative
+
+  - remote: buf.build/grpc/go
+    out: ../backend/api
+    opt: paths=source_relative
+
+  # - remote: buf.build/connectrpc/go
+  #   out: ../backend/api
+  #   opt:
+  #     - paths=source_relative
+
+  # - remote: buf.build/bufbuild/es
+  #   out: ../frontend/app/lib/client
+  #   opt:
+  #     - target=ts
+  #     - import_extension=none
+
+  # - remote: buf.build/grpc/web:v1.5.0
+  #   opt:
+  #   - mode=grpcweb
+  #   - import_style=typescript
+  #   # - js_out=import_style=commonjs
+  #   # - grpc-web_out=import_style=typescript
+  #   out: ../frontend/app/lib/client
+
+  # - remote: buf.build/protocolbuffers/js
+  #   out: ../frontend/app/lib/client
+
+  - remote: buf.build/connectrpc/es
+    out: ../frontend/app/lib/client
+    opt:
+      - target=ts
+      - import_extension=none
+
+  # - remote: buf.build/connectrpc/query-es
+  #   out: ../../frontend/app/lib/client
+  #   opt:
+  #     - target=ts
+  #     - import_extension=none
