@@ -1,7 +1,7 @@
 package run
 
 import (
-	"web-server-template/internal"
+	"admin/internal"
 
 	"github.com/spf13/cobra"
 )
@@ -14,7 +14,7 @@ var RunCmd = &cobra.Command{
 }
 
 func init() {
-	RunCmd.Flags().StringP("port", "p", "8080", "port")
+	RunCmd.Flags().StringP("port", "p", ":50051", "port")
 	RunCmd.Flags().
-		StringP("database", "d", "pg", `database enum. allowed: "pg", "sqlite"`)
+		StringP("database", "d", "sqlite", `database enum. allowed: "postgres", "sqlite"`)
 }

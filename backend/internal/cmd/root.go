@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"web-server-template/internal/cmd/service"
+	"admin/internal/cmd/service"
 
 	"github.com/spf13/cobra"
 )

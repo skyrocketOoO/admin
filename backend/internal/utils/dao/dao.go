@@ -8,10 +8,6 @@ import (
 )
 
 type (
-	Dao struct {
-		db *gorm.DB
-	}
-
 	Pager struct {
 		Number int
 		Size   int
@@ -27,15 +23,15 @@ func ListWithPager(db *gorm.DB, pager Pager, src any) (total int64, err error) {
 	return
 }
 
-func Ping(ctx context.Context) error {
-	db, err := d.db.DB()
+func Ping(db *gorm.DB, ctx context.Context) error {
+	sqlDb, err := db.DB()
 	if err != nil {
 		return err
 	}
 
 	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
-	if err := db.PingContext(ctx); err != nil {
+	if err := sqlDb.PingContext(ctx); err != nil {
 		return err
 	}
 

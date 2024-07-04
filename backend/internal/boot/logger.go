@@ -9,9 +9,8 @@ import (
 )
 
 func InitLogger() {
-	zerolog.TimeFieldFormat = time.RFC3339
 	log.Logger = log.Output(
-		zerolog.ConsoleWriter{Out: os.Stderr},
-	) // human-friendly logging without efficiency
+		zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: time.RFC3339},
+	)
 	log.Info().Msg("Logger initialized")
 }

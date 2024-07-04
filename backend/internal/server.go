@@ -1,17 +1,16 @@
 package internal
 
 import (
-	restapi "admin/api/rest"
+	"net"
+
+	"admin/api"
 	"admin/internal/boot"
-	"admin/internal/controller/rest"
-	"admin/internal/controller/rest/middleware"
-	"admin/internal/service/dao"
+	"admin/internal/controller"
 	"admin/internal/service/orm"
-	"admin/internal/usecase"
 
 	errors "github.com/rotisserie/eris"
+	"google.golang.org/grpc"
 
-	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
@@ -22,27 +21,24 @@ func RunServer(cmd *cobra.Command, args []string) {
 	}
 
 	dbConf, _ := cmd.Flags().GetString("database")
-	db, err := orm.NewDB(dbConf)
-	if err != nil {
+	if err := orm.InitDb(dbConf); err != nil {
 		log.Fatal().Msg(errors.ToString(err, true))
 	}
 	defer func() {
-		db, _ := db.DB()
+		db, _ := orm.GetDb().DB()
 		db.Close()
 	}()
 
-	dao := dao.NewDao(db)
+	port, _ := cmd.Flags().GetString("port")
+	lis, err := net.Listen("tcp", port)
 	if err != nil {
-		log.Fatal().Msg(err.Error())
+		log.Fatal().Msgf("Failed to listen: %v", err)
 	}
 
-	usecase := usecase.NewBasicUsecase(dao)
-	restController := rest.NewRestController(usecase)
-
-	router := gin.Default()
-	router.Use(middleware.CORS())
-	restapi.Binding(router, restController)
-
-	port, _ := cmd.Flags().GetString("port")
-	router.Run(":" + port)
+	s := grpc.NewServer()
+	api.RegisterAccountServer(s, &controller.AccountServer{})
+	log.Info().Msgf("Listen to %s", port)
+	if err := s.Serve(lis); err != nil {
+		log.Fatal().Msgf("Failed to serve: %v", err)
+	}
 }

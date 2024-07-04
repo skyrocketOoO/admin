@@ -20,17 +20,19 @@ type AccountServer struct {
 func (s *AccountServer) CreateAccount(
 	ctx context.Context,
 	req *api.CreateAccountRequest,
-) (*empty.Empty, error) {
+) (empty *empty.Empty, err error) {
 	salt, err := password.GenSalt()
 	if err != nil {
 		return nil, Error.Internal.LogWithTrace(err)
 	}
 
-	orm.GetDb().Create(&model.Account{
-		UserName:    in.UserName,
-		Password:    in.Password,
-		DisplayName: in.DisplayName,
-	})
-	return nil
-	return nil, nil
+	if err = orm.GetDb().Create(&model.Account{
+		UserName:    req.UserName,
+		HashPass:    password.Hash(req.Password, salt),
+		DisplayName: req.DisplayName,
+	}).Error; err != nil {
+		return nil, Error.Internal.LogWithTrace(err)
+	}
+
+	return
 }
