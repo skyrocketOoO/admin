@@ -6,8 +6,8 @@ import "./common.proto";
 option go_package = "api";
 
 service Account{
-  rpc CreateAccount(CreateAccountRequest) returns (Empty);
-  rpc ListAccount(ListAccountRequest) returns (Empty);
+  rpc CreateAccount(CreateAccountRequest) returns (common.Empty);
+  rpc ListAccount(ListAccountRequest) returns (common.Empty);
   // rpc UpdateAccount(UpdateAccountRequest) returns (google.protobuf.Empty);
   // rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
   // rpc InactiveAccount(InactiveAccountRequest) returns (google.protobuf.Empty);
