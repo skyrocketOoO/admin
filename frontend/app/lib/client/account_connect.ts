@@ -3,7 +3,8 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateAccountRequest, Empty } from "./account_pb";
+import { CreateAccountRequest, ListAccountRequest } from "./account_pb";
+import { Empty } from "./common_pb";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -13,17 +14,25 @@ export const Account = {
   typeName: "api.Account",
   methods: {
     /**
-     * rpc ListAccount(ListAccountRequest) returns (google.protobuf.Empty);
-     * rpc UpdateAccount(UpdateAccountRequest) returns (google.protobuf.Empty);
-     * rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
-     * rpc InactiveAccount(InactiveAccountRequest) returns (google.protobuf.Empty);
-     * rpc ActiveAccount(ActiveAccountRequest) returns (google.protobuf.Empty);
-     *
      * @generated from rpc api.Account.CreateAccount
      */
     createAccount: {
       name: "CreateAccount",
       I: CreateAccountRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * rpc UpdateAccount(UpdateAccountRequest) returns (google.protobuf.Empty);
+     * rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
+     * rpc InactiveAccount(InactiveAccountRequest) returns (google.protobuf.Empty);
+     * rpc ActiveAccount(ActiveAccountRequest) returns (google.protobuf.Empty);
+     *
+     * @generated from rpc api.Account.ListAccount
+     */
+    listAccount: {
+      name: "ListAccount",
+      I: ListAccountRequest,
       O: Empty,
       kind: MethodKind.Unary,
     },

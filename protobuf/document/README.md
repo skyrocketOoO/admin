@@ -3,13 +3,42 @@
 
 ## Table of Contents
 
+- [common.proto](#common-proto)
+    - [Empty](#api-Empty)
+  
 - [account.proto](#account-proto)
     - [CreateAccountRequest](#api-CreateAccountRequest)
-    - [Empty](#api-Empty)
+    - [ListAccountRequest](#api-ListAccountRequest)
   
     - [Account](#api-Account)
   
 - [Scalar Value Types](#scalar-value-types)
+
+
+
+<a name="common-proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## common.proto
+
+
+
+<a name="api-Empty"></a>
+
+### Empty
+
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
 
 
 
@@ -37,9 +66,9 @@
 
 
 
-<a name="api-Empty"></a>
+<a name="api-ListAccountRequest"></a>
 
-### Empty
+### ListAccountRequest
 
 
 
@@ -60,7 +89,8 @@
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| CreateAccount | [CreateAccountRequest](#api-CreateAccountRequest) | [Empty](#api-Empty) | rpc ListAccount(ListAccountRequest) returns (google.protobuf.Empty); rpc UpdateAccount(UpdateAccountRequest) returns (google.protobuf.Empty); rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty); rpc InactiveAccount(InactiveAccountRequest) returns (google.protobuf.Empty); rpc ActiveAccount(ActiveAccountRequest) returns (google.protobuf.Empty); |
+| CreateAccount | [CreateAccountRequest](#api-CreateAccountRequest) | [Empty](#api-Empty) |  |
+| ListAccount | [ListAccountRequest](#api-ListAccountRequest) | [Empty](#api-Empty) | rpc UpdateAccount(UpdateAccountRequest) returns (google.protobuf.Empty); rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty); rpc InactiveAccount(InactiveAccountRequest) returns (google.protobuf.Empty); rpc ActiveAccount(ActiveAccountRequest) returns (google.protobuf.Empty); |
 
  
 

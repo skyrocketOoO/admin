@@ -1,11 +1,13 @@
 syntax = "proto3";
 
 package api;
-option go_package = "./api";
+
+import "./common.proto";
+option go_package = "api";
 
 service Account{
   rpc CreateAccount(CreateAccountRequest) returns (Empty);
-  // rpc ListAccount(ListAccountRequest) returns (google.protobuf.Empty);
+  rpc ListAccount(ListAccountRequest) returns (Empty);
   // rpc UpdateAccount(UpdateAccountRequest) returns (google.protobuf.Empty);
   // rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
   // rpc InactiveAccount(InactiveAccountRequest) returns (google.protobuf.Empty);
@@ -18,4 +20,6 @@ message CreateAccountRequest{
   string DisplayName = 3;
 }
 
-message Empty{}
+message ListAccountRequest{
+
+}
