@@ -12,7 +12,7 @@ import (
 )
 
 type AccountServer struct {
-	api.UnimplementedAccountServer
+	api.UnimplementedAccountServiceServer
 }
 
 func (s *AccountServer) CreateAccount(

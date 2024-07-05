@@ -19,128 +19,128 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Account_CreateAccount_FullMethodName = "/api.Account/CreateAccount"
-	Account_ListAccount_FullMethodName   = "/api.Account/ListAccount"
+	AccountService_CreateAccount_FullMethodName = "/proto.AccountService/CreateAccount"
+	AccountService_ListAccount_FullMethodName   = "/proto.AccountService/ListAccount"
 )
 
-// AccountClient is the client API for Account service.
+// AccountServiceClient is the client API for AccountService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AccountClient interface {
+type AccountServiceClient interface {
 	CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Empty, error)
 	ListAccount(ctx context.Context, in *ListAccountRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
-type accountClient struct {
+type accountServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAccountClient(cc grpc.ClientConnInterface) AccountClient {
-	return &accountClient{cc}
+func NewAccountServiceClient(cc grpc.ClientConnInterface) AccountServiceClient {
+	return &accountServiceClient{cc}
 }
 
-func (c *accountClient) CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *accountServiceClient) CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, Account_CreateAccount_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AccountService_CreateAccount_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountClient) ListAccount(ctx context.Context, in *ListAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *accountServiceClient) ListAccount(ctx context.Context, in *ListAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, Account_ListAccount_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AccountService_ListAccount_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AccountServer is the server API for Account service.
-// All implementations must embed UnimplementedAccountServer
+// AccountServiceServer is the server API for AccountService service.
+// All implementations must embed UnimplementedAccountServiceServer
 // for forward compatibility
-type AccountServer interface {
+type AccountServiceServer interface {
 	CreateAccount(context.Context, *CreateAccountRequest) (*Empty, error)
 	ListAccount(context.Context, *ListAccountRequest) (*Empty, error)
-	mustEmbedUnimplementedAccountServer()
+	mustEmbedUnimplementedAccountServiceServer()
 }
 
-// UnimplementedAccountServer must be embedded to have forward compatible implementations.
-type UnimplementedAccountServer struct {
+// UnimplementedAccountServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedAccountServiceServer struct {
 }
 
-func (UnimplementedAccountServer) CreateAccount(context.Context, *CreateAccountRequest) (*Empty, error) {
+func (UnimplementedAccountServiceServer) CreateAccount(context.Context, *CreateAccountRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAccount not implemented")
 }
-func (UnimplementedAccountServer) ListAccount(context.Context, *ListAccountRequest) (*Empty, error) {
+func (UnimplementedAccountServiceServer) ListAccount(context.Context, *ListAccountRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAccount not implemented")
 }
-func (UnimplementedAccountServer) mustEmbedUnimplementedAccountServer() {}
+func (UnimplementedAccountServiceServer) mustEmbedUnimplementedAccountServiceServer() {}
 
-// UnsafeAccountServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AccountServer will
+// UnsafeAccountServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AccountServiceServer will
 // result in compilation errors.
-type UnsafeAccountServer interface {
-	mustEmbedUnimplementedAccountServer()
+type UnsafeAccountServiceServer interface {
+	mustEmbedUnimplementedAccountServiceServer()
 }
 
-func RegisterAccountServer(s grpc.ServiceRegistrar, srv AccountServer) {
-	s.RegisterService(&Account_ServiceDesc, srv)
+func RegisterAccountServiceServer(s grpc.ServiceRegistrar, srv AccountServiceServer) {
+	s.RegisterService(&AccountService_ServiceDesc, srv)
 }
 
-func _Account_CreateAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AccountService_CreateAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateAccountRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServer).CreateAccount(ctx, in)
+		return srv.(AccountServiceServer).CreateAccount(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Account_CreateAccount_FullMethodName,
+		FullMethod: AccountService_CreateAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).CreateAccount(ctx, req.(*CreateAccountRequest))
+		return srv.(AccountServiceServer).CreateAccount(ctx, req.(*CreateAccountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Account_ListAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AccountService_ListAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListAccountRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServer).ListAccount(ctx, in)
+		return srv.(AccountServiceServer).ListAccount(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Account_ListAccount_FullMethodName,
+		FullMethod: AccountService_ListAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).ListAccount(ctx, req.(*ListAccountRequest))
+		return srv.(AccountServiceServer).ListAccount(ctx, req.(*ListAccountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Account_ServiceDesc is the grpc.ServiceDesc for Account service.
+// AccountService_ServiceDesc is the grpc.ServiceDesc for AccountService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Account_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.Account",
-	HandlerType: (*AccountServer)(nil),
+var AccountService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "proto.AccountService",
+	HandlerType: (*AccountServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateAccount",
-			Handler:    _Account_CreateAccount_Handler,
+			Handler:    _AccountService_CreateAccount_Handler,
 		},
 		{
 			MethodName: "ListAccount",
-			Handler:    _Account_ListAccount_Handler,
+			Handler:    _AccountService_ListAccount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

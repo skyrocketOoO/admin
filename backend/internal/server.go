@@ -36,7 +36,7 @@ func RunServer(cmd *cobra.Command, args []string) {
 	}
 
 	s := grpc.NewServer()
-	api.RegisterAccountServer(s, &controller.AccountServer{})
+	api.RegisterAccountServiceServer(s, &controller.AccountServer{})
 	log.Info().Msgf("Listen to %s", port)
 	if err := s.Serve(lis); err != nil {
 		log.Fatal().Msgf("Failed to serve: %v", err)

@@ -1,24 +1,48 @@
-// Import necessary modules
-import * as grpcWeb from 'grpc-web';
-import { AccountClient } from './AccountServiceClientPb';  // Replace with the correct path to your generated client file
-import { CreateAccountRequest, Empty } from './account_pb';    // Replace with the correct path to your generated message file
+import { createConnectTransport } from "@connectrpc/connect-web";
+import { createPromiseClient } from "@connectrpc/connect";
+import { AccountService } from "./account_connect.js";
+import { CreateAccountRequest, ListAccountRequest } from "./account_pb.js";
+import { Empty } from "./common_pb.js";
 
-// Define your gRPC-Web client
-const client = new AccountClient('http://localhost:50051', null, null);
-
-// Prepare the request message
-const request = new CreateAccountRequest();
-request.setUsername('username');
-request.setPassword('password');
-request.setDisplayname('Display Name');
-
-// Make the gRPC call
-client.createAccount(request, {}, (err: grpcWeb.RpcError, response: Empty) => {
-  if (err) {
-    console.error('Error:', err.message);
-    // Handle error
-  } else {
-    console.log('Response:', response.toObject());
-    // Handle success
-  }
+// Initialize the client
+const transport = createConnectTransport({ 
+  baseUrl: "http://127.0.0.1:50051", 
+  useBinaryFormat: true 
 });
+
+const client = createPromiseClient(AccountService, transport);
+
+// Function to create an account
+async function createAccount() {
+  try {
+    const request = new CreateAccountRequest({
+      // Populate request fields as needed
+    });
+    request.UserName="abc"
+    request.Password="123"
+    request.DisplayName="hi"
+
+    const response = await client.createAccount(request);
+    console.log("Account created:", response);
+  } catch (error) {
+    console.error("Error creating account:", error);
+  }
+}
+
+// Function to list accounts
+async function listAccounts() {
+  try {
+    const request = new ListAccountRequest({
+      // Populate request fields as needed
+    });
+
+    const response = await client.listAccount(request);
+    console.log("Accounts list:", response);
+  } catch (error) {
+    console.error("Error listing accounts:", error);
+  }
+}
+
+// Call the functions
+createAccount();
+// listAccounts();

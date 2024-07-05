@@ -4,13 +4,13 @@
 ## Table of Contents
 
 - [common.proto](#common-proto)
-    - [Empty](#api-Empty)
+    - [Empty](#proto-Empty)
   
 - [account.proto](#account-proto)
-    - [CreateAccountRequest](#api-CreateAccountRequest)
-    - [ListAccountRequest](#api-ListAccountRequest)
+    - [CreateAccountRequest](#proto-CreateAccountRequest)
+    - [ListAccountRequest](#proto-ListAccountRequest)
   
-    - [Account](#api-Account)
+    - [AccountService](#proto-AccountService)
   
 - [Scalar Value Types](#scalar-value-types)
 
@@ -23,7 +23,7 @@
 
 
 
-<a name="api-Empty"></a>
+<a name="proto-Empty"></a>
 
 ### Empty
 
@@ -49,7 +49,7 @@
 
 
 
-<a name="api-CreateAccountRequest"></a>
+<a name="proto-CreateAccountRequest"></a>
 
 ### CreateAccountRequest
 
@@ -66,7 +66,7 @@
 
 
 
-<a name="api-ListAccountRequest"></a>
+<a name="proto-ListAccountRequest"></a>
 
 ### ListAccountRequest
 
@@ -82,15 +82,15 @@
  
 
 
-<a name="api-Account"></a>
+<a name="proto-AccountService"></a>
 
-### Account
+### AccountService
 
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| CreateAccount | [CreateAccountRequest](#api-CreateAccountRequest) | [Empty](#api-Empty) |  |
-| ListAccount | [ListAccountRequest](#api-ListAccountRequest) | [Empty](#api-Empty) | rpc UpdateAccount(UpdateAccountRequest) returns (google.protobuf.Empty); rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty); rpc InactiveAccount(InactiveAccountRequest) returns (google.protobuf.Empty); rpc ActiveAccount(ActiveAccountRequest) returns (google.protobuf.Empty); |
+| CreateAccount | [CreateAccountRequest](#proto-CreateAccountRequest) | [Empty](#proto-Empty) |  |
+| ListAccount | [ListAccountRequest](#proto-ListAccountRequest) | [Empty](#proto-Empty) | rpc UpdateAccount(UpdateAccountRequest) returns (google.protobuf.Empty); rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty); rpc InactiveAccount(InactiveAccountRequest) returns (google.protobuf.Empty); rpc ActiveAccount(ActiveAccountRequest) returns (google.protobuf.Empty); |
 
  
 
