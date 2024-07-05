@@ -19,128 +19,204 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	AccountService_CreateAccount_FullMethodName = "/proto.AccountService/CreateAccount"
-	AccountService_ListAccount_FullMethodName   = "/proto.AccountService/ListAccount"
+	Admin_CreateAccount_FullMethodName = "/proto.Admin/CreateAccount"
+	Admin_ListAccount_FullMethodName   = "/proto.Admin/ListAccount"
+	Admin_UpdateAccount_FullMethodName = "/proto.Admin/UpdateAccount"
+	Admin_DeleteAccount_FullMethodName = "/proto.Admin/DeleteAccount"
 )
 
-// AccountServiceClient is the client API for AccountService service.
+// AdminClient is the client API for Admin service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AccountServiceClient interface {
+type AdminClient interface {
 	CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Empty, error)
-	ListAccount(ctx context.Context, in *ListAccountRequest, opts ...grpc.CallOption) (*Empty, error)
+	ListAccount(ctx context.Context, in *ListAccountRequest, opts ...grpc.CallOption) (*ListAccountResponse, error)
+	UpdateAccount(ctx context.Context, in *UpdateAccountRequest, opts ...grpc.CallOption) (*Empty, error)
+	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
-type accountServiceClient struct {
+type adminClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAccountServiceClient(cc grpc.ClientConnInterface) AccountServiceClient {
-	return &accountServiceClient{cc}
+func NewAdminClient(cc grpc.ClientConnInterface) AdminClient {
+	return &adminClient{cc}
 }
 
-func (c *accountServiceClient) CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *adminClient) CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, AccountService_CreateAccount_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Admin_CreateAccount_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountServiceClient) ListAccount(ctx context.Context, in *ListAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *adminClient) ListAccount(ctx context.Context, in *ListAccountRequest, opts ...grpc.CallOption) (*ListAccountResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, AccountService_ListAccount_FullMethodName, in, out, cOpts...)
+	out := new(ListAccountResponse)
+	err := c.cc.Invoke(ctx, Admin_ListAccount_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AccountServiceServer is the server API for AccountService service.
-// All implementations must embed UnimplementedAccountServiceServer
+func (c *adminClient) UpdateAccount(ctx context.Context, in *UpdateAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, Admin_UpdateAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, Admin_DeleteAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AdminServer is the server API for Admin service.
+// All implementations must embed UnimplementedAdminServer
 // for forward compatibility
-type AccountServiceServer interface {
+type AdminServer interface {
 	CreateAccount(context.Context, *CreateAccountRequest) (*Empty, error)
-	ListAccount(context.Context, *ListAccountRequest) (*Empty, error)
-	mustEmbedUnimplementedAccountServiceServer()
+	ListAccount(context.Context, *ListAccountRequest) (*ListAccountResponse, error)
+	UpdateAccount(context.Context, *UpdateAccountRequest) (*Empty, error)
+	DeleteAccount(context.Context, *DeleteAccountRequest) (*Empty, error)
+	mustEmbedUnimplementedAdminServer()
 }
 
-// UnimplementedAccountServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedAccountServiceServer struct {
+// UnimplementedAdminServer must be embedded to have forward compatible implementations.
+type UnimplementedAdminServer struct {
 }
 
-func (UnimplementedAccountServiceServer) CreateAccount(context.Context, *CreateAccountRequest) (*Empty, error) {
+func (UnimplementedAdminServer) CreateAccount(context.Context, *CreateAccountRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAccount not implemented")
 }
-func (UnimplementedAccountServiceServer) ListAccount(context.Context, *ListAccountRequest) (*Empty, error) {
+func (UnimplementedAdminServer) ListAccount(context.Context, *ListAccountRequest) (*ListAccountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAccount not implemented")
 }
-func (UnimplementedAccountServiceServer) mustEmbedUnimplementedAccountServiceServer() {}
+func (UnimplementedAdminServer) UpdateAccount(context.Context, *UpdateAccountRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAccount not implemented")
+}
+func (UnimplementedAdminServer) DeleteAccount(context.Context, *DeleteAccountRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
+}
+func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
 
-// UnsafeAccountServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AccountServiceServer will
+// UnsafeAdminServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AdminServer will
 // result in compilation errors.
-type UnsafeAccountServiceServer interface {
-	mustEmbedUnimplementedAccountServiceServer()
+type UnsafeAdminServer interface {
+	mustEmbedUnimplementedAdminServer()
 }
 
-func RegisterAccountServiceServer(s grpc.ServiceRegistrar, srv AccountServiceServer) {
-	s.RegisterService(&AccountService_ServiceDesc, srv)
+func RegisterAdminServer(s grpc.ServiceRegistrar, srv AdminServer) {
+	s.RegisterService(&Admin_ServiceDesc, srv)
 }
 
-func _AccountService_CreateAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Admin_CreateAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateAccountRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServiceServer).CreateAccount(ctx, in)
+		return srv.(AdminServer).CreateAccount(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccountService_CreateAccount_FullMethodName,
+		FullMethod: Admin_CreateAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).CreateAccount(ctx, req.(*CreateAccountRequest))
+		return srv.(AdminServer).CreateAccount(ctx, req.(*CreateAccountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AccountService_ListAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Admin_ListAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListAccountRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServiceServer).ListAccount(ctx, in)
+		return srv.(AdminServer).ListAccount(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccountService_ListAccount_FullMethodName,
+		FullMethod: Admin_ListAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).ListAccount(ctx, req.(*ListAccountRequest))
+		return srv.(AdminServer).ListAccount(ctx, req.(*ListAccountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AccountService_ServiceDesc is the grpc.ServiceDesc for AccountService service.
+func _Admin_UpdateAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).UpdateAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_UpdateAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).UpdateAccount(ctx, req.(*UpdateAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_DeleteAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).DeleteAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_DeleteAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).DeleteAccount(ctx, req.(*DeleteAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Admin_ServiceDesc is the grpc.ServiceDesc for Admin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AccountService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "proto.AccountService",
-	HandlerType: (*AccountServiceServer)(nil),
+var Admin_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "proto.Admin",
+	HandlerType: (*AdminServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateAccount",
-			Handler:    _AccountService_CreateAccount_Handler,
+			Handler:    _Admin_CreateAccount_Handler,
 		},
 		{
 			MethodName: "ListAccount",
-			Handler:    _AccountService_ListAccount_Handler,
+			Handler:    _Admin_ListAccount_Handler,
+		},
+		{
+			MethodName: "UpdateAccount",
+			Handler:    _Admin_UpdateAccount_Handler,
+		},
+		{
+			MethodName: "DeleteAccount",
+			Handler:    _Admin_DeleteAccount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

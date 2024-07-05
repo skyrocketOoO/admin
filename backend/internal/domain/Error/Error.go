@@ -15,7 +15,7 @@ func (e Error) Wrap(err error) error {
 	return fmt.Errorf("rpc error: %v, %s", e, err.Error())
 }
 
-func (e Error) LogWithTrace(err error) error {
+func (e Error) WithTrace(err error) error {
 	return fmt.Errorf("rpc error: %v, %s", e, log.WithTrace(err).Error())
 }
 
