@@ -14,3 +14,7 @@ backup:
 
 gen-rest-doc:
 	swag init -g internal/delivery/rest/*.go -o ./docs
+
+genbuf:
+	cd protobuf
+	buf generate

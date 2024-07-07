@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@grpc/grpc-js": "^1.10.10",
+    "long": "^5.2.3",
+    "pnpm": "^9.4.0",
+    "protobufjs": "^7.3.2"
+  }
+}

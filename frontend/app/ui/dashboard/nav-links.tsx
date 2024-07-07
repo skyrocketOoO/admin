@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 
 const links = [
@@ -22,7 +23,8 @@ const links = [
       { name: 'Paid', href: '/dashboard/invoices/paid', count: 1 },
     ],
   },
-  { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon, count: 0 },
+  { name: 'AccountList', href: '/dashboard/accountlist', icon: UserGroupIcon, count: 0 },
+  { name: 'Role', href: '/dashboard/role', icon: UserGroupIcon, count: 0 },
 ];
 
 export default function NavLinks() {
@@ -65,7 +67,7 @@ export default function NavLinks() {
                 </span>
               )}
               {link.subLinks && (
-                <span className="">
+                <span className="" onClick={() => handleDropdown(link.name)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className={`h-4 w-4 transform ${isActive ? 'rotate-180' : 'rotate-0'}`}

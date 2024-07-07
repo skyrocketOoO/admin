@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package proto;
+
+import "common.proto";
+
+service Main{
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Logout(LogoutRequest) returns (Empty);
+
+  rpc CreateAccount(CreateAccountRequest) returns (Empty);
+  rpc ListAccount(ListAccountRequest) returns (ListAccountResponse);
+  rpc UpdateAccount(UpdateAccountRequest) returns (Empty);
+  rpc DeleteAccount(DeleteAccountRequest) returns (Empty);
+
+  rpc CreateRole(CreateRoleRequest) returns (Empty);
+  rpc ListRole(ListRoleRequest) returns (ListRoleResponse);
+  rpc GetRoleAuth(GetRoleAuthRequest) returns (GetRoleAuthResponse);
+  rpc UpdateRole(UpdateRoleRequest) returns (Empty);
+  rpc DeleteRole(DeleteRoleRequest) returns (Empty);
+  rpc BindRole(BindRoleRequest) returns (Empty);
+}
+
+message CreateAccountRequest{
+  string UserName = 1;
+  string Password = 2;
+  string DisplayName = 3;
+}
+
+message ListAccountRequest{
+  optional ListOption Option = 1;
+}
+message ListAccountResponse{
+  repeated AccountData List = 1;
+  int64 Total = 2;
+}
+message AccountData {
+  string UserName = 1;
+  string DisplayName = 2;
+  string Email = 3;
+  int32 State = 4;
+}
+
+message UpdateAccountRequest{
+  string ID = 1;
+  string DisplayName = 2;
+  int32 State = 3; // 0: no change, 1: active, 2: inactive
+}
+
+message DeleteAccountRequest{
+  string ID = 1;
+  Page Page = 2;
+}
+
+message CreateRoleRequest{
+  string Name = 1;
+  Page Page = 2;
+}
+message Page{
+  PageOperation AccountList = 1;
+  PageOperation Role = 2;
+  PageOperation Setting = 3;
+}
+message PageOperation{
+  bool Create = 1;
+  bool Read = 2;
+  bool Update = 3;
+  bool Delete = 4;
+}
+
+message ListRoleRequest{
+  optional ListOption Option = 1;
+}
+message ListRoleResponse{
+  repeated RoleData List = 1;
+  int64 Total = 2;
+}
+message RoleData {
+  string ID = 1;
+  string Name = 2;
+}
+
+message GetRoleAuthRequest{
+  optional string ID = 1; // if ID is "", return auth based on session
+}
+message GetRoleAuthResponse{
+  Page Page = 1;
+}
+
+message UpdateRoleRequest{
+  string ID = 1;
+  string Name = 2;
+  Page Page = 3;
+}
+
+message DeleteRoleRequest{
+  string ID = 1;
+}
+
+message BindRoleRequest{
+  string AccountID = 1;
+  string RoleID = 2;
+}
+
+message LoginRequest{
+  string UserName = 1;
+  string Password = 2;
+}
+message LoginResponse{
+  string SessionID = 1;
+}
+
+message LogoutRequest{
+  string SessionID = 1;
+}

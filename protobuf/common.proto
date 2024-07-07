@@ -4,3 +4,24 @@ package proto;
 
 message Empty{}
 
+message ListOption{
+  optional Pager Pager = 1;
+  optional Sorter Sorter = 2;
+  repeated Query Query = 3;
+}
+
+message Pager{
+  int32 Number = 1;
+  int32 Size = 2;
+}
+
+message Sorter{
+  bool Asc = 1;;
+  string Field = 2;
+}
+
+message Query{
+  bool Fuzzy = 1;
+  string Field = 2;
+  string Value = 3;
+}

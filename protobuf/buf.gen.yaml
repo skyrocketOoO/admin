@@ -21,12 +21,16 @@ plugins:
     out: ../backend/api
     opt: paths=source_relative
 
-  - remote: buf.build/bufbuild/es
-    out: ../frontend/app/lib/client
+  - remote: buf.build/community/stephenh-ts-proto
+    out: ../frontend/app/proto
     opt:
-      - target=ts
+      - outputServices=grpc-js
+      - env=node
+      - paths=source_relative
 
-  - remote: buf.build/connectrpc/es
-    out: ../frontend/app/lib/client
+  - remote: buf.build/community/stephenh-ts-proto
+    out: ../k6/proto
     opt:
-      - target=ts
+      - outputServices=grpc-js
+      - env=node
+      - paths=source_relative

@@ -8,18 +8,58 @@ import (
 )
 
 type (
+	ListOption struct {
+		Pager  Pager
+		Sorter Sorter
+		Query  []Query
+	}
+
 	Pager struct {
 		Number int
 		Size   int
 	}
+
+	Sorter struct {
+		Field string
+		Asc   bool
+	}
+
+	Query struct {
+		Field string
+		Value string
+		Fuzzy bool
+	}
 )
 
 // Get page items with total count, src must pass the pointer of item
-func ListWithPager(db *gorm.DB, pager Pager, src any) (total int64, err error) {
+func ListWithPager(db *gorm.DB, option ListOption, src any) (total int64, err error) {
+	if option.Sorter != (Sorter{}) {
+		expr := option.Sorter.Field
+		if !option.Sorter.Asc {
+			expr += " desc"
+		}
+		db = db.Order(expr)
+	}
+
+	if option.Query != nil {
+		for _, q := range option.Query {
+			if q.Fuzzy {
+				db = db.Where(q.Field+" LIKE ?", "%"+q.Value+"%")
+			} else {
+				db = db.Where(q.Field+" = ?", q.Value)
+			}
+		}
+	}
+
 	if err = db.Count(&total).Error; err != nil {
 		return
 	}
-	err = db.Offset(pager.Size * (pager.Number - 1)).Limit(pager.Size).Find(src).Error
+
+	if option.Pager != (Pager{}) {
+		db.Offset(option.Pager.Size * (option.Pager.Number - 1)).Limit(option.Pager.Size)
+	}
+
+	err = db.Find(src).Error
 	return
 }
 

@@ -4,6 +4,7 @@ import AcmeLogo from '@/app/ui/acme-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
 // import { signOut } from '@/auth';
 import { lusitana } from '@/app/ui/fonts';
+import { signOut } from '@/auth';
 
 export default function SideNav() {
   return (
@@ -19,7 +20,7 @@ export default function SideNav() {
       <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
         <NavLinks />
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
-        {/* <form
+        <form
           action={async () => {
             'use server';
             await signOut();
@@ -29,7 +30,7 @@ export default function SideNav() {
             <PowerIcon className="w-6" />
             <div className="hidden md:block">Sign Out</div>
           </button>
-        </form> */}
+        </form>
       </div>
     </div>
   );

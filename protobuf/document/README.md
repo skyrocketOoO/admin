@@ -5,12 +5,34 @@
 
 - [common.proto](#common-proto)
     - [Empty](#proto-Empty)
+    - [ListOption](#proto-ListOption)
+    - [Pager](#proto-Pager)
+    - [Query](#proto-Query)
+    - [Sorter](#proto-Sorter)
   
-- [account.proto](#account-proto)
+- [main.proto](#main-proto)
+    - [AccountData](#proto-AccountData)
+    - [BindRoleRequest](#proto-BindRoleRequest)
     - [CreateAccountRequest](#proto-CreateAccountRequest)
+    - [CreateRoleRequest](#proto-CreateRoleRequest)
+    - [DeleteAccountRequest](#proto-DeleteAccountRequest)
+    - [DeleteRoleRequest](#proto-DeleteRoleRequest)
+    - [GetRoleAuthRequest](#proto-GetRoleAuthRequest)
+    - [GetRoleAuthResponse](#proto-GetRoleAuthResponse)
     - [ListAccountRequest](#proto-ListAccountRequest)
+    - [ListAccountResponse](#proto-ListAccountResponse)
+    - [ListRoleRequest](#proto-ListRoleRequest)
+    - [ListRoleResponse](#proto-ListRoleResponse)
+    - [LoginRequest](#proto-LoginRequest)
+    - [LoginResponse](#proto-LoginResponse)
+    - [LogoutRequest](#proto-LogoutRequest)
+    - [Page](#proto-Page)
+    - [PageOperation](#proto-PageOperation)
+    - [RoleData](#proto-RoleData)
+    - [UpdateAccountRequest](#proto-UpdateAccountRequest)
+    - [UpdateRoleRequest](#proto-UpdateRoleRequest)
   
-    - [AccountService](#proto-AccountService)
+    - [Main](#proto-Main)
   
 - [Scalar Value Types](#scalar-value-types)
 
@@ -32,7 +54,71 @@
 
 
 
- 
+
+<a name="proto-ListOption"></a>
+
+### ListOption
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Pager | [Pager](#proto-Pager) | optional |  |
+| Sorter | [Sorter](#proto-Sorter) | optional |  |
+| Query | [Query](#proto-Query) | repeated |  |
+
+
+
+
+
+
+<a name="proto-Pager"></a>
+
+### Pager
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Number | [int32](#int32) |  |  |
+| Size | [int32](#int32) |  |  |
+
+
+
+
+
+
+<a name="proto-Query"></a>
+
+### Query
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Fuzzy | [bool](#bool) |  |  |
+| Field | [string](#string) |  |  |
+| Value | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="proto-Sorter"></a>
+
+### Sorter
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Asc | [bool](#bool) |  |  |
+| Field | [string](#string) |  |  |
+
+
+
+
 
  
 
@@ -40,12 +126,48 @@
 
  
 
+ 
 
 
-<a name="account-proto"></a>
+
+<a name="main-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## account.proto
+## main.proto
+
+
+
+<a name="proto-AccountData"></a>
+
+### AccountData
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| UserName | [string](#string) |  |  |
+| DisplayName | [string](#string) |  |  |
+| Email | [string](#string) |  |  |
+| State | [int32](#int32) |  |  |
+
+
+
+
+
+
+<a name="proto-BindRoleRequest"></a>
+
+### BindRoleRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| AccountID | [string](#string) |  |  |
+| RoleID | [string](#string) |  |  |
+
+
+
 
 
 
@@ -66,12 +188,272 @@
 
 
 
+<a name="proto-CreateRoleRequest"></a>
+
+### CreateRoleRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Name | [string](#string) |  |  |
+| Page | [Page](#proto-Page) |  |  |
+
+
+
+
+
+
+<a name="proto-DeleteAccountRequest"></a>
+
+### DeleteAccountRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| Page | [Page](#proto-Page) |  |  |
+
+
+
+
+
+
+<a name="proto-DeleteRoleRequest"></a>
+
+### DeleteRoleRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="proto-GetRoleAuthRequest"></a>
+
+### GetRoleAuthRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) | optional | if ID is &#34;&#34;, return auth based on session |
+
+
+
+
+
+
+<a name="proto-GetRoleAuthResponse"></a>
+
+### GetRoleAuthResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Page | [Page](#proto-Page) |  |  |
+
+
+
+
+
+
 <a name="proto-ListAccountRequest"></a>
 
 ### ListAccountRequest
 
 
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Option | [ListOption](#proto-ListOption) | optional |  |
+
+
+
+
+
+
+<a name="proto-ListAccountResponse"></a>
+
+### ListAccountResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| List | [AccountData](#proto-AccountData) | repeated |  |
+| Total | [int64](#int64) |  |  |
+
+
+
+
+
+
+<a name="proto-ListRoleRequest"></a>
+
+### ListRoleRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Option | [ListOption](#proto-ListOption) | optional |  |
+
+
+
+
+
+
+<a name="proto-ListRoleResponse"></a>
+
+### ListRoleResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| List | [RoleData](#proto-RoleData) | repeated |  |
+| Total | [int64](#int64) |  |  |
+
+
+
+
+
+
+<a name="proto-LoginRequest"></a>
+
+### LoginRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| UserName | [string](#string) |  |  |
+| Password | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="proto-LoginResponse"></a>
+
+### LoginResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| SessionID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="proto-LogoutRequest"></a>
+
+### LogoutRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| SessionID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="proto-Page"></a>
+
+### Page
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| AccountList | [PageOperation](#proto-PageOperation) |  |  |
+| Role | [PageOperation](#proto-PageOperation) |  |  |
+| Setting | [PageOperation](#proto-PageOperation) |  |  |
+
+
+
+
+
+
+<a name="proto-PageOperation"></a>
+
+### PageOperation
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Create | [bool](#bool) |  |  |
+| Read | [bool](#bool) |  |  |
+| Update | [bool](#bool) |  |  |
+| Delete | [bool](#bool) |  |  |
+
+
+
+
+
+
+<a name="proto-RoleData"></a>
+
+### RoleData
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| Name | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="proto-UpdateAccountRequest"></a>
+
+### UpdateAccountRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| DisplayName | [string](#string) |  |  |
+| State | [int32](#int32) |  | 0: no change, 1: active, 2: inactive |
+
+
+
+
+
+
+<a name="proto-UpdateRoleRequest"></a>
+
+### UpdateRoleRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| Name | [string](#string) |  |  |
+| Page | [Page](#proto-Page) |  |  |
+
+
 
 
 
@@ -82,15 +464,25 @@
  
 
 
-<a name="proto-AccountService"></a>
+<a name="proto-Main"></a>
 
-### AccountService
+### Main
 
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| Login | [LoginRequest](#proto-LoginRequest) | [LoginResponse](#proto-LoginResponse) |  |
+| Logout | [LogoutRequest](#proto-LogoutRequest) | [Empty](#proto-Empty) |  |
 | CreateAccount | [CreateAccountRequest](#proto-CreateAccountRequest) | [Empty](#proto-Empty) |  |
-| ListAccount | [ListAccountRequest](#proto-ListAccountRequest) | [Empty](#proto-Empty) | rpc UpdateAccount(UpdateAccountRequest) returns (google.protobuf.Empty); rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty); rpc InactiveAccount(InactiveAccountRequest) returns (google.protobuf.Empty); rpc ActiveAccount(ActiveAccountRequest) returns (google.protobuf.Empty); |
+| ListAccount | [ListAccountRequest](#proto-ListAccountRequest) | [ListAccountResponse](#proto-ListAccountResponse) |  |
+| UpdateAccount | [UpdateAccountRequest](#proto-UpdateAccountRequest) | [Empty](#proto-Empty) |  |
+| DeleteAccount | [DeleteAccountRequest](#proto-DeleteAccountRequest) | [Empty](#proto-Empty) |  |
+| CreateRole | [CreateRoleRequest](#proto-CreateRoleRequest) | [Empty](#proto-Empty) |  |
+| ListRole | [ListRoleRequest](#proto-ListRoleRequest) | [ListRoleResponse](#proto-ListRoleResponse) |  |
+| GetRoleAuth | [GetRoleAuthRequest](#proto-GetRoleAuthRequest) | [GetRoleAuthResponse](#proto-GetRoleAuthResponse) |  |
+| UpdateRole | [UpdateRoleRequest](#proto-UpdateRoleRequest) | [Empty](#proto-Empty) |  |
+| DeleteRole | [DeleteRoleRequest](#proto-DeleteRoleRequest) | [Empty](#proto-Empty) |  |
+| BindRole | [BindRoleRequest](#proto-BindRoleRequest) | [Empty](#proto-Empty) |  |
 
  
 

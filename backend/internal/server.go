@@ -6,6 +6,7 @@ import (
 	"admin/api"
 	"admin/internal/boot"
 	"admin/internal/controller"
+	"admin/internal/service/Session"
 	"admin/internal/service/orm"
 
 	errors "github.com/rotisserie/eris"
@@ -36,7 +37,8 @@ func RunServer(cmd *cobra.Command, args []string) {
 	}
 
 	s := grpc.NewServer()
-	api.RegisterAdminServer(s, &controller.Server{})
+	sessionSvc := Session.NewSessionSvc()
+	api.RegisterMainServer(s, controller.NewServer(sessionSvc))
 	log.Info().Msgf("Listen to %s", port)
 	if err := s.Serve(lis); err != nil {
 		log.Fatal().Msgf("Failed to serve: %v", err)

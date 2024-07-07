@@ -11,7 +11,7 @@ func Hash(password string, salt []byte) (hashedPassword []byte) {
 	return argon2.IDKey([]byte(password), salt, 1, 64*1024, 4, 32)
 }
 
-func Compare(password string, salt []byte, hashedPassword []byte) bool {
+func Equal(password string, salt []byte, hashedPassword []byte) bool {
 	return bytes.Equal(Hash(password, salt), []byte(hashedPassword))
 }
 

@@ -3,7 +3,7 @@ package orm
 import (
 	"fmt"
 
-	"admin/internal/service/orm/model"
+	"admin/internal/model"
 
 	errors "github.com/rotisserie/eris"
 	"github.com/rs/zerolog/log"
@@ -11,6 +11,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 )
 
 var db *gorm.DB
@@ -20,6 +21,12 @@ func GetDb() *gorm.DB {
 }
 
 func InitDb(database string) (err error) {
+	config := gorm.Config{
+		Logger: nil,
+		NamingStrategy: schema.NamingStrategy{
+			NoLowerCase: true,
+		},
+	}
 	switch database {
 	case "postgres":
 		log.Info().Msg("Connecting to Postgres")
@@ -34,15 +41,13 @@ func InitDb(database string) (err error) {
 			viper.GetString("postgres.timezone"),
 		)
 		if db, err = gorm.Open(
-			postgres.Open(connStr), &gorm.Config{
-				Logger: nil,
-			},
+			postgres.Open(connStr), &config,
 		); err != nil {
 			return
 		}
 	case "sqlite":
 		log.Info().Msg("Connecting to Sqlite")
-		if db, err = gorm.Open(sqlite.Open("sqlite.db"), &gorm.Config{}); err != nil {
+		if db, err = gorm.Open(sqlite.Open("sqlite.db"), &config); err != nil {
 			return
 		}
 	default:
