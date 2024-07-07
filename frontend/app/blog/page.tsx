@@ -1,22 +1,13 @@
 import React from 'react';
-
-const Header = () => {
-  return (
-    <header className="bg-blue-500 text-white p-4">
-      <h1 className="text-3xl">My Blog</h1>
-    </header>
-  );
-};
+import Sidebar from './components/sidebar';
+import Header from './components/header';
 
 
 
-const Footer = () => {
-  return (
-    <footer className="bg-gray-800 text-white p-4 mt-8">
-      <p className="text-center">&copy; 2024 My Blog. All rights reserved.</p>
-    </footer>
-  );
-};
+const articles = [
+  { slug: 'first-post', title: 'First Blog Post', content: 'This is the content of the first blog post.', author: 'John Doe', date: 'July 7, 2024' },
+  { slug: 'second-post', title: 'Second Blog Post', content: 'This is the content of the second blog post.', author: 'Jane Smith', date: 'July 8, 2024' },
+];
 
 interface BlogPostProps {
   title: string;
@@ -55,18 +46,20 @@ const BlogPage = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow container mx-auto p-4">
-        {posts.map((post, index) => (
-          <BlogPost 
-            key={index}
-            title={post.title}
-            content={post.content}
-            author={post.author}
-            date={post.date}
-          />
-        ))}
-      </main>
-      <Footer />
+      <div className="flex flex-grow">
+        <Sidebar articles={articles} />
+        <main className="flex-grow container mx-auto p-4">
+          {posts.map((post, index) => (
+            <BlogPost 
+              key={index}
+              title={post.title}
+              content={post.content}
+              author={post.author}
+              date={post.date}
+            />
+          ))}
+        </main>
+      </div>
     </div>
   );
 };
