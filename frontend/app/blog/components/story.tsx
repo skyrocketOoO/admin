@@ -2,7 +2,7 @@
 import React from 'react';
 import Markdown  from 'react-markdown';
 import remarkGfm from 'remark-gfm'
-import 'github-markdown-css';
+import './white.css';
 
 interface Story {
   title: string;

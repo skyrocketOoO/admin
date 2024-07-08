@@ -29,7 +29,7 @@ const BlogPage = () => {
       <Header />
       <div className="flex flex-grow">
         <Sidebar articles={articles} onSelectPost={handleSelectPost} />
-        <main className="flex-grow container mx-auto p-4">
+        <main className="flex-grow container mx-auto p-4 bg-gray-700">
           {selectedPost ? (
             <BlogStory
               title={selectedPost.title}
