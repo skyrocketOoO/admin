@@ -10,26 +10,16 @@ const articles = [
 ];
 
 const BlogPage = () => {
-  const posts = [
-    {
-      title: 'First Blog Post',
-      content: 'This is the content of the first blog post.',
-      author: 'John Doe',
-      date: 'July 7, 2024',
-    },
-    {
-      title: 'Second Blog Post',
-      content: 'This is the content of the second blog post.',
-      author: 'Jane Smith',
-      date: 'July 8, 2024',
-    },
-  ];
-
   const [selectedPost, setSelectedPost] = useState(articles[0]);
 
   const handleSelectPost = (slug: string) => {
     const post = articles.find((article) => article.slug === slug);
     if (post) {
+      post.content = `
+        # Markdown Example
+        - List item 1
+        - List item 2
+      `;
       setSelectedPost(post);
     }
   };
