@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Sidebar from './components/sidebar';
 import Header from './components/header';
 import BlogStory from './components/story';
+import './scroll.css';
 
 const articles = [
   { slug: 'first-post', title: 'First Blog Post', content: 'This is the content of the first blog post.', author: 'John Doe', date: 'July 7, 2024' },
@@ -29,7 +30,7 @@ const BlogPage = () => {
       <Header />
       <div className="flex flex-grow">
         <Sidebar articles={articles} onSelectPost={handleSelectPost} />
-        <main className="flex-grow container mx-auto p-4 bg-gray-700">
+        <main className="flex-grow container mx-auto p-4 bg-gray-700 overflow-y-auto">
           {selectedPost ? (
             <BlogStory
               title={selectedPost.title}
