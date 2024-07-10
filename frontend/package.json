@@ -21,6 +21,7 @@
     "bcrypt": "^5.1.1",
     "buf": "^0.1.1",
     "clsx": "^2.1.1",
+    "fs": "0.0.1-security",
     "github-markdown-css": "^5.6.1",
     "google-protobuf": "^3.21.2",
     "grpc-web": "^1.5.0",

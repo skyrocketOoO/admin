@@ -1,26 +1,30 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+import React, { useState, useEffect } from 'react';
 import Sidebar from './components/sidebar';
 import Header from './components/header';
 import BlogStory from './components/story';
 import './scroll.css';
-
-const articles = [
-  { slug: 'first-post', title: 'First Blog Post', content: 'This is the content of the first blog post.', author: 'John Doe', date: 'July 7, 2024' },
-  { slug: 'second-post', title: 'Second Blog Post', content: 'This is the content of the second blog post.', author: 'Jane Smith', date: 'July 8, 2024' },
-];
+import { getMarkdownFiles, PostData } from './loadMarkdownFiles';
 
 const BlogPage = () => {
-  const [selectedPost, setSelectedPost] = useState(articles[0]);
+  const [articles, setArticles] = useState<PostData[]>([]);
+  const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
 
-  const handleSelectPost = (slug: string) => {
-    const post = articles.find((article) => article.slug === slug);
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const loadedArticles = await getMarkdownFiles();
+      setArticles(loadedArticles);
+      if (loadedArticles.length > 0) {
+        setSelectedPost(loadedArticles[0]);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
+  const handleSelectPost = (title: string) => {
+    const post = articles.find((article) => article.title === title);
     if (post) {
-      post.content = `
-        # Markdown Example
-        - List item 1
-        - List item 2
-      `;
       setSelectedPost(post);
     }
   };
@@ -35,8 +39,6 @@ const BlogPage = () => {
             <BlogStory
               title={selectedPost.title}
               content={selectedPost.content}
-              author={selectedPost.author}
-              date={selectedPost.date}
             />
           ) : (
             <p>No story selected.</p>
