@@ -12,68 +12,14 @@ interface Story {
 }
 
 const BlogStory: React.FC<Story> = ({ title, content }) => {
-  let markdown = `A paragraph with *emphasis* and **strong importance**.
-
-> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-* Lists
-* [ ] todo
-* [x] done
-
-A table:
-
-| a | b |
-| - | - |
-12332
-A paragraph with *emphasis* and **strong importance**.
-
-> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-* Lists
-* [ ] todo
-* [x] done
-
-A table:
-
-| a | b |
-| - | - |
-12332
-A paragraph with *emphasis* and **strong importance**.
-
-> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-* Lists
-* [ ] todo
-* [x] done
-
-A table:
-
-| a | b |
-| - | - |
-12332
-A paragraph with *emphasis* and **strong importance**.
-
-> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-* Lists
-* [ ] todo
-* [x] done
-
-A table:
-
-| a | b |
-| - | - |
-12332
-
-`;
 
   return (
-    <article className="markdown-body w-full h-full">
-      <p className="font-medium" style={{ fontSize: '4rem' }}>{title}</p>
+    <article className="markdown-body w-full h-full p-12">
+      <div className="font-medium text-5xl" >{title}</div>
+      <div className="p-2"></div>
       {/* <p className="text-gray-900 font-medium">{date}</p> */}
-      
       <Markdown remarkPlugins={[[remarkGfm]]}>
-        {markdown}
+        {content}
       </Markdown>
     </article>
   );
