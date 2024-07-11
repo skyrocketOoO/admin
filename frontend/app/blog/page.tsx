@@ -4,11 +4,11 @@ import Sidebar from './components/sidebar';
 import Header from './components/header';
 import BlogStory from './components/story';
 import './scroll.css';
-import { getMarkdownFiles, PostData } from './loadMarkdownFiles';
+import { getMarkdownFiles, Story } from './loadMarkdownFiles';
 
 const BlogPage = () => {
-  const [articles, setArticles] = useState<PostData[]>([]);
-  const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
+  const [stories, setArticles] = useState<Story[]>([]);
+  const [selectedPost, setSelectedPost] = useState<Story | null>(null);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -23,7 +23,7 @@ const BlogPage = () => {
   }, []);
 
   const handleSelectPost = (title: string) => {
-    const post = articles.find((article) => article.title === title);
+    const post = stories.find((story) => story.title === title);
     if (post) {
       setSelectedPost(post);
     }
@@ -33,12 +33,13 @@ const BlogPage = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
       <div className="flex flex-grow">
-        <Sidebar articles={articles} onSelectPost={handleSelectPost} />
+        <Sidebar stories={stories} onSelectPost={handleSelectPost} />
         {/* <div className="flex-grow  mx-0 bg-gray-700 "> */}
           {selectedPost ? (
             <BlogStory
               title={selectedPost.title}
               content={selectedPost.content}
+              date={selectedPost.date}
             />
           ) : (
             <p>No story selected.</p>

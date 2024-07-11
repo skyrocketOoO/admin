@@ -4,21 +4,31 @@ import path from 'path';
 
 const postsDirectory = path.join(process.cwd(), 'app/blog/stories');
 
-export interface PostData {
+export interface Story {
   title: string;
   content: string;
+  date: string;
+  type: string;
 }
 
-export async function getMarkdownFiles(): Promise<PostData[]> {
+export async function getMarkdownFiles(): Promise<Story[]> {
   const fileNames = await fs.readdir(postsDirectory);
-  const allPostsData: PostData[] = await Promise.all(
+  const allPostsData: Story[] = await Promise.all(
     fileNames.map(async (fileName) => {
       const fullPath = path.join(postsDirectory, fileName);
       const fileContents = await fs.readFile(fullPath, 'utf8');
+      
+      // Split the file contents by lines
+      const lines = fileContents.split('\n');
+      const date = lines[0] || '';
+      const type = lines[1] || '';
+      const content = lines.slice(2).join('\n');
 
       return {
         title: fileName.replace(/\.md$/, ''),
-        content: fileContents,
+        content: content,
+        date: date,
+        type: type,
       };
     })
   );

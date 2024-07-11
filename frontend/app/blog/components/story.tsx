@@ -8,16 +8,16 @@ interface Story {
   title: string;
   content: string;
   // author: string;
-  // date: string;
+  date: string;
 }
 
-const BlogStory: React.FC<Story> = ({ title, content }) => {
+const BlogStory: React.FC<Story> = ({ title, content, date }) => {
 
   return (
     <article className="markdown-body w-full h-full p-12">
       <div className="font-medium text-5xl" >{title}</div>
       <div className="p-2"></div>
-      {/* <p className="text-gray-900 font-medium">{date}</p> */}
+      <p className="text-gray-900 font-medium">{date}</p>
       <Markdown remarkPlugins={[[remarkGfm]]}>
         {content}
       </Markdown>
