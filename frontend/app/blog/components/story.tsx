@@ -3,16 +3,9 @@ import React from 'react';
 import Markdown  from 'react-markdown';
 import remarkGfm from 'remark-gfm'
 import './white.css';
-
-interface Story {
-  title: string;
-  content: string;
-  // author: string;
-  date: string;
-}
+import { Story } from '../loadMarkdownFiles';
 
 const BlogStory: React.FC<Story> = ({ title, content, date }) => {
-
   return (
     <article className="markdown-body w-full h-full p-12">
       <div className="font-medium text-5xl" >{title}</div>

@@ -129,7 +129,7 @@
   height: .25em;
   padding: 0;
   margin: 24px 0;
-  background-color: #d0d7de;
+  background-color: #d4d0de;
   border: 0;
 }
 
@@ -182,7 +182,7 @@
 }
 
 .markdown-body ::placeholder {
-  color: #636c76;
+  color: #766363;
   opacity: 1;
 }
 

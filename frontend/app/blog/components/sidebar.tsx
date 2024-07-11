@@ -10,12 +10,12 @@ const Sidebar: React.FC<SidebarProps> = ({ stories, onSelectPost }) => {
   const [selectedType, setSelectedType] = useState('All');
 
   // Get unique story types
-  const articleTypes = ['All', ...new Set(stories.map(story => story.type))];
+  const articleTypes = ['All', ...new Set(stories.map(story => story.topic))];
 
   // Filter stories by selected type
   const filteredstories = selectedType === 'All'
     ? stories
-    : stories.filter(story => story.type === selectedType);
+    : stories.filter(story => story.topic === selectedType);
 
   return (
     <aside className="w-80 bg-amber-50 p-4 min-h-full border">

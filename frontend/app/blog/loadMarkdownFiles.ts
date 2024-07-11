@@ -8,7 +8,7 @@ export interface Story {
   title: string;
   content: string;
   date: string;
-  type: string;
+  topic: string;
 }
 
 export async function getMarkdownFiles(): Promise<Story[]> {
@@ -21,14 +21,14 @@ export async function getMarkdownFiles(): Promise<Story[]> {
       // Split the file contents by lines
       const lines = fileContents.split('\n');
       const date = lines[0] || '';
-      const type = lines[1] || '';
+      const topic = lines[1] || '';
       const content = lines.slice(2).join('\n');
 
       return {
         title: fileName.replace(/\.md$/, ''),
         content: content,
         date: date,
-        type: type,
+        topic: topic,
       };
     })
   );
