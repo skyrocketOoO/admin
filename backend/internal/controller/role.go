@@ -137,3 +137,34 @@ func (s *Server) BindRole(
 
 	return
 }
+
+func (s *Server) BindRole(
+	ctx context.Context,
+	req *api.BindRoleRequest,
+) (resp *api.Empty, err error) {
+	db := orm.GetDb()
+
+	if err = db.Transaction(func(tx *gorm.DB) error {
+		role := model.Role{}
+		if err = tx.Take(&role, "ID = ?", req.GetRoleID()).Error; err != nil {
+			return Error.Internal.WithTrace(tx.Error)
+		}
+
+		tx = tx.Model(&model.Account{}).
+			Where("ID = ?", req.GetAccountID()).
+			Update("RoleID", req.GetRoleID())
+		if tx.Error != nil {
+			return Error.Internal.WithTrace(tx.Error)
+		}
+		if tx.RowsAffected == 0 {
+			return Error.NotFound.WithTrace(
+				fmt.Errorf("record not found: AccountID: %s", req.GetAccountID()))
+		}
+
+		return nil
+	}); err != nil {
+		return nil, Error.Internal.WithTrace(err)
+	}
+
+	return
+}

@@ -32,7 +32,6 @@ func (s *Server) Login(
 		return nil, Error.Unauthenticated.WithTrace(fmt.Errorf("invalid password"))
 	}
 
-	fmt.Println("success")
 	return &api.LoginResponse{
 		SessionID: uuid.UUID(s.SessionSvc.GetSession(account.ID)).String(),
 	}, nil

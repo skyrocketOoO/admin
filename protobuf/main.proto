@@ -19,6 +19,7 @@ service Main{
   rpc UpdateRole(UpdateRoleRequest) returns (Empty);
   rpc DeleteRole(DeleteRoleRequest) returns (Empty);
   rpc BindRole(BindRoleRequest) returns (Empty);
+  rpc UnBindRole(UnBindRoleRequest) returns (Empty);
 }
 
 message CreateAccountRequest{
@@ -98,6 +99,11 @@ message DeleteRoleRequest{
 }
 
 message BindRoleRequest{
+  string AccountID = 1;
+  string RoleID = 2;
+}
+
+message UnBindRoleRequest{
   string AccountID = 1;
   string RoleID = 2;
 }

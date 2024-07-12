@@ -5,7 +5,6 @@ func InitAll() (err error) {
 	if err = InitConfig(); err != nil {
 		return
 	}
-	InitSwagger()
 
 	return nil
 }
