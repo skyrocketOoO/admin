@@ -105,7 +105,6 @@ message BindRoleRequest{
 
 message UnBindRoleRequest{
   string AccountID = 1;
-  string RoleID = 2;
 }
 
 message LoginRequest{

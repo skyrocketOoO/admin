@@ -48,6 +48,7 @@ func (s *Server) ListRole(
 
 	resp.List = make([]*api.RoleData, len(Roles))
 	for i, Role := range Roles {
+		resp.List[i] = Struct.DeepNew[api.RoleData]()
 		if err = Struct.Scan(&Role, resp.List[i]); err != nil {
 			return nil, Error.Internal.WithTrace(err)
 		}
@@ -138,21 +139,16 @@ func (s *Server) BindRole(
 	return
 }
 
-func (s *Server) BindRole(
+func (s *Server) UnBindRole(
 	ctx context.Context,
-	req *api.BindRoleRequest,
+	req *api.UnBindRoleRequest,
 ) (resp *api.Empty, err error) {
 	db := orm.GetDb()
 
 	if err = db.Transaction(func(tx *gorm.DB) error {
-		role := model.Role{}
-		if err = tx.Take(&role, "ID = ?", req.GetRoleID()).Error; err != nil {
-			return Error.Internal.WithTrace(tx.Error)
-		}
-
 		tx = tx.Model(&model.Account{}).
 			Where("ID = ?", req.GetAccountID()).
-			Update("RoleID", req.GetRoleID())
+			Update("RoleID", 0)
 		if tx.Error != nil {
 			return Error.Internal.WithTrace(tx.Error)
 		}

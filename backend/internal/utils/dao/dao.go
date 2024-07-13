@@ -39,6 +39,8 @@ func ListWithPager(db *gorm.DB, option ListOption, src any) (total int64, err er
 			expr += " desc"
 		}
 		db = db.Order(expr)
+	} else {
+		db = db.Order("CreatedAt DESC")
 	}
 
 	if option.Query != nil {

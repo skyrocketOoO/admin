@@ -29,6 +29,7 @@
     - [Page](#proto-Page)
     - [PageOperation](#proto-PageOperation)
     - [RoleData](#proto-RoleData)
+    - [UnBindRoleRequest](#proto-UnBindRoleRequest)
     - [UpdateAccountRequest](#proto-UpdateAccountRequest)
     - [UpdateRoleRequest](#proto-UpdateRoleRequest)
   
@@ -424,6 +425,21 @@
 
 
 
+<a name="proto-UnBindRoleRequest"></a>
+
+### UnBindRoleRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| AccountID | [string](#string) |  |  |
+
+
+
+
+
+
 <a name="proto-UpdateAccountRequest"></a>
 
 ### UpdateAccountRequest
@@ -483,6 +499,7 @@
 | UpdateRole | [UpdateRoleRequest](#proto-UpdateRoleRequest) | [Empty](#proto-Empty) |  |
 | DeleteRole | [DeleteRoleRequest](#proto-DeleteRoleRequest) | [Empty](#proto-Empty) |  |
 | BindRole | [BindRoleRequest](#proto-BindRoleRequest) | [Empty](#proto-Empty) |  |
+| UnBindRole | [UnBindRoleRequest](#proto-UnBindRoleRequest) | [Empty](#proto-Empty) |  |
 
  
 

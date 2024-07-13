@@ -31,6 +31,7 @@ const (
 	Main_UpdateRole_FullMethodName    = "/proto.Main/UpdateRole"
 	Main_DeleteRole_FullMethodName    = "/proto.Main/DeleteRole"
 	Main_BindRole_FullMethodName      = "/proto.Main/BindRole"
+	Main_UnBindRole_FullMethodName    = "/proto.Main/UnBindRole"
 )
 
 // MainClient is the client API for Main service.
@@ -49,6 +50,7 @@ type MainClient interface {
 	UpdateRole(ctx context.Context, in *UpdateRoleRequest, opts ...grpc.CallOption) (*Empty, error)
 	DeleteRole(ctx context.Context, in *DeleteRoleRequest, opts ...grpc.CallOption) (*Empty, error)
 	BindRole(ctx context.Context, in *BindRoleRequest, opts ...grpc.CallOption) (*Empty, error)
+	UnBindRole(ctx context.Context, in *UnBindRoleRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type mainClient struct {
@@ -179,6 +181,16 @@ func (c *mainClient) BindRole(ctx context.Context, in *BindRoleRequest, opts ...
 	return out, nil
 }
 
+func (c *mainClient) UnBindRole(ctx context.Context, in *UnBindRoleRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, Main_UnBindRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MainServer is the server API for Main service.
 // All implementations must embed UnimplementedMainServer
 // for forward compatibility
@@ -195,6 +207,7 @@ type MainServer interface {
 	UpdateRole(context.Context, *UpdateRoleRequest) (*Empty, error)
 	DeleteRole(context.Context, *DeleteRoleRequest) (*Empty, error)
 	BindRole(context.Context, *BindRoleRequest) (*Empty, error)
+	UnBindRole(context.Context, *UnBindRoleRequest) (*Empty, error)
 	mustEmbedUnimplementedMainServer()
 }
 
@@ -237,6 +250,9 @@ func (UnimplementedMainServer) DeleteRole(context.Context, *DeleteRoleRequest) (
 }
 func (UnimplementedMainServer) BindRole(context.Context, *BindRoleRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BindRole not implemented")
+}
+func (UnimplementedMainServer) UnBindRole(context.Context, *UnBindRoleRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnBindRole not implemented")
 }
 func (UnimplementedMainServer) mustEmbedUnimplementedMainServer() {}
 
@@ -467,6 +483,24 @@ func _Main_BindRole_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Main_UnBindRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnBindRoleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MainServer).UnBindRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Main_UnBindRole_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MainServer).UnBindRole(ctx, req.(*UnBindRoleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Main_ServiceDesc is the grpc.ServiceDesc for Main service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -521,6 +555,10 @@ var Main_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BindRole",
 			Handler:    _Main_BindRole_Handler,
+		},
+		{
+			MethodName: "UnBindRole",
+			Handler:    _Main_UnBindRole_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

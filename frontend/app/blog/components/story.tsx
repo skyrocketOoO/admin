@@ -7,14 +7,15 @@ import { Story } from '../loadMarkdownFiles';
 
 const BlogStory: React.FC<Story> = ({ title, content, date }) => {
   return (
-    <article className="markdown-body w-full h-full p-12">
-      <div className="font-medium text-5xl" >{title}</div>
-      <div className="p-2"></div>
-      <p className="text-gray-900 font-medium">{date}</p>
-      <Markdown remarkPlugins={[[remarkGfm]]}>
-        {content}
-      </Markdown>
-    </article>
+    <div className="w-full h-full pl-4 pt-2 justify-center ">
+      <div className="font-bold text-7xl flex text-indigo-900 pb-4" >{title}</div>
+      <p className="text-gray-900 font-medium flex pt-2 pb-2">{date}</p>
+      <div className='markdown-body pt-4 '>
+        <Markdown className="w-full" remarkPlugins={[[remarkGfm]]}>
+          {content}
+        </Markdown>
+      </div>
+    </div>
   );
 };
 

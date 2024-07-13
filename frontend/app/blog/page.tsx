@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './components/sidebar';
 import Header from './components/header';
 import BlogStory from './components/story';
+import RightSidebar from './components/rightSidebar';
 import './scroll.css';
 import { getMarkdownFiles, Story } from './loadMarkdownFiles';
+
 
 const mainpage: Story = {
   title: 'Welcome to my playground!!',
@@ -14,7 +16,7 @@ const mainpage: Story = {
   `
   This is a place where I write some stories about technology, personal... or lifestyle
   
-   This is also a place I'll be experimenting with new technologies and learning about the world around me.
+  This is also a place I'll be experimenting with new technologies and learning about the world around me.
   `
 }
 
@@ -26,9 +28,6 @@ const BlogPage = () => {
     const fetchArticles = async () => {
       const loadedArticles = await getMarkdownFiles();
       setArticles(loadedArticles);
-      // if (loadedArticles.length > 0) {
-      //   setSelectedPost(loadedArticles[0]);
-      // }
     };
 
     fetchArticles();
@@ -41,11 +40,16 @@ const BlogPage = () => {
     }
   };
 
+  const handleBlogLinkClick = () => {
+    setSelectedPost(null); // Reset selected post when clicking on Blog link
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <Header onBlogLinkClick={handleBlogLinkClick}/>
       <div className="flex flex-grow">
         <Sidebar stories={stories} onSelectPost={handleSelectPost} />
+        <div className="flex-grow p-4">
           {selectedPost ? (
             <BlogStory
               title={selectedPost.title}
@@ -55,12 +59,14 @@ const BlogPage = () => {
             />
           ) : (
             <BlogStory
-            title={mainpage.title}
-            content={mainpage.content}
-            date={mainpage.date}
-            topic={mainpage.topic}
-          />
+              title={mainpage.title}
+              content={mainpage.content}
+              date={mainpage.date}
+              topic={mainpage.topic}
+            />
           )}
+        </div>
+        <RightSidebar />
       </div>
     </div>
   );

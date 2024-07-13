@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Story } from '../loadMarkdownFiles';
+import './sidebar.css';
 
 interface SidebarProps {
   stories: Story[];
@@ -8,45 +9,97 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ stories, onSelectPost }) => {
   const [selectedType, setSelectedType] = useState('All');
+  const [recommendedStory, setRecommendedStory] = useState<Story | null>(null);
 
   // Get unique story types
   const articleTypes = ['All', ...new Set(stories.map(story => story.topic))];
 
   // Filter stories by selected type
-  const filteredstories = selectedType === 'All'
+  const filteredStories = selectedType === 'All'
     ? stories
     : stories.filter(story => story.topic === selectedType);
 
+  // Helper function to truncate content
+  const truncateContent = (content: string, maxLength: number) => {
+    if (content.length <= maxLength) {
+      return content;
+    }
+    return content.substring(0, maxLength) + '...';
+  };
+
+  // Function to select a random story for recommendation
+  const getRandomStory = () => {
+    const randomIndex = Math.floor(Math.random() * stories.length);
+    return stories[randomIndex];
+  };
+
+  // Set a random recommended story on component mount
+  useEffect(() => {
+    setRecommendedStory(getRandomStory());
+  }, [stories]);
+
   return (
-    <aside className="w-80 bg-amber-50 p-4 min-h-full border">
-      <h2 className="mb-8 lg:mb-3 font-semibold text-slate-900 text-xl">Stories</h2>
-      
-      <label htmlFor="typeFilter" className="block mb-4 text-gray-700">
+    <aside className="w-1/6 bg-violet-50 min-h-full border-t-0 border p-4 flex flex-col relative">
+      <label htmlFor="typeFilter" className="block text-gray-700 text-sm p-1">
         Topic:
       </label>
       <select
         id="typeFilter"
         value={selectedType}
         onChange={(e) => setSelectedType(e.target.value)}
-        className="mb-6 p-2 border rounded w-full"
+        className="mb-10 p-1 h-10 border-2 rounded w-full bg-gray-200 custom-select items-center text-base"
       >
         {articleTypes.map(type => (
           <option key={type} value={type}>{type}</option>
         ))}
       </select>
 
-      <ul className='leading-6'>
-        {filteredstories.map((story) => (
-          <li key={story.title} className="text-lg block border-l pl-4 -ml-px border-transparent hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300">
-            <button
-              className="text-gray-800 hover:underline"
-              onClick={() => onSelectPost(story.title)}
-            >
-              {story.title}
-            </button>
-          </li>
+      <ul className='leading-0 flex-grow'>
+        {filteredStories.map((story) => (
+          <button key={story.title} onClick={() => onSelectPost(story.title)} className="p-2 text-lg block border-l pl-4 -ml-px border-transparent hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300">
+            <div className='flex items-center p-1 font-bold'>
+              <div className="w-2.5 h-2.5 bg-violet-400 rounded-full mr-2"></div>
+              <div>
+                <button
+                  className="text-slate-900 w-2.5 h-2.5 hover:underline"
+                >
+                  {story.title}
+                </button>
+              </div>
+            </div>
+            <div className='flex items-center p-1'>
+              <div className="w-2.5 h-2.5 bg-violet-50 rounded-full mr-2"></div>
+              <p className="text-sm text-gray-900">
+                {truncateContent(story.content, 60)} {/* Adjust the maxLength as needed */}
+              </p>
+            </div>
+          </button>
         ))}
       </ul>
+
+      {recommendedStory && (
+        <div className="mt-auto p-4 absolute bottom-0 left-0 w-full">
+          <h3 className="font-semibold text-slate-900 text-base">maybe you will interest in ...</h3>
+          <button onClick={() => onSelectPost(recommendedStory.title)} className="mt-2 text-lg block border-l pl-4 -ml-px border-transparent hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300">
+            <div className='flex items-center p-1 font-bold'>
+              <div className="w-2.5 h-2.5 bg-violet-400 rounded-full mr-2"></div>
+              <div>
+                <button
+                  className="text-slate-900 w-2.5 h-2.5 hover:underline"
+                >
+                  {recommendedStory.title}
+                </button>
+              </div>
+            </div>
+            <div className='flex items-center p-1'>
+              <div className="w-2.5 h-2.5 bg-violet-50 rounded-full mr-2"></div>
+              <p className="text-sm text-gray-900">
+                {truncateContent(recommendedStory.content, 60)} {/* Adjust the maxLength as needed */}
+              </p>
+            </div>
+          </button>
+        </div>
+      )}
     </aside>
   );
 };

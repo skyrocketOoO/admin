@@ -113,6 +113,10 @@ export interface BindRoleRequest {
   RoleID: string;
 }
 
+export interface UnBindRoleRequest {
+  AccountID: string;
+}
+
 export interface LoginRequest {
   UserName: string;
   Password: string;
@@ -1429,6 +1433,63 @@ export const BindRoleRequest = {
   },
 };
 
+function createBaseUnBindRoleRequest(): UnBindRoleRequest {
+  return { AccountID: "" };
+}
+
+export const UnBindRoleRequest = {
+  encode(message: UnBindRoleRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.AccountID !== "") {
+      writer.uint32(10).string(message.AccountID);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UnBindRoleRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUnBindRoleRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.AccountID = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UnBindRoleRequest {
+    return { AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "" };
+  },
+
+  toJSON(message: UnBindRoleRequest): unknown {
+    const obj: any = {};
+    if (message.AccountID !== "") {
+      obj.AccountID = message.AccountID;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UnBindRoleRequest>, I>>(base?: I): UnBindRoleRequest {
+    return UnBindRoleRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<UnBindRoleRequest>, I>>(object: I): UnBindRoleRequest {
+    const message = createBaseUnBindRoleRequest();
+    message.AccountID = object.AccountID ?? "";
+    return message;
+  },
+};
+
 function createBaseLoginRequest(): LoginRequest {
   return { UserName: "", Password: "" };
 }
@@ -1727,6 +1788,15 @@ export const MainService = {
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
+  unBindRole: {
+    path: "/proto.Main/UnBindRole",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: UnBindRoleRequest) => Buffer.from(UnBindRoleRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => UnBindRoleRequest.decode(value),
+    responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
+  },
 } as const;
 
 export interface MainServer extends UntypedServiceImplementation {
@@ -1742,6 +1812,7 @@ export interface MainServer extends UntypedServiceImplementation {
   updateRole: handleUnaryCall<UpdateRoleRequest, Empty>;
   deleteRole: handleUnaryCall<DeleteRoleRequest, Empty>;
   bindRole: handleUnaryCall<BindRoleRequest, Empty>;
+  unBindRole: handleUnaryCall<UnBindRoleRequest, Empty>;
 }
 
 export interface MainClient extends Client {
@@ -1915,6 +1986,21 @@ export interface MainClient extends Client {
   ): ClientUnaryCall;
   bindRole(
     request: BindRoleRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  unBindRole(
+    request: UnBindRoleRequest,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  unBindRole(
+    request: UnBindRoleRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  unBindRole(
+    request: UnBindRoleRequest,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
