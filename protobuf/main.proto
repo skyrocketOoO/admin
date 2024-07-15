@@ -12,6 +12,8 @@ service Main{
   rpc ListAccount(ListAccountRequest) returns (ListAccountResponse);
   rpc UpdateAccount(UpdateAccountRequest) returns (Empty);
   rpc DeleteAccount(DeleteAccountRequest) returns (Empty);
+  rpc DeactiveAccount(DeleteAccountRequest) returns (Empty);
+  rpc ActiveAccount(DeleteAccountRequest) returns (Empty);
 
   rpc CreateRole(CreateRoleRequest) returns (Empty);
   rpc ListRole(ListRoleRequest) returns (ListRoleResponse);
