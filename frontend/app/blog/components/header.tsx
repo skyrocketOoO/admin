@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import head from '@/public/head.png';
 import { useEffect, useState } from 'react';
+import { loadVisitCount } from '@/utils/visit';
 
 interface HeaderProps {
   onBlogLinkClick: () => void; // Callback function to handle blog link click
@@ -11,7 +12,15 @@ const Header: React.FC<HeaderProps> = ({ onBlogLinkClick }) => {
   const [visitCount, setVisitCount] = useState(0);
 
   useEffect(() => {
-    setVisitCount(visitCount+1);
+    const fetchVisitCount = async () => {
+      try {
+        const count = await loadVisitCount();
+        setVisitCount(count);
+      } catch (error) {
+        console.error('Error loading visit count:', error);
+      }
+    }
+    fetchVisitCount();
   }, []);
 
   return (

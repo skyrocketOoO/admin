@@ -1,7 +1,14 @@
 'use client';
 import Header from './blog/components/header';
+import { useEffect, useState } from 'react';
+import { AddVisitCount } from '@/utils/visit';
 
 export default function Home() {
+  useEffect(() => {
+    AddVisitCount();
+  }, []);
+
+
   const handleBlogLinkClick = () => {
   };
   return (
