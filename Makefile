@@ -14,3 +14,6 @@ backup:
 
 gen-rest-doc:
 	swag init -g internal/delivery/rest/*.go -o ./docs
+
+find-process-listen:
+  sudo ss -lptn 'sport = :80'

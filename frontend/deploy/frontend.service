@@ -1,0 +1,11 @@
+[Unit]
+Description=My Application
+
+[Service]
+ExecStart=pnpm start -H 0.0.0.0 -p 3000
+WorkingDirectory=/home/ubuntu/frontend
+Restart=always
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target

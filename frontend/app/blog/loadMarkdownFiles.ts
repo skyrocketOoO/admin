@@ -25,7 +25,7 @@ export async function getMarkdownFiles(): Promise<Story[]> {
       const content = lines.slice(2).join('\n');
 
       return {
-        title: fileName.replace(/\.md$/, ''),
+        title: fileName.replace(/\.md$/, '').replace('_', ' '),
         content: content,
         date: date,
         topic: topic,
