@@ -2,7 +2,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-const filePath = path.join(process.cwd(), 'data', 'visits.json');
+const filePath = path.join(process.cwd(), 'public', 'visits.json');
 
 export async function AddVisitCount() {
   try {
