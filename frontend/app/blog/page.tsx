@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/sidebar';
-import Header from './components/header';
 import BlogStory from './components/story';
 import RightSidebar from './components/rightSidebar';
 import './scroll.css';
@@ -46,7 +45,6 @@ const BlogPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header onBlogLinkClick={handleBlogLinkClick}/>
       <div className="flex flex-grow">
         <Sidebar stories={stories} onSelectPost={handleSelectPost} />
         <div className="flex-grow p-4">

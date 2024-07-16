@@ -1,14 +1,13 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import head from '@/public/head.png';
 import { useEffect, useState } from 'react';
 import { loadVisitCount } from '@/utils/visit';
 
-interface HeaderProps {
-  onBlogLinkClick: () => void; // Callback function to handle blog link click
-}
+interface HeaderProps {}
 
-const Header: React.FC<HeaderProps> = ({ onBlogLinkClick }) => {
+const Header: React.FC<HeaderProps> = () => {
   const [visitCount, setVisitCount] = useState(0);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ onBlogLinkClick }) => {
       <div className='w-1/8'></div>
       <Link href="/" className="w-32 h-full font-mono  flex items-center hover:border-b-4 justify-center hover:border-black hover:text-gray-800">Home</Link>
       <div className='p-2'></div>
-      <Link href="/blog" onClick={onBlogLinkClick} className="w-32 h-full  font-mono flex items-center justify-center hover:border-b-4 hover:border-black hover:text-gray-800">Blog</Link>
+      <Link href="/blog" className="w-32 h-full  font-mono flex items-center justify-center hover:border-b-4 hover:border-black hover:text-gray-800">Blog</Link>
       <div className='p-2'></div>
       <Link href="/admin" className="w-32 h-full font-mono  flex items-center hover:border-b-4 justify-center hover:border-black hover:text-gray-800">Admin</Link>
       <div className="flex items-center ml-auto">
