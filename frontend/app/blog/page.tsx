@@ -38,10 +38,6 @@ const BlogPage = () => {
     }
   };
 
-  const handleBlogLinkClick = () => {
-    setSelectedPost(null); // Reset selected post when clicking on Blog link
-  };
-
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-grow">
