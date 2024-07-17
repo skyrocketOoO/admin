@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = () => {
   }, []);
 
   return (
-    <header className="bg-violet-50 font-semibold text-lg border text-gray-600 pl-6 pr-2 h-12 flex items-center">
+    <header className="bg-violet-50 w-full font-semibold text-lg border text-gray-600 pl-6 pr-2 h-12 flex items-center">
       <div className='w-1/8'></div>
       <Link href="/" className="w-32 h-full font-mono  flex items-center hover:border-b-4 justify-center hover:border-black hover:text-gray-800">Home</Link>
       <div className='p-2'></div>

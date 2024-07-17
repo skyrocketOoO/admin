@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/sidebar';
 import BlogStory from './components/story';
-import RightSidebar from './components/rightSidebar';
 import './scroll.css';
 import { getMarkdownFiles, Story } from './loadMarkdownFiles';
 
@@ -64,7 +63,6 @@ const BlogPage = () => {
             />
           )}
         </div>
-        <RightSidebar />
       </div>
     </div>
   );
