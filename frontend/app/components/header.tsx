@@ -31,6 +31,9 @@ const Header: React.FC<HeaderProps> = () => {
       <div className='p-2'></div>
       <Link href="/admin" className="w-32 h-full font-mono  flex items-center hover:border-b-4 justify-center hover:border-black hover:text-gray-800">Admin</Link>
       <div className="flex items-center ml-auto">
+        <div className='mr-4 text-sm text-purple-800'>
+          Start from 20240712
+        </div>
         <span className="text-gray-700 h-8 text-sm p-4 rounded-md bg-cyan-100 flex items-center justify-center mr-4">{visitCount}</span>
         <div className="w-9 h-9 relative mr-2">
           <Image src={head} alt="Head" fill className="object-contain" />
