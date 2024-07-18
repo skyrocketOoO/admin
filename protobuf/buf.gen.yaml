@@ -22,7 +22,7 @@ plugins:
     opt: paths=source_relative
 
   - remote: buf.build/community/stephenh-ts-proto
-    out: ../frontend/app/proto
+    out: ../frontend/proto
     opt:
       - outputServices=grpc-js
       - env=node
