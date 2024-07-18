@@ -2,7 +2,7 @@
 import React from 'react';
 import Markdown  from 'react-markdown';
 import remarkGfm from 'remark-gfm'
-import './white.css';
+import './story.css';
 import { Story } from '../loadMarkdownFiles';
 
 const BlogStory: React.FC<Story> = ({ title, content, date }) => {
