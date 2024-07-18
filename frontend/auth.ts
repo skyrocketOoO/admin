@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider  from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
 import { z } from 'zod';
-import { MainClient, LoginRequest, LoginResponse } from '@/app/proto/main';
+import { MainClient, LoginRequest, LoginResponse } from '@/proto/main';
 import * as grpc from '@grpc/grpc-js';
  
 type User = {
