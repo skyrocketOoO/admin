@@ -1,4 +1,4 @@
-import Logo from '@/app/ui/acme-logo';
+import Logo from './github-logo';
 import LoginForm from '@/app/login/login-form';
 
 export default function LoginPage() {

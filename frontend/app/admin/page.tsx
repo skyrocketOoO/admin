@@ -1,4 +1,4 @@
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/global/fonts';
 
 export default async function Page() {
   return (

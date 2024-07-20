@@ -1,4 +1,4 @@
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/global/fonts';
 
 export default function Logo() {
   return (

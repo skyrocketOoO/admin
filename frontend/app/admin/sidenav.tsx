@@ -1,9 +1,6 @@
-import Link from 'next/link';
 import NavLinks from '@/app/admin/nav-links';
-import AcmeLogo from '@/app/ui/acme-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
-// import { signOut } from '@/auth';
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/global/fonts';
 import { signOut } from '@/app/login/auth';
 
 export default function SideNav() {

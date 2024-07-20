@@ -1,5 +1,5 @@
-import '@/app/ui/global.css';
-import { inter } from '@/app/ui/fonts';
+import '@/global/global.css';
+import { inter } from '@/global/fonts';
 import { Metadata } from 'next';
 import Header from '@/app/components/header';
 import LinkBar from '@/app/components/LinkBar';
