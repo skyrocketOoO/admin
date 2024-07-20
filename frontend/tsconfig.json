@@ -34,7 +34,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "app/auth/.components/login-form.tsx"  ],
+, "app/auth/components/login-form.tsx", "app/auth/components/button.tsx", "app/auth/components/github-logo.tsx"  ],
   "exclude": [
     "node_modules"
   ]

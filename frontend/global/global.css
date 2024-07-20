@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;
@@ -23,14 +23,14 @@ body {
   margin: 0;
 }
 
-main {
-  padding-right: 3.5rem; /* Ensure space for the LinkBar */
-}
+/* main {
+  padding-right: 3.5rem; 
+} */
 
 .linkbar {
   position: fixed;
   right: 0;
   top: 1;
   height: 100%;
-  z-index: 1000; /*Ensure it stays on top of other content*/
-}
+  z-index: 1000; 
+} 

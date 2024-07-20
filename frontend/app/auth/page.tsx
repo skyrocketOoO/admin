@@ -1,5 +1,5 @@
-import Logo from './github-logo';
-import LoginForm from './.components/login-form';
+import Logo from './components/github-logo';
+import LoginForm from './components/login-form';
 
 export default function LoginPage() {
   return (
@@ -13,7 +13,7 @@ export default function LoginPage() {
             <Logo />
           </div>
         </div>
-        <LoginForm />
+          <LoginForm />
       </div>
     </main>
   );
