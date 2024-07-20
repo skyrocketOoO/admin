@@ -1,0 +1,11 @@
+[Unit]
+Description=My Application
+
+[Service]
+ExecStart=/home/ubuntu/backend/server service run
+WorkingDirectory=/home/ubuntu/backend
+Restart=always
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target

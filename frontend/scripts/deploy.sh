@@ -23,11 +23,16 @@ cp package.json frontend/
 tar -czvf frontend.tar.gz frontend
 rm -rf frontend
 
+ssh -i "~/.ssh/home.pem" $VM_USER@$VM_HOST << 'ENDSSH'
+sudo service frontend stop
+rm -rf frontend
+ENDSSH
+
 # Transfer the tarball to the VM
 scp -i "~/.ssh/home.pem" frontend.tar.gz $VM_USER@$VM_HOST:
 
 # Connect to the VM and set up the project
-ssh $VM_USER@$VM_HOST << 'ENDSSH'
+ssh -i "~/.ssh/home.pem" $VM_USER@$VM_HOST << 'ENDSSH'
 
 tar -xzvf frontend.tar.gz
 rm frontend.tar.gz
