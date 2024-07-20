@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import head from '@/public/head.png';
 import { useEffect, useState } from 'react';
-import { loadVisitCount } from '@/utils/visit';
+import { AddVisitCount, loadVisitCount } from '@/utils/visit';
 
 interface HeaderProps {}
 
@@ -13,6 +13,7 @@ const Header: React.FC<HeaderProps> = () => {
   useEffect(() => {
     const fetchVisitCount = async () => {
       try {
+        await AddVisitCount();
         const count = await loadVisitCount();
         setVisitCount(count);
       } catch (error) {

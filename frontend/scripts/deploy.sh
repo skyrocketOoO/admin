@@ -1,37 +1,39 @@
 #!/bin/bash
 
 # Variables
-REPO_SSH_URL="git@github.com:yourusername/your-repo.git"
 VM_USER="ubuntu"
-VM_HOST="your-vm-domain-or-ip"
-PROJECT_DIR_NAME="your-repo" # The directory name after cloning
+VM_HOST="ec2-3-106-200-208.ap-southeast-2.compute.amazonaws.com"
+PROJECT_DIR_NAME="fontend" # The directory name after cloning
+
 
 # Build the project locally
 pnpm install
 pnpm build
 
 # Create a tarball of the build and necessary files
-mkdir -p deploy
-cp -r .next deploy/
-cp -r public deploy/
-cp next.config.js deploy/
-cp .env deploy/
-cp pnpm-lock.yaml deploy/
-cp package.json deploy/
-tar -czvf deploy.tar.gz deploy
-rm -rf deploy
+mkdir -p frontend
+mkdir -p frontend/app/blog/stories
+cp app/blog/stories/*  frontend/app/blog/stories/
+cp -r .next frontend/
+cp -r public frontend/
+cp next.config.mjs frontend/
+cp .env frontend/
+cp pnpm-lock.yaml frontend/
+cp package.json frontend/
+tar -czvf frontend.tar.gz frontend
+rm -rf frontend
 
 # Transfer the tarball to the VM
-scp deploy.tar.gz $VM_USER@$VM_HOST:
+scp -i "~/.ssh/home.pem" frontend.tar.gz $VM_USER@$VM_HOST:
 
 # Connect to the VM and set up the project
 ssh $VM_USER@$VM_HOST << 'ENDSSH'
-cd $DEST_DIR
-tar -xzvf deploy.tar.gz
-rm deploy.tar.gz
+
+tar -xzvf frontend.tar.gz
+rm frontend.tar.gz
 
 # Install dependencies
-cd deploy
+cd frontend
 pnpm install --prod
 
 # Start the application (optional: configure to run as a service)
@@ -39,6 +41,6 @@ sudo service frontend restart
 ENDSSH
 
 # Clean up local tarball
-rm deploy.tar.gz
+rm frontend.tar.gz
 
-echo "Deployment complete!"
+echo "deployment complete!"
