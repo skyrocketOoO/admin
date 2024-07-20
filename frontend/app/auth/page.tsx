@@ -1,5 +1,5 @@
 import Logo from './github-logo';
-import LoginForm from '@/app/login/login-form';
+import LoginForm from './.components/login-form';
 
 export default function LoginPage() {
   return (

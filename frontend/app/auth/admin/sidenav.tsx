@@ -1,7 +1,7 @@
-import NavLinks from '@/app/admin/nav-links';
+import NavLinks from '@/app/auth/admin/nav-links';
 import { PowerIcon } from '@heroicons/react/24/outline';
 import { lusitana } from '@/global/fonts';
-import { signOut } from '@/app/login/auth';
+import { signOut } from '@/app/auth/auth';
 
 export default function SideNav() {
   return (

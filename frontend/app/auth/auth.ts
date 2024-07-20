@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider  from 'next-auth/providers/credentials';
-import { authConfig } from '@/app/login/auth.config';
+import { authConfig } from '@/app/auth/auth.config';
 import { z } from 'zod';
 import { MainClient, LoginRequest, LoginResponse } from '@/proto/main';
 import * as grpc from '@grpc/grpc-js';
@@ -65,6 +65,6 @@ export const { auth, signIn, signOut } = NextAuth({
     }),
   ],
   pages: {
-    signIn: '/login',  // Displays the login page
+    signIn: '/auth',  // Displays the login page
   }
 });

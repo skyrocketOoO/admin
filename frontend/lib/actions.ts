@@ -1,6 +1,6 @@
 'use server';
 import { z } from 'zod';
-import { signIn } from '@/app/login/auth';
+import { signIn } from '@/app/auth/auth';
 import { AuthError } from 'next-auth';
 
 // const FormSchema = z.object({
