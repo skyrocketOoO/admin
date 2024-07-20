@@ -1,4 +1,4 @@
-import SideNav from '@/app/auth/admin/sidenav';
+import SideNav from '@/app/auth/admin/components/sidenav';
 
 export const experimental_ppr = true;
  

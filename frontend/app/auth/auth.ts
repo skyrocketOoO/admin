@@ -1,10 +1,7 @@
-import NextAuth from 'next-auth';
-import CredentialsProvider  from 'next-auth/providers/credentials';
-import { authConfig } from '@/app/auth/auth.config';
 import { z } from 'zod';
 import { MainClient, LoginRequest, LoginResponse } from '@/proto/main';
 import * as grpc from '@grpc/grpc-js';
- 
+
 type User = {
   name: string;
   password: string;
@@ -38,33 +35,18 @@ async function getUser(username: string, password: string): Promise<User | undef
     throw new Error('Failed to fetch user.');
   }
 }
- 
-export const { auth, signIn, signOut } = NextAuth({
-  ...authConfig,
-  providers: [
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        username: { label: "Username", type: "text" },
-        password: {  label: "Password", type: "password" }
-      },
-      authorize: async (credentials) => {
-        const parsedCredentials = z
-          .object({ username: z.string(), password: z.string() })
-          .safeParse(credentials);
- 
-        if (parsedCredentials.success) {
-          const { username, password } = parsedCredentials.data;
-          const user = await getUser(username, password);
-          if (!user) return null;
-          return user;
-        }
- 
-        return null;
-      },
-    }),
-  ],
-  pages: {
-    signIn: '/auth',  // Displays the login page
+
+export async function signIn(formData: FormData) {
+  const parsedCredentials = z
+  .object({ username: z.string(), password: z.string() })
+  .safeParse(formData);
+
+  if (parsedCredentials.success) {
+    const { username, password } = parsedCredentials.data;
+    const user = await getUser(username, password);
+    if (!user) return null;
+    return user;
   }
-});
+
+  return null;
+}

@@ -14,7 +14,11 @@
     "@heroicons/react": "^2.1.4",
     "@vercel/postgres": "^0.9.0",
     "clsx": "^2.1.1",
+    "dns": "^0.2.2",
+    "fs": "0.0.1-security",
+    "http2": "^3.3.7",
     "long": "^5.2.3",
+    "net": "^1.0.2",
     "next": "15.0.0-rc.0",
     "next-auth": "5.0.0-beta.19",
     "protobufjs": "^7.3.2",
@@ -22,6 +26,7 @@
     "react-dom": "19.0.0-rc-f994737d14-20240522",
     "react-markdown": "^9.0.1",
     "remark-gfm": "^4.0.0",
+    "tls": "^0.0.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {

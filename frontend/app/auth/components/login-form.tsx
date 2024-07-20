@@ -8,17 +8,42 @@ import {
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
-import { useActionState } from 'react';
-import { authenticate } from '@/lib/actions';
+import { authenticate } from './actions';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
  
 export default function LoginForm() {
-  const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
-    undefined,
-  );
- 
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+
+  const handleSubmit = async (event) => {
+    const formData = new FormData(event.target);
+    const data = {
+      username: formData.get('username'),
+      password: formData.get('password'),
+    };
+
+    setIsLoading(true);
+
+    try {
+      // const response = await authenticate(formData);
+
+        router.push('/auth/admin');
+
+        // setErrorMessage(result.message);
+      
+    } catch (error) {
+      setErrorMessage('An unexpected error occurred.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
   return (
-    <form action={formAction} className="space-y-3">
+    <form action={handleSubmit} className="space-y-3">
       <div className="flex-1 rounded-lg bg-neutral-900 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl text-white`}>
           Please log in to continue.
@@ -27,17 +52,17 @@ export default function LoginForm() {
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium bg-neutral-900 text-white"
-              htmlFor="email"
+              htmlFor="text"
             >
-              Email
+              username
             </label>
             <div className="relative">
               <input
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
+                id="username"
+                type="text"
+                name="username"
+                placeholder="Enter your username"
                 required
               />
               <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:bg-neutral-500" />
@@ -48,7 +73,7 @@ export default function LoginForm() {
               className="mb-3 mt-5 block text-xs font-medium bg-neutral-900 text-white"
               htmlFor="password"
             >
-              Password
+              password
             </label>
             <div className="relative">
               <input
@@ -58,13 +83,13 @@ export default function LoginForm() {
                 name="password"
                 placeholder="Enter password"
                 required
-                minLength={6}
+                minLength={5}
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:bg-neutral-500" />
             </div>
           </div>
         </div>
-        <Button className="mt-8 w-full" aria-disabled={isPending}>
+        <Button className="mt-8 w-full" aria-disabled={isLoading}>
           Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
         <div

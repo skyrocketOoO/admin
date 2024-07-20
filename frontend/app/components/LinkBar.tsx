@@ -12,7 +12,7 @@ const LinkBar = () => {
   ];
 
   return (
-    <div className="linkbar bg-violet-50 w-14 p-2 border border-t-0 items-center h-auto">
+    <div className="bg-violet-50 w-14 p-2 border border-t-0">
       {links.map((link, index) => (
         <LinkItem key={index} href={link.href} src={link.src} alt={link.alt} />
       ))}
