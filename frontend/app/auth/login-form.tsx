@@ -7,34 +7,38 @@ import {
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
-import { authenticate } from './actions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
- 
+import { signIn}  from './auth';
+import { z } from 'zod';
+
 export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-
-  const onSubmit = async (form:FormData) => {
+  const onSubmit = async (form: FormData) => {
     const data = {
-      username: form.get('username') as string,
-      password: form.get('password') as string,
-    };
-    
-
+      username: form.get('username'),
+      password: form.get('password'),
+    }
+    const parsedCredentials = z
+    .object({ username: z.string(), password: z.string() })
+    .safeParse(data);
+    if (parsedCredentials.error) {
+      setErrorMessage('Invalid credentials format.');
+      return;
+    }
     setIsLoading(true);
-
-
     try {
-      // const response = await authenticate(formData);
-
+        // console.log(form.get('password'));
+        const resp = await signIn(parsedCredentials.data.username, parsedCredentials.data.password);
+        if (!resp) {
+          setErrorMessage('Invalid credentials.');
+          return;
+        }
+        localStorage.setItem('session', resp.SessionID);
         router.push('/auth/admin');
-
-        // setErrorMessage(result.message);
-        localStorage.setItem('session', data.username);
-      
     } catch (error) {
       setErrorMessage('An unexpected error occurred.');
     } finally {

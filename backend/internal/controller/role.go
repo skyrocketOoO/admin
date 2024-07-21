@@ -17,7 +17,7 @@ import (
 
 func (s *Server) CreateRole(
 	ctx context.Context,
-	req *api.CreateRoleRequest,
+	req *api.CreateRoleReq,
 ) (resp *api.Empty, err error) {
 	role := Struct.DeepNew[model.Role]()
 	if err = Struct.Scan(req, req); err != nil {
@@ -32,15 +32,15 @@ func (s *Server) CreateRole(
 
 func (s *Server) ListRole(
 	ctx context.Context,
-	req *api.ListRoleRequest,
-) (resp *api.ListRoleResponse, err error) {
+	req *api.ListRoleReq,
+) (resp *api.ListRoleResp, err error) {
 	option := Struct.DeepNew[dao.ListOption]()
 	if err = Struct.Scan(req.Option, option); err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
 	db := orm.GetDb().Model(&model.Role{}).Select("ID", "Name")
-	resp = Struct.DeepNew[api.ListRoleResponse]()
+	resp = Struct.DeepNew[api.ListRoleResp]()
 	Roles := []model.Role{}
 	if resp.Total, err = dao.ListWithPager(db, *option, &Roles); err != nil {
 		return nil, Error.Internal.WithTrace(err)
@@ -59,14 +59,14 @@ func (s *Server) ListRole(
 
 func (s *Server) GetRoleAuth(
 	ctx context.Context,
-	req *api.GetRoleAuthRequest,
-) (resp *api.GetRoleAuthResponse, err error) {
+	req *api.GetRoleAuthReq,
+) (resp *api.GetRoleAuthResp, err error) {
 	role := model.Role{}
 	if err = orm.GetDb().Where("ID =?", req.GetID()).Take(&role).Error; err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
-	resp = Struct.DeepNew[api.GetRoleAuthResponse]()
+	resp = Struct.DeepNew[api.GetRoleAuthResp]()
 	if err = Struct.Scan(role.Page, resp.Page); err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
@@ -76,7 +76,7 @@ func (s *Server) GetRoleAuth(
 
 func (s *Server) UpdateRole(
 	ctx context.Context,
-	req *api.UpdateRoleRequest,
+	req *api.UpdateRoleReq,
 ) (resp *api.Empty, err error) {
 	update := Struct.DeepNew[model.Role]()
 	if err = Struct.Scan(req, update); err != nil {
@@ -100,7 +100,7 @@ func (s *Server) UpdateRole(
 
 func (s *Server) DeleteRole(
 	ctx context.Context,
-	req *api.DeleteRoleRequest,
+	req *api.DeleteRoleReq,
 ) (resp *api.Empty, err error) {
 	if err = orm.GetDb().Delete(&model.Role{}, req.GetID()).Error; err != nil {
 		return nil, Error.Internal.WithTrace(err)
@@ -110,7 +110,7 @@ func (s *Server) DeleteRole(
 
 func (s *Server) BindRole(
 	ctx context.Context,
-	req *api.BindRoleRequest,
+	req *api.BindRoleReq,
 ) (resp *api.Empty, err error) {
 	db := orm.GetDb()
 
@@ -141,7 +141,7 @@ func (s *Server) BindRole(
 
 func (s *Server) UnBindRole(
 	ctx context.Context,
-	req *api.UnBindRoleRequest,
+	req *api.UnBindRoleReq,
 ) (resp *api.Empty, err error) {
 	db := orm.GetDb()
 

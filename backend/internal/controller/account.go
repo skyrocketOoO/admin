@@ -17,7 +17,7 @@ import (
 
 func (s *Server) CreateAccount(
 	ctx context.Context,
-	req *api.CreateAccountRequest,
+	req *api.CreateAccountReq,
 ) (resp *api.Empty, err error) {
 	salt, err := password.GenSalt()
 	if err != nil {
@@ -38,8 +38,8 @@ func (s *Server) CreateAccount(
 
 func (s *Server) ListAccount(
 	ctx context.Context,
-	req *api.ListAccountRequest,
-) (resp *api.ListAccountResponse, err error) {
+	req *api.ListAccountReq,
+) (resp *api.ListAccountResp, err error) {
 	option := Struct.DeepNew[dao.ListOption]()
 	if req.GetOption() != nil {
 		if err = Struct.Scan(req.Option, option); err != nil {
@@ -48,7 +48,7 @@ func (s *Server) ListAccount(
 	}
 
 	db := orm.GetDb().Model(&model.Account{})
-	resp = Struct.DeepNew[api.ListAccountResponse]()
+	resp = Struct.DeepNew[api.ListAccountResp]()
 	accounts := []model.Account{}
 	if resp.Total, err = dao.ListWithPager(db, *option, &accounts); err != nil {
 		return nil, Error.Internal.WithTrace(err)
@@ -67,7 +67,7 @@ func (s *Server) ListAccount(
 
 func (s *Server) UpdateAccount(
 	ctx context.Context,
-	req *api.UpdateAccountRequest,
+	req *api.UpdateAccountReq,
 ) (resp *api.Empty, err error) {
 	tx := orm.GetDb().
 		Model(&model.Account{}).
@@ -89,7 +89,7 @@ func (s *Server) UpdateAccount(
 
 func (s *Server) DeleteAccount(
 	ctx context.Context,
-	req *api.DeleteAccountRequest,
+	req *api.DeleteAccountReq,
 ) (resp *api.Empty, err error) {
 	if err = orm.GetDb().Delete(&model.Account{}, req.GetID()).Error; err != nil {
 		return nil, Error.Internal.WithTrace(err)

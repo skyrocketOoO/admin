@@ -40,21 +40,21 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MainClient interface {
-	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*Empty, error)
-	CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Empty, error)
-	ListAccount(ctx context.Context, in *ListAccountRequest, opts ...grpc.CallOption) (*ListAccountResponse, error)
-	UpdateAccount(ctx context.Context, in *UpdateAccountRequest, opts ...grpc.CallOption) (*Empty, error)
-	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error)
-	DeactiveAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error)
-	ActiveAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error)
-	CreateRole(ctx context.Context, in *CreateRoleRequest, opts ...grpc.CallOption) (*Empty, error)
-	ListRole(ctx context.Context, in *ListRoleRequest, opts ...grpc.CallOption) (*ListRoleResponse, error)
-	GetRoleAuth(ctx context.Context, in *GetRoleAuthRequest, opts ...grpc.CallOption) (*GetRoleAuthResponse, error)
-	UpdateRole(ctx context.Context, in *UpdateRoleRequest, opts ...grpc.CallOption) (*Empty, error)
-	DeleteRole(ctx context.Context, in *DeleteRoleRequest, opts ...grpc.CallOption) (*Empty, error)
-	BindRole(ctx context.Context, in *BindRoleRequest, opts ...grpc.CallOption) (*Empty, error)
-	UnBindRole(ctx context.Context, in *UnBindRoleRequest, opts ...grpc.CallOption) (*Empty, error)
+	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
+	Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*Empty, error)
+	CreateAccount(ctx context.Context, in *CreateAccountReq, opts ...grpc.CallOption) (*Empty, error)
+	ListAccount(ctx context.Context, in *ListAccountReq, opts ...grpc.CallOption) (*ListAccountResp, error)
+	UpdateAccount(ctx context.Context, in *UpdateAccountReq, opts ...grpc.CallOption) (*Empty, error)
+	DeleteAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc.CallOption) (*Empty, error)
+	DeactiveAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc.CallOption) (*Empty, error)
+	ActiveAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc.CallOption) (*Empty, error)
+	CreateRole(ctx context.Context, in *CreateRoleReq, opts ...grpc.CallOption) (*Empty, error)
+	ListRole(ctx context.Context, in *ListRoleReq, opts ...grpc.CallOption) (*ListRoleResp, error)
+	GetRoleAuth(ctx context.Context, in *GetRoleAuthReq, opts ...grpc.CallOption) (*GetRoleAuthResp, error)
+	UpdateRole(ctx context.Context, in *UpdateRoleReq, opts ...grpc.CallOption) (*Empty, error)
+	DeleteRole(ctx context.Context, in *DeleteRoleReq, opts ...grpc.CallOption) (*Empty, error)
+	BindRole(ctx context.Context, in *BindRoleReq, opts ...grpc.CallOption) (*Empty, error)
+	UnBindRole(ctx context.Context, in *UnBindRoleReq, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type mainClient struct {
@@ -65,9 +65,9 @@ func NewMainClient(cc grpc.ClientConnInterface) MainClient {
 	return &mainClient{cc}
 }
 
-func (c *mainClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+func (c *mainClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LoginResponse)
+	out := new(LoginResp)
 	err := c.cc.Invoke(ctx, Main_Login_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -75,7 +75,7 @@ func (c *mainClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.C
 	return out, nil
 }
 
-func (c *mainClient) Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *mainClient) Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_Logout_FullMethodName, in, out, cOpts...)
@@ -85,7 +85,7 @@ func (c *mainClient) Logout(ctx context.Context, in *LogoutRequest, opts ...grpc
 	return out, nil
 }
 
-func (c *mainClient) CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *mainClient) CreateAccount(ctx context.Context, in *CreateAccountReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_CreateAccount_FullMethodName, in, out, cOpts...)
@@ -95,9 +95,9 @@ func (c *mainClient) CreateAccount(ctx context.Context, in *CreateAccountRequest
 	return out, nil
 }
 
-func (c *mainClient) ListAccount(ctx context.Context, in *ListAccountRequest, opts ...grpc.CallOption) (*ListAccountResponse, error) {
+func (c *mainClient) ListAccount(ctx context.Context, in *ListAccountReq, opts ...grpc.CallOption) (*ListAccountResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListAccountResponse)
+	out := new(ListAccountResp)
 	err := c.cc.Invoke(ctx, Main_ListAccount_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -105,7 +105,7 @@ func (c *mainClient) ListAccount(ctx context.Context, in *ListAccountRequest, op
 	return out, nil
 }
 
-func (c *mainClient) UpdateAccount(ctx context.Context, in *UpdateAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *mainClient) UpdateAccount(ctx context.Context, in *UpdateAccountReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_UpdateAccount_FullMethodName, in, out, cOpts...)
@@ -115,7 +115,7 @@ func (c *mainClient) UpdateAccount(ctx context.Context, in *UpdateAccountRequest
 	return out, nil
 }
 
-func (c *mainClient) DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *mainClient) DeleteAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_DeleteAccount_FullMethodName, in, out, cOpts...)
@@ -125,7 +125,7 @@ func (c *mainClient) DeleteAccount(ctx context.Context, in *DeleteAccountRequest
 	return out, nil
 }
 
-func (c *mainClient) DeactiveAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *mainClient) DeactiveAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_DeactiveAccount_FullMethodName, in, out, cOpts...)
@@ -135,7 +135,7 @@ func (c *mainClient) DeactiveAccount(ctx context.Context, in *DeleteAccountReque
 	return out, nil
 }
 
-func (c *mainClient) ActiveAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *mainClient) ActiveAccount(ctx context.Context, in *DeleteAccountReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_ActiveAccount_FullMethodName, in, out, cOpts...)
@@ -145,7 +145,7 @@ func (c *mainClient) ActiveAccount(ctx context.Context, in *DeleteAccountRequest
 	return out, nil
 }
 
-func (c *mainClient) CreateRole(ctx context.Context, in *CreateRoleRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *mainClient) CreateRole(ctx context.Context, in *CreateRoleReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_CreateRole_FullMethodName, in, out, cOpts...)
@@ -155,9 +155,9 @@ func (c *mainClient) CreateRole(ctx context.Context, in *CreateRoleRequest, opts
 	return out, nil
 }
 
-func (c *mainClient) ListRole(ctx context.Context, in *ListRoleRequest, opts ...grpc.CallOption) (*ListRoleResponse, error) {
+func (c *mainClient) ListRole(ctx context.Context, in *ListRoleReq, opts ...grpc.CallOption) (*ListRoleResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListRoleResponse)
+	out := new(ListRoleResp)
 	err := c.cc.Invoke(ctx, Main_ListRole_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -165,9 +165,9 @@ func (c *mainClient) ListRole(ctx context.Context, in *ListRoleRequest, opts ...
 	return out, nil
 }
 
-func (c *mainClient) GetRoleAuth(ctx context.Context, in *GetRoleAuthRequest, opts ...grpc.CallOption) (*GetRoleAuthResponse, error) {
+func (c *mainClient) GetRoleAuth(ctx context.Context, in *GetRoleAuthReq, opts ...grpc.CallOption) (*GetRoleAuthResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetRoleAuthResponse)
+	out := new(GetRoleAuthResp)
 	err := c.cc.Invoke(ctx, Main_GetRoleAuth_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -175,7 +175,7 @@ func (c *mainClient) GetRoleAuth(ctx context.Context, in *GetRoleAuthRequest, op
 	return out, nil
 }
 
-func (c *mainClient) UpdateRole(ctx context.Context, in *UpdateRoleRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *mainClient) UpdateRole(ctx context.Context, in *UpdateRoleReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_UpdateRole_FullMethodName, in, out, cOpts...)
@@ -185,7 +185,7 @@ func (c *mainClient) UpdateRole(ctx context.Context, in *UpdateRoleRequest, opts
 	return out, nil
 }
 
-func (c *mainClient) DeleteRole(ctx context.Context, in *DeleteRoleRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *mainClient) DeleteRole(ctx context.Context, in *DeleteRoleReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_DeleteRole_FullMethodName, in, out, cOpts...)
@@ -195,7 +195,7 @@ func (c *mainClient) DeleteRole(ctx context.Context, in *DeleteRoleRequest, opts
 	return out, nil
 }
 
-func (c *mainClient) BindRole(ctx context.Context, in *BindRoleRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *mainClient) BindRole(ctx context.Context, in *BindRoleReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_BindRole_FullMethodName, in, out, cOpts...)
@@ -205,7 +205,7 @@ func (c *mainClient) BindRole(ctx context.Context, in *BindRoleRequest, opts ...
 	return out, nil
 }
 
-func (c *mainClient) UnBindRole(ctx context.Context, in *UnBindRoleRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *mainClient) UnBindRole(ctx context.Context, in *UnBindRoleReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_UnBindRole_FullMethodName, in, out, cOpts...)
@@ -219,21 +219,21 @@ func (c *mainClient) UnBindRole(ctx context.Context, in *UnBindRoleRequest, opts
 // All implementations must embed UnimplementedMainServer
 // for forward compatibility
 type MainServer interface {
-	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	Logout(context.Context, *LogoutRequest) (*Empty, error)
-	CreateAccount(context.Context, *CreateAccountRequest) (*Empty, error)
-	ListAccount(context.Context, *ListAccountRequest) (*ListAccountResponse, error)
-	UpdateAccount(context.Context, *UpdateAccountRequest) (*Empty, error)
-	DeleteAccount(context.Context, *DeleteAccountRequest) (*Empty, error)
-	DeactiveAccount(context.Context, *DeleteAccountRequest) (*Empty, error)
-	ActiveAccount(context.Context, *DeleteAccountRequest) (*Empty, error)
-	CreateRole(context.Context, *CreateRoleRequest) (*Empty, error)
-	ListRole(context.Context, *ListRoleRequest) (*ListRoleResponse, error)
-	GetRoleAuth(context.Context, *GetRoleAuthRequest) (*GetRoleAuthResponse, error)
-	UpdateRole(context.Context, *UpdateRoleRequest) (*Empty, error)
-	DeleteRole(context.Context, *DeleteRoleRequest) (*Empty, error)
-	BindRole(context.Context, *BindRoleRequest) (*Empty, error)
-	UnBindRole(context.Context, *UnBindRoleRequest) (*Empty, error)
+	Login(context.Context, *LoginReq) (*LoginResp, error)
+	Logout(context.Context, *LogoutReq) (*Empty, error)
+	CreateAccount(context.Context, *CreateAccountReq) (*Empty, error)
+	ListAccount(context.Context, *ListAccountReq) (*ListAccountResp, error)
+	UpdateAccount(context.Context, *UpdateAccountReq) (*Empty, error)
+	DeleteAccount(context.Context, *DeleteAccountReq) (*Empty, error)
+	DeactiveAccount(context.Context, *DeleteAccountReq) (*Empty, error)
+	ActiveAccount(context.Context, *DeleteAccountReq) (*Empty, error)
+	CreateRole(context.Context, *CreateRoleReq) (*Empty, error)
+	ListRole(context.Context, *ListRoleReq) (*ListRoleResp, error)
+	GetRoleAuth(context.Context, *GetRoleAuthReq) (*GetRoleAuthResp, error)
+	UpdateRole(context.Context, *UpdateRoleReq) (*Empty, error)
+	DeleteRole(context.Context, *DeleteRoleReq) (*Empty, error)
+	BindRole(context.Context, *BindRoleReq) (*Empty, error)
+	UnBindRole(context.Context, *UnBindRoleReq) (*Empty, error)
 	mustEmbedUnimplementedMainServer()
 }
 
@@ -241,49 +241,49 @@ type MainServer interface {
 type UnimplementedMainServer struct {
 }
 
-func (UnimplementedMainServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
+func (UnimplementedMainServer) Login(context.Context, *LoginReq) (*LoginResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedMainServer) Logout(context.Context, *LogoutRequest) (*Empty, error) {
+func (UnimplementedMainServer) Logout(context.Context, *LogoutReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
-func (UnimplementedMainServer) CreateAccount(context.Context, *CreateAccountRequest) (*Empty, error) {
+func (UnimplementedMainServer) CreateAccount(context.Context, *CreateAccountReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAccount not implemented")
 }
-func (UnimplementedMainServer) ListAccount(context.Context, *ListAccountRequest) (*ListAccountResponse, error) {
+func (UnimplementedMainServer) ListAccount(context.Context, *ListAccountReq) (*ListAccountResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAccount not implemented")
 }
-func (UnimplementedMainServer) UpdateAccount(context.Context, *UpdateAccountRequest) (*Empty, error) {
+func (UnimplementedMainServer) UpdateAccount(context.Context, *UpdateAccountReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAccount not implemented")
 }
-func (UnimplementedMainServer) DeleteAccount(context.Context, *DeleteAccountRequest) (*Empty, error) {
+func (UnimplementedMainServer) DeleteAccount(context.Context, *DeleteAccountReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
 }
-func (UnimplementedMainServer) DeactiveAccount(context.Context, *DeleteAccountRequest) (*Empty, error) {
+func (UnimplementedMainServer) DeactiveAccount(context.Context, *DeleteAccountReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeactiveAccount not implemented")
 }
-func (UnimplementedMainServer) ActiveAccount(context.Context, *DeleteAccountRequest) (*Empty, error) {
+func (UnimplementedMainServer) ActiveAccount(context.Context, *DeleteAccountReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ActiveAccount not implemented")
 }
-func (UnimplementedMainServer) CreateRole(context.Context, *CreateRoleRequest) (*Empty, error) {
+func (UnimplementedMainServer) CreateRole(context.Context, *CreateRoleReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRole not implemented")
 }
-func (UnimplementedMainServer) ListRole(context.Context, *ListRoleRequest) (*ListRoleResponse, error) {
+func (UnimplementedMainServer) ListRole(context.Context, *ListRoleReq) (*ListRoleResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRole not implemented")
 }
-func (UnimplementedMainServer) GetRoleAuth(context.Context, *GetRoleAuthRequest) (*GetRoleAuthResponse, error) {
+func (UnimplementedMainServer) GetRoleAuth(context.Context, *GetRoleAuthReq) (*GetRoleAuthResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRoleAuth not implemented")
 }
-func (UnimplementedMainServer) UpdateRole(context.Context, *UpdateRoleRequest) (*Empty, error) {
+func (UnimplementedMainServer) UpdateRole(context.Context, *UpdateRoleReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateRole not implemented")
 }
-func (UnimplementedMainServer) DeleteRole(context.Context, *DeleteRoleRequest) (*Empty, error) {
+func (UnimplementedMainServer) DeleteRole(context.Context, *DeleteRoleReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRole not implemented")
 }
-func (UnimplementedMainServer) BindRole(context.Context, *BindRoleRequest) (*Empty, error) {
+func (UnimplementedMainServer) BindRole(context.Context, *BindRoleReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BindRole not implemented")
 }
-func (UnimplementedMainServer) UnBindRole(context.Context, *UnBindRoleRequest) (*Empty, error) {
+func (UnimplementedMainServer) UnBindRole(context.Context, *UnBindRoleReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnBindRole not implemented")
 }
 func (UnimplementedMainServer) mustEmbedUnimplementedMainServer() {}
@@ -300,7 +300,7 @@ func RegisterMainServer(s grpc.ServiceRegistrar, srv MainServer) {
 }
 
 func _Main_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoginRequest)
+	in := new(LoginReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -312,13 +312,13 @@ func _Main_Login_Handler(srv interface{}, ctx context.Context, dec func(interfac
 		FullMethod: Main_Login_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).Login(ctx, req.(*LoginRequest))
+		return srv.(MainServer).Login(ctx, req.(*LoginReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_Logout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LogoutRequest)
+	in := new(LogoutReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -330,13 +330,13 @@ func _Main_Logout_Handler(srv interface{}, ctx context.Context, dec func(interfa
 		FullMethod: Main_Logout_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).Logout(ctx, req.(*LogoutRequest))
+		return srv.(MainServer).Logout(ctx, req.(*LogoutReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_CreateAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateAccountRequest)
+	in := new(CreateAccountReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -348,13 +348,13 @@ func _Main_CreateAccount_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: Main_CreateAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).CreateAccount(ctx, req.(*CreateAccountRequest))
+		return srv.(MainServer).CreateAccount(ctx, req.(*CreateAccountReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_ListAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListAccountRequest)
+	in := new(ListAccountReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -366,13 +366,13 @@ func _Main_ListAccount_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: Main_ListAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).ListAccount(ctx, req.(*ListAccountRequest))
+		return srv.(MainServer).ListAccount(ctx, req.(*ListAccountReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_UpdateAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateAccountRequest)
+	in := new(UpdateAccountReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -384,13 +384,13 @@ func _Main_UpdateAccount_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: Main_UpdateAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).UpdateAccount(ctx, req.(*UpdateAccountRequest))
+		return srv.(MainServer).UpdateAccount(ctx, req.(*UpdateAccountReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_DeleteAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteAccountRequest)
+	in := new(DeleteAccountReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -402,13 +402,13 @@ func _Main_DeleteAccount_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: Main_DeleteAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).DeleteAccount(ctx, req.(*DeleteAccountRequest))
+		return srv.(MainServer).DeleteAccount(ctx, req.(*DeleteAccountReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_DeactiveAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteAccountRequest)
+	in := new(DeleteAccountReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -420,13 +420,13 @@ func _Main_DeactiveAccount_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: Main_DeactiveAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).DeactiveAccount(ctx, req.(*DeleteAccountRequest))
+		return srv.(MainServer).DeactiveAccount(ctx, req.(*DeleteAccountReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_ActiveAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteAccountRequest)
+	in := new(DeleteAccountReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -438,13 +438,13 @@ func _Main_ActiveAccount_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: Main_ActiveAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).ActiveAccount(ctx, req.(*DeleteAccountRequest))
+		return srv.(MainServer).ActiveAccount(ctx, req.(*DeleteAccountReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_CreateRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRoleRequest)
+	in := new(CreateRoleReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -456,13 +456,13 @@ func _Main_CreateRole_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: Main_CreateRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).CreateRole(ctx, req.(*CreateRoleRequest))
+		return srv.(MainServer).CreateRole(ctx, req.(*CreateRoleReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_ListRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListRoleRequest)
+	in := new(ListRoleReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -474,13 +474,13 @@ func _Main_ListRole_Handler(srv interface{}, ctx context.Context, dec func(inter
 		FullMethod: Main_ListRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).ListRole(ctx, req.(*ListRoleRequest))
+		return srv.(MainServer).ListRole(ctx, req.(*ListRoleReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_GetRoleAuth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRoleAuthRequest)
+	in := new(GetRoleAuthReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -492,13 +492,13 @@ func _Main_GetRoleAuth_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: Main_GetRoleAuth_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).GetRoleAuth(ctx, req.(*GetRoleAuthRequest))
+		return srv.(MainServer).GetRoleAuth(ctx, req.(*GetRoleAuthReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_UpdateRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateRoleRequest)
+	in := new(UpdateRoleReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -510,13 +510,13 @@ func _Main_UpdateRole_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: Main_UpdateRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).UpdateRole(ctx, req.(*UpdateRoleRequest))
+		return srv.(MainServer).UpdateRole(ctx, req.(*UpdateRoleReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_DeleteRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteRoleRequest)
+	in := new(DeleteRoleReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -528,13 +528,13 @@ func _Main_DeleteRole_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: Main_DeleteRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).DeleteRole(ctx, req.(*DeleteRoleRequest))
+		return srv.(MainServer).DeleteRole(ctx, req.(*DeleteRoleReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_BindRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BindRoleRequest)
+	in := new(BindRoleReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -546,13 +546,13 @@ func _Main_BindRole_Handler(srv interface{}, ctx context.Context, dec func(inter
 		FullMethod: Main_BindRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).BindRole(ctx, req.(*BindRoleRequest))
+		return srv.(MainServer).BindRole(ctx, req.(*BindRoleReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Main_UnBindRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UnBindRoleRequest)
+	in := new(UnBindRoleReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -564,7 +564,7 @@ func _Main_UnBindRole_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: Main_UnBindRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MainServer).UnBindRole(ctx, req.(*UnBindRoleRequest))
+		return srv.(MainServer).UnBindRole(ctx, req.(*UnBindRoleReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }

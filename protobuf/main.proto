@@ -7,35 +7,35 @@ import "common.proto";
 import "model/role.proto";
 
 service Main{
-  rpc Login(LoginRequest) returns (LoginResponse);
-  rpc Logout(LogoutRequest) returns (Empty);
+  rpc Login(LoginReq) returns (LoginResp);
+  rpc Logout(LogoutReq) returns (Empty);
 
-  rpc CreateAccount(CreateAccountRequest) returns (Empty);
-  rpc ListAccount(ListAccountRequest) returns (ListAccountResponse);
-  rpc UpdateAccount(UpdateAccountRequest) returns (Empty);
-  rpc DeleteAccount(DeleteAccountRequest) returns (Empty);
-  rpc DeactiveAccount(DeleteAccountRequest) returns (Empty);
-  rpc ActiveAccount(DeleteAccountRequest) returns (Empty);
+  rpc CreateAccount(CreateAccountReq) returns (Empty);
+  rpc ListAccount(ListAccountReq) returns (ListAccountResp);
+  rpc UpdateAccount(UpdateAccountReq) returns (Empty);
+  rpc DeleteAccount(DeleteAccountReq) returns (Empty);
+  rpc DeactiveAccount(DeleteAccountReq) returns (Empty);
+  rpc ActiveAccount(DeleteAccountReq) returns (Empty);
 
-  rpc CreateRole(CreateRoleRequest) returns (Empty);
-  rpc ListRole(ListRoleRequest) returns (ListRoleResponse);
-  rpc GetRoleAuth(GetRoleAuthRequest) returns (GetRoleAuthResponse);
-  rpc UpdateRole(UpdateRoleRequest) returns (Empty);
-  rpc DeleteRole(DeleteRoleRequest) returns (Empty);
-  rpc BindRole(BindRoleRequest) returns (Empty);
-  rpc UnBindRole(UnBindRoleRequest) returns (Empty);
+  rpc CreateRole(CreateRoleReq) returns (Empty);
+  rpc ListRole(ListRoleReq) returns (ListRoleResp);
+  rpc GetRoleAuth(GetRoleAuthReq) returns (GetRoleAuthResp);
+  rpc UpdateRole(UpdateRoleReq) returns (Empty);
+  rpc DeleteRole(DeleteRoleReq) returns (Empty);
+  rpc BindRole(BindRoleReq) returns (Empty);
+  rpc UnBindRole(UnBindRoleReq) returns (Empty);
 }
 
-message CreateAccountRequest{
+message CreateAccountReq{
   string UserName = 1;
   string Password = 2;
   string DisplayName = 3;
 }
 
-message ListAccountRequest{
+message ListAccountReq{
   optional ListOption Option = 1;
 }
-message ListAccountResponse{
+message ListAccountResp{
   repeated AccountData List = 1;
   int64 Total = 2;
 }
@@ -46,18 +46,18 @@ message AccountData {
   int32 State = 4;
 }
 
-message UpdateAccountRequest{
+message UpdateAccountReq{
   string ID = 1;
   string DisplayName = 2;
   int32 State = 3; // 0: no change, 1: active, 2: inactive
 }
 
-message DeleteAccountRequest{
+message DeleteAccountReq{
   string ID = 1;
   Page Page = 2;
 }
 
-message CreateRoleRequest{
+message CreateRoleReq{
   string Name = 1;
   Page Page = 2;
 }
@@ -73,10 +73,10 @@ message PageOperation{
   bool Delete = 4;
 }
 
-message ListRoleRequest{
+message ListRoleReq{
   optional ListOption Option = 1;
 }
-message ListRoleResponse{
+message ListRoleResp{
   repeated RoleData List = 1;
   int64 Total = 2;
 }
@@ -85,41 +85,41 @@ message RoleData {
   string Name = 2;
 }
 
-message GetRoleAuthRequest{
+message GetRoleAuthReq{
   optional string ID = 1; // if ID is "", return auth based on session
 }
-message GetRoleAuthResponse{
+message GetRoleAuthResp{
   Page Page = 1;
 }
 
-message UpdateRoleRequest{
+message UpdateRoleReq{
   string ID = 1;
   string Name = 2;
   Page Page = 3;
 }
 
-message DeleteRoleRequest{
+message DeleteRoleReq{
   string ID = 1;
 }
 
-message BindRoleRequest{
+message BindRoleReq{
   string AccountID = 1;
   string RoleID = 2;
 }
 
-message UnBindRoleRequest{
+message UnBindRoleReq{
   string AccountID = 1;
 }
 
-message LoginRequest{
+message LoginReq{
   string UserName = 1;
   string Password = 2;
 }
-message LoginResponse{
+message LoginResp{
   string SessionID = 1;
   proto.model.Role Role = 2;
 }
 
-message LogoutRequest{
+message LogoutReq{
   string SessionID = 1;
 }

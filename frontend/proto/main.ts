@@ -24,17 +24,17 @@ import Long = require("long");
 
 export const protobufPackage = "proto";
 
-export interface CreateAccountRequest {
+export interface CreateAccountReq {
   UserName: string;
   Password: string;
   DisplayName: string;
 }
 
-export interface ListAccountRequest {
+export interface ListAccountReq {
   Option?: ListOption | undefined;
 }
 
-export interface ListAccountResponse {
+export interface ListAccountResp {
   List: AccountData[];
   Total: number;
 }
@@ -46,19 +46,19 @@ export interface AccountData {
   State: number;
 }
 
-export interface UpdateAccountRequest {
+export interface UpdateAccountReq {
   ID: string;
   DisplayName: string;
   /** 0: no change, 1: active, 2: inactive */
   State: number;
 }
 
-export interface DeleteAccountRequest {
+export interface DeleteAccountReq {
   ID: string;
   Page: Page | undefined;
 }
 
-export interface CreateRoleRequest {
+export interface CreateRoleReq {
   Name: string;
   Page: Page | undefined;
 }
@@ -76,11 +76,11 @@ export interface PageOperation {
   Delete: boolean;
 }
 
-export interface ListRoleRequest {
+export interface ListRoleReq {
   Option?: ListOption | undefined;
 }
 
-export interface ListRoleResponse {
+export interface ListRoleResp {
   List: RoleData[];
   Total: number;
 }
@@ -90,54 +90,54 @@ export interface RoleData {
   Name: string;
 }
 
-export interface GetRoleAuthRequest {
+export interface GetRoleAuthReq {
   /** if ID is "", return auth based on session */
   ID?: string | undefined;
 }
 
-export interface GetRoleAuthResponse {
+export interface GetRoleAuthResp {
   Page: Page | undefined;
 }
 
-export interface UpdateRoleRequest {
+export interface UpdateRoleReq {
   ID: string;
   Name: string;
   Page: Page | undefined;
 }
 
-export interface DeleteRoleRequest {
+export interface DeleteRoleReq {
   ID: string;
 }
 
-export interface BindRoleRequest {
+export interface BindRoleReq {
   AccountID: string;
   RoleID: string;
 }
 
-export interface UnBindRoleRequest {
+export interface UnBindRoleReq {
   AccountID: string;
 }
 
-export interface LoginRequest {
+export interface LoginReq {
   UserName: string;
   Password: string;
 }
 
-export interface LoginResponse {
+export interface LoginResp {
   SessionID: string;
   Role: Role | undefined;
 }
 
-export interface LogoutRequest {
+export interface LogoutReq {
   SessionID: string;
 }
 
-function createBaseCreateAccountRequest(): CreateAccountRequest {
+function createBaseCreateAccountReq(): CreateAccountReq {
   return { UserName: "", Password: "", DisplayName: "" };
 }
 
-export const CreateAccountRequest = {
-  encode(message: CreateAccountRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CreateAccountReq = {
+  encode(message: CreateAccountReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.UserName !== "") {
       writer.uint32(10).string(message.UserName);
     }
@@ -150,10 +150,10 @@ export const CreateAccountRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CreateAccountRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateAccountReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateAccountRequest();
+    const message = createBaseCreateAccountReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -187,7 +187,7 @@ export const CreateAccountRequest = {
     return message;
   },
 
-  fromJSON(object: any): CreateAccountRequest {
+  fromJSON(object: any): CreateAccountReq {
     return {
       UserName: isSet(object.UserName) ? globalThis.String(object.UserName) : "",
       Password: isSet(object.Password) ? globalThis.String(object.Password) : "",
@@ -195,7 +195,7 @@ export const CreateAccountRequest = {
     };
   },
 
-  toJSON(message: CreateAccountRequest): unknown {
+  toJSON(message: CreateAccountReq): unknown {
     const obj: any = {};
     if (message.UserName !== "") {
       obj.UserName = message.UserName;
@@ -209,11 +209,11 @@ export const CreateAccountRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateAccountRequest>, I>>(base?: I): CreateAccountRequest {
-    return CreateAccountRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<CreateAccountReq>, I>>(base?: I): CreateAccountReq {
+    return CreateAccountReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CreateAccountRequest>, I>>(object: I): CreateAccountRequest {
-    const message = createBaseCreateAccountRequest();
+  fromPartial<I extends Exact<DeepPartial<CreateAccountReq>, I>>(object: I): CreateAccountReq {
+    const message = createBaseCreateAccountReq();
     message.UserName = object.UserName ?? "";
     message.Password = object.Password ?? "";
     message.DisplayName = object.DisplayName ?? "";
@@ -221,22 +221,22 @@ export const CreateAccountRequest = {
   },
 };
 
-function createBaseListAccountRequest(): ListAccountRequest {
+function createBaseListAccountReq(): ListAccountReq {
   return { Option: undefined };
 }
 
-export const ListAccountRequest = {
-  encode(message: ListAccountRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const ListAccountReq = {
+  encode(message: ListAccountReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.Option !== undefined) {
       ListOption.encode(message.Option, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): ListAccountRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): ListAccountReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseListAccountRequest();
+    const message = createBaseListAccountReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -256,11 +256,11 @@ export const ListAccountRequest = {
     return message;
   },
 
-  fromJSON(object: any): ListAccountRequest {
+  fromJSON(object: any): ListAccountReq {
     return { Option: isSet(object.Option) ? ListOption.fromJSON(object.Option) : undefined };
   },
 
-  toJSON(message: ListAccountRequest): unknown {
+  toJSON(message: ListAccountReq): unknown {
     const obj: any = {};
     if (message.Option !== undefined) {
       obj.Option = ListOption.toJSON(message.Option);
@@ -268,11 +268,11 @@ export const ListAccountRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListAccountRequest>, I>>(base?: I): ListAccountRequest {
-    return ListAccountRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<ListAccountReq>, I>>(base?: I): ListAccountReq {
+    return ListAccountReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListAccountRequest>, I>>(object: I): ListAccountRequest {
-    const message = createBaseListAccountRequest();
+  fromPartial<I extends Exact<DeepPartial<ListAccountReq>, I>>(object: I): ListAccountReq {
+    const message = createBaseListAccountReq();
     message.Option = (object.Option !== undefined && object.Option !== null)
       ? ListOption.fromPartial(object.Option)
       : undefined;
@@ -280,12 +280,12 @@ export const ListAccountRequest = {
   },
 };
 
-function createBaseListAccountResponse(): ListAccountResponse {
+function createBaseListAccountResp(): ListAccountResp {
   return { List: [], Total: 0 };
 }
 
-export const ListAccountResponse = {
-  encode(message: ListAccountResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const ListAccountResp = {
+  encode(message: ListAccountResp, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.List) {
       AccountData.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -295,10 +295,10 @@ export const ListAccountResponse = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): ListAccountResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): ListAccountResp {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseListAccountResponse();
+    const message = createBaseListAccountResp();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -325,14 +325,14 @@ export const ListAccountResponse = {
     return message;
   },
 
-  fromJSON(object: any): ListAccountResponse {
+  fromJSON(object: any): ListAccountResp {
     return {
       List: globalThis.Array.isArray(object?.List) ? object.List.map((e: any) => AccountData.fromJSON(e)) : [],
       Total: isSet(object.Total) ? globalThis.Number(object.Total) : 0,
     };
   },
 
-  toJSON(message: ListAccountResponse): unknown {
+  toJSON(message: ListAccountResp): unknown {
     const obj: any = {};
     if (message.List?.length) {
       obj.List = message.List.map((e) => AccountData.toJSON(e));
@@ -343,11 +343,11 @@ export const ListAccountResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListAccountResponse>, I>>(base?: I): ListAccountResponse {
-    return ListAccountResponse.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<ListAccountResp>, I>>(base?: I): ListAccountResp {
+    return ListAccountResp.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListAccountResponse>, I>>(object: I): ListAccountResponse {
-    const message = createBaseListAccountResponse();
+  fromPartial<I extends Exact<DeepPartial<ListAccountResp>, I>>(object: I): ListAccountResp {
+    const message = createBaseListAccountResp();
     message.List = object.List?.map((e) => AccountData.fromPartial(e)) || [];
     message.Total = object.Total ?? 0;
     return message;
@@ -458,12 +458,12 @@ export const AccountData = {
   },
 };
 
-function createBaseUpdateAccountRequest(): UpdateAccountRequest {
+function createBaseUpdateAccountReq(): UpdateAccountReq {
   return { ID: "", DisplayName: "", State: 0 };
 }
 
-export const UpdateAccountRequest = {
-  encode(message: UpdateAccountRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const UpdateAccountReq = {
+  encode(message: UpdateAccountReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.ID !== "") {
       writer.uint32(10).string(message.ID);
     }
@@ -476,10 +476,10 @@ export const UpdateAccountRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateAccountRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateAccountReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateAccountRequest();
+    const message = createBaseUpdateAccountReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -513,7 +513,7 @@ export const UpdateAccountRequest = {
     return message;
   },
 
-  fromJSON(object: any): UpdateAccountRequest {
+  fromJSON(object: any): UpdateAccountReq {
     return {
       ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
       DisplayName: isSet(object.DisplayName) ? globalThis.String(object.DisplayName) : "",
@@ -521,7 +521,7 @@ export const UpdateAccountRequest = {
     };
   },
 
-  toJSON(message: UpdateAccountRequest): unknown {
+  toJSON(message: UpdateAccountReq): unknown {
     const obj: any = {};
     if (message.ID !== "") {
       obj.ID = message.ID;
@@ -535,11 +535,11 @@ export const UpdateAccountRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateAccountRequest>, I>>(base?: I): UpdateAccountRequest {
-    return UpdateAccountRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<UpdateAccountReq>, I>>(base?: I): UpdateAccountReq {
+    return UpdateAccountReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<UpdateAccountRequest>, I>>(object: I): UpdateAccountRequest {
-    const message = createBaseUpdateAccountRequest();
+  fromPartial<I extends Exact<DeepPartial<UpdateAccountReq>, I>>(object: I): UpdateAccountReq {
+    const message = createBaseUpdateAccountReq();
     message.ID = object.ID ?? "";
     message.DisplayName = object.DisplayName ?? "";
     message.State = object.State ?? 0;
@@ -547,12 +547,12 @@ export const UpdateAccountRequest = {
   },
 };
 
-function createBaseDeleteAccountRequest(): DeleteAccountRequest {
+function createBaseDeleteAccountReq(): DeleteAccountReq {
   return { ID: "", Page: undefined };
 }
 
-export const DeleteAccountRequest = {
-  encode(message: DeleteAccountRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const DeleteAccountReq = {
+  encode(message: DeleteAccountReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.ID !== "") {
       writer.uint32(10).string(message.ID);
     }
@@ -562,10 +562,10 @@ export const DeleteAccountRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteAccountRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteAccountReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseDeleteAccountRequest();
+    const message = createBaseDeleteAccountReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -592,14 +592,14 @@ export const DeleteAccountRequest = {
     return message;
   },
 
-  fromJSON(object: any): DeleteAccountRequest {
+  fromJSON(object: any): DeleteAccountReq {
     return {
       ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
       Page: isSet(object.Page) ? Page.fromJSON(object.Page) : undefined,
     };
   },
 
-  toJSON(message: DeleteAccountRequest): unknown {
+  toJSON(message: DeleteAccountReq): unknown {
     const obj: any = {};
     if (message.ID !== "") {
       obj.ID = message.ID;
@@ -610,23 +610,23 @@ export const DeleteAccountRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<DeleteAccountRequest>, I>>(base?: I): DeleteAccountRequest {
-    return DeleteAccountRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<DeleteAccountReq>, I>>(base?: I): DeleteAccountReq {
+    return DeleteAccountReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<DeleteAccountRequest>, I>>(object: I): DeleteAccountRequest {
-    const message = createBaseDeleteAccountRequest();
+  fromPartial<I extends Exact<DeepPartial<DeleteAccountReq>, I>>(object: I): DeleteAccountReq {
+    const message = createBaseDeleteAccountReq();
     message.ID = object.ID ?? "";
     message.Page = (object.Page !== undefined && object.Page !== null) ? Page.fromPartial(object.Page) : undefined;
     return message;
   },
 };
 
-function createBaseCreateRoleRequest(): CreateRoleRequest {
+function createBaseCreateRoleReq(): CreateRoleReq {
   return { Name: "", Page: undefined };
 }
 
-export const CreateRoleRequest = {
-  encode(message: CreateRoleRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CreateRoleReq = {
+  encode(message: CreateRoleReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.Name !== "") {
       writer.uint32(10).string(message.Name);
     }
@@ -636,10 +636,10 @@ export const CreateRoleRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CreateRoleRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CreateRoleReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateRoleRequest();
+    const message = createBaseCreateRoleReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -666,14 +666,14 @@ export const CreateRoleRequest = {
     return message;
   },
 
-  fromJSON(object: any): CreateRoleRequest {
+  fromJSON(object: any): CreateRoleReq {
     return {
       Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
       Page: isSet(object.Page) ? Page.fromJSON(object.Page) : undefined,
     };
   },
 
-  toJSON(message: CreateRoleRequest): unknown {
+  toJSON(message: CreateRoleReq): unknown {
     const obj: any = {};
     if (message.Name !== "") {
       obj.Name = message.Name;
@@ -684,11 +684,11 @@ export const CreateRoleRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateRoleRequest>, I>>(base?: I): CreateRoleRequest {
-    return CreateRoleRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<CreateRoleReq>, I>>(base?: I): CreateRoleReq {
+    return CreateRoleReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CreateRoleRequest>, I>>(object: I): CreateRoleRequest {
-    const message = createBaseCreateRoleRequest();
+  fromPartial<I extends Exact<DeepPartial<CreateRoleReq>, I>>(object: I): CreateRoleReq {
+    const message = createBaseCreateRoleReq();
     message.Name = object.Name ?? "";
     message.Page = (object.Page !== undefined && object.Page !== null) ? Page.fromPartial(object.Page) : undefined;
     return message;
@@ -894,22 +894,22 @@ export const PageOperation = {
   },
 };
 
-function createBaseListRoleRequest(): ListRoleRequest {
+function createBaseListRoleReq(): ListRoleReq {
   return { Option: undefined };
 }
 
-export const ListRoleRequest = {
-  encode(message: ListRoleRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const ListRoleReq = {
+  encode(message: ListRoleReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.Option !== undefined) {
       ListOption.encode(message.Option, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): ListRoleRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): ListRoleReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseListRoleRequest();
+    const message = createBaseListRoleReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -929,11 +929,11 @@ export const ListRoleRequest = {
     return message;
   },
 
-  fromJSON(object: any): ListRoleRequest {
+  fromJSON(object: any): ListRoleReq {
     return { Option: isSet(object.Option) ? ListOption.fromJSON(object.Option) : undefined };
   },
 
-  toJSON(message: ListRoleRequest): unknown {
+  toJSON(message: ListRoleReq): unknown {
     const obj: any = {};
     if (message.Option !== undefined) {
       obj.Option = ListOption.toJSON(message.Option);
@@ -941,11 +941,11 @@ export const ListRoleRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListRoleRequest>, I>>(base?: I): ListRoleRequest {
-    return ListRoleRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<ListRoleReq>, I>>(base?: I): ListRoleReq {
+    return ListRoleReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListRoleRequest>, I>>(object: I): ListRoleRequest {
-    const message = createBaseListRoleRequest();
+  fromPartial<I extends Exact<DeepPartial<ListRoleReq>, I>>(object: I): ListRoleReq {
+    const message = createBaseListRoleReq();
     message.Option = (object.Option !== undefined && object.Option !== null)
       ? ListOption.fromPartial(object.Option)
       : undefined;
@@ -953,12 +953,12 @@ export const ListRoleRequest = {
   },
 };
 
-function createBaseListRoleResponse(): ListRoleResponse {
+function createBaseListRoleResp(): ListRoleResp {
   return { List: [], Total: 0 };
 }
 
-export const ListRoleResponse = {
-  encode(message: ListRoleResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const ListRoleResp = {
+  encode(message: ListRoleResp, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.List) {
       RoleData.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -968,10 +968,10 @@ export const ListRoleResponse = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): ListRoleResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): ListRoleResp {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseListRoleResponse();
+    const message = createBaseListRoleResp();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -998,14 +998,14 @@ export const ListRoleResponse = {
     return message;
   },
 
-  fromJSON(object: any): ListRoleResponse {
+  fromJSON(object: any): ListRoleResp {
     return {
       List: globalThis.Array.isArray(object?.List) ? object.List.map((e: any) => RoleData.fromJSON(e)) : [],
       Total: isSet(object.Total) ? globalThis.Number(object.Total) : 0,
     };
   },
 
-  toJSON(message: ListRoleResponse): unknown {
+  toJSON(message: ListRoleResp): unknown {
     const obj: any = {};
     if (message.List?.length) {
       obj.List = message.List.map((e) => RoleData.toJSON(e));
@@ -1016,11 +1016,11 @@ export const ListRoleResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListRoleResponse>, I>>(base?: I): ListRoleResponse {
-    return ListRoleResponse.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<ListRoleResp>, I>>(base?: I): ListRoleResp {
+    return ListRoleResp.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListRoleResponse>, I>>(object: I): ListRoleResponse {
-    const message = createBaseListRoleResponse();
+  fromPartial<I extends Exact<DeepPartial<ListRoleResp>, I>>(object: I): ListRoleResp {
+    const message = createBaseListRoleResp();
     message.List = object.List?.map((e) => RoleData.fromPartial(e)) || [];
     message.Total = object.Total ?? 0;
     return message;
@@ -1101,22 +1101,22 @@ export const RoleData = {
   },
 };
 
-function createBaseGetRoleAuthRequest(): GetRoleAuthRequest {
+function createBaseGetRoleAuthReq(): GetRoleAuthReq {
   return { ID: undefined };
 }
 
-export const GetRoleAuthRequest = {
-  encode(message: GetRoleAuthRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const GetRoleAuthReq = {
+  encode(message: GetRoleAuthReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.ID !== undefined) {
       writer.uint32(10).string(message.ID);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): GetRoleAuthRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetRoleAuthReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetRoleAuthRequest();
+    const message = createBaseGetRoleAuthReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1136,11 +1136,11 @@ export const GetRoleAuthRequest = {
     return message;
   },
 
-  fromJSON(object: any): GetRoleAuthRequest {
+  fromJSON(object: any): GetRoleAuthReq {
     return { ID: isSet(object.ID) ? globalThis.String(object.ID) : undefined };
   },
 
-  toJSON(message: GetRoleAuthRequest): unknown {
+  toJSON(message: GetRoleAuthReq): unknown {
     const obj: any = {};
     if (message.ID !== undefined) {
       obj.ID = message.ID;
@@ -1148,32 +1148,32 @@ export const GetRoleAuthRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<GetRoleAuthRequest>, I>>(base?: I): GetRoleAuthRequest {
-    return GetRoleAuthRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<GetRoleAuthReq>, I>>(base?: I): GetRoleAuthReq {
+    return GetRoleAuthReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<GetRoleAuthRequest>, I>>(object: I): GetRoleAuthRequest {
-    const message = createBaseGetRoleAuthRequest();
+  fromPartial<I extends Exact<DeepPartial<GetRoleAuthReq>, I>>(object: I): GetRoleAuthReq {
+    const message = createBaseGetRoleAuthReq();
     message.ID = object.ID ?? undefined;
     return message;
   },
 };
 
-function createBaseGetRoleAuthResponse(): GetRoleAuthResponse {
+function createBaseGetRoleAuthResp(): GetRoleAuthResp {
   return { Page: undefined };
 }
 
-export const GetRoleAuthResponse = {
-  encode(message: GetRoleAuthResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const GetRoleAuthResp = {
+  encode(message: GetRoleAuthResp, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.Page !== undefined) {
       Page.encode(message.Page, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): GetRoleAuthResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetRoleAuthResp {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGetRoleAuthResponse();
+    const message = createBaseGetRoleAuthResp();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1193,11 +1193,11 @@ export const GetRoleAuthResponse = {
     return message;
   },
 
-  fromJSON(object: any): GetRoleAuthResponse {
+  fromJSON(object: any): GetRoleAuthResp {
     return { Page: isSet(object.Page) ? Page.fromJSON(object.Page) : undefined };
   },
 
-  toJSON(message: GetRoleAuthResponse): unknown {
+  toJSON(message: GetRoleAuthResp): unknown {
     const obj: any = {};
     if (message.Page !== undefined) {
       obj.Page = Page.toJSON(message.Page);
@@ -1205,22 +1205,22 @@ export const GetRoleAuthResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<GetRoleAuthResponse>, I>>(base?: I): GetRoleAuthResponse {
-    return GetRoleAuthResponse.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<GetRoleAuthResp>, I>>(base?: I): GetRoleAuthResp {
+    return GetRoleAuthResp.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<GetRoleAuthResponse>, I>>(object: I): GetRoleAuthResponse {
-    const message = createBaseGetRoleAuthResponse();
+  fromPartial<I extends Exact<DeepPartial<GetRoleAuthResp>, I>>(object: I): GetRoleAuthResp {
+    const message = createBaseGetRoleAuthResp();
     message.Page = (object.Page !== undefined && object.Page !== null) ? Page.fromPartial(object.Page) : undefined;
     return message;
   },
 };
 
-function createBaseUpdateRoleRequest(): UpdateRoleRequest {
+function createBaseUpdateRoleReq(): UpdateRoleReq {
   return { ID: "", Name: "", Page: undefined };
 }
 
-export const UpdateRoleRequest = {
-  encode(message: UpdateRoleRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const UpdateRoleReq = {
+  encode(message: UpdateRoleReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.ID !== "") {
       writer.uint32(10).string(message.ID);
     }
@@ -1233,10 +1233,10 @@ export const UpdateRoleRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateRoleRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateRoleReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateRoleRequest();
+    const message = createBaseUpdateRoleReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1270,7 +1270,7 @@ export const UpdateRoleRequest = {
     return message;
   },
 
-  fromJSON(object: any): UpdateRoleRequest {
+  fromJSON(object: any): UpdateRoleReq {
     return {
       ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
       Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
@@ -1278,7 +1278,7 @@ export const UpdateRoleRequest = {
     };
   },
 
-  toJSON(message: UpdateRoleRequest): unknown {
+  toJSON(message: UpdateRoleReq): unknown {
     const obj: any = {};
     if (message.ID !== "") {
       obj.ID = message.ID;
@@ -1292,11 +1292,11 @@ export const UpdateRoleRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateRoleRequest>, I>>(base?: I): UpdateRoleRequest {
-    return UpdateRoleRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<UpdateRoleReq>, I>>(base?: I): UpdateRoleReq {
+    return UpdateRoleReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<UpdateRoleRequest>, I>>(object: I): UpdateRoleRequest {
-    const message = createBaseUpdateRoleRequest();
+  fromPartial<I extends Exact<DeepPartial<UpdateRoleReq>, I>>(object: I): UpdateRoleReq {
+    const message = createBaseUpdateRoleReq();
     message.ID = object.ID ?? "";
     message.Name = object.Name ?? "";
     message.Page = (object.Page !== undefined && object.Page !== null) ? Page.fromPartial(object.Page) : undefined;
@@ -1304,22 +1304,22 @@ export const UpdateRoleRequest = {
   },
 };
 
-function createBaseDeleteRoleRequest(): DeleteRoleRequest {
+function createBaseDeleteRoleReq(): DeleteRoleReq {
   return { ID: "" };
 }
 
-export const DeleteRoleRequest = {
-  encode(message: DeleteRoleRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const DeleteRoleReq = {
+  encode(message: DeleteRoleReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.ID !== "") {
       writer.uint32(10).string(message.ID);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteRoleRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteRoleReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseDeleteRoleRequest();
+    const message = createBaseDeleteRoleReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1339,11 +1339,11 @@ export const DeleteRoleRequest = {
     return message;
   },
 
-  fromJSON(object: any): DeleteRoleRequest {
+  fromJSON(object: any): DeleteRoleReq {
     return { ID: isSet(object.ID) ? globalThis.String(object.ID) : "" };
   },
 
-  toJSON(message: DeleteRoleRequest): unknown {
+  toJSON(message: DeleteRoleReq): unknown {
     const obj: any = {};
     if (message.ID !== "") {
       obj.ID = message.ID;
@@ -1351,22 +1351,22 @@ export const DeleteRoleRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<DeleteRoleRequest>, I>>(base?: I): DeleteRoleRequest {
-    return DeleteRoleRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<DeleteRoleReq>, I>>(base?: I): DeleteRoleReq {
+    return DeleteRoleReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<DeleteRoleRequest>, I>>(object: I): DeleteRoleRequest {
-    const message = createBaseDeleteRoleRequest();
+  fromPartial<I extends Exact<DeepPartial<DeleteRoleReq>, I>>(object: I): DeleteRoleReq {
+    const message = createBaseDeleteRoleReq();
     message.ID = object.ID ?? "";
     return message;
   },
 };
 
-function createBaseBindRoleRequest(): BindRoleRequest {
+function createBaseBindRoleReq(): BindRoleReq {
   return { AccountID: "", RoleID: "" };
 }
 
-export const BindRoleRequest = {
-  encode(message: BindRoleRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const BindRoleReq = {
+  encode(message: BindRoleReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.AccountID !== "") {
       writer.uint32(10).string(message.AccountID);
     }
@@ -1376,10 +1376,10 @@ export const BindRoleRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): BindRoleRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): BindRoleReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseBindRoleRequest();
+    const message = createBaseBindRoleReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1406,14 +1406,14 @@ export const BindRoleRequest = {
     return message;
   },
 
-  fromJSON(object: any): BindRoleRequest {
+  fromJSON(object: any): BindRoleReq {
     return {
       AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "",
       RoleID: isSet(object.RoleID) ? globalThis.String(object.RoleID) : "",
     };
   },
 
-  toJSON(message: BindRoleRequest): unknown {
+  toJSON(message: BindRoleReq): unknown {
     const obj: any = {};
     if (message.AccountID !== "") {
       obj.AccountID = message.AccountID;
@@ -1424,33 +1424,33 @@ export const BindRoleRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<BindRoleRequest>, I>>(base?: I): BindRoleRequest {
-    return BindRoleRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<BindRoleReq>, I>>(base?: I): BindRoleReq {
+    return BindRoleReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<BindRoleRequest>, I>>(object: I): BindRoleRequest {
-    const message = createBaseBindRoleRequest();
+  fromPartial<I extends Exact<DeepPartial<BindRoleReq>, I>>(object: I): BindRoleReq {
+    const message = createBaseBindRoleReq();
     message.AccountID = object.AccountID ?? "";
     message.RoleID = object.RoleID ?? "";
     return message;
   },
 };
 
-function createBaseUnBindRoleRequest(): UnBindRoleRequest {
+function createBaseUnBindRoleReq(): UnBindRoleReq {
   return { AccountID: "" };
 }
 
-export const UnBindRoleRequest = {
-  encode(message: UnBindRoleRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const UnBindRoleReq = {
+  encode(message: UnBindRoleReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.AccountID !== "") {
       writer.uint32(10).string(message.AccountID);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UnBindRoleRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): UnBindRoleReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUnBindRoleRequest();
+    const message = createBaseUnBindRoleReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1470,11 +1470,11 @@ export const UnBindRoleRequest = {
     return message;
   },
 
-  fromJSON(object: any): UnBindRoleRequest {
+  fromJSON(object: any): UnBindRoleReq {
     return { AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "" };
   },
 
-  toJSON(message: UnBindRoleRequest): unknown {
+  toJSON(message: UnBindRoleReq): unknown {
     const obj: any = {};
     if (message.AccountID !== "") {
       obj.AccountID = message.AccountID;
@@ -1482,22 +1482,22 @@ export const UnBindRoleRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UnBindRoleRequest>, I>>(base?: I): UnBindRoleRequest {
-    return UnBindRoleRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<UnBindRoleReq>, I>>(base?: I): UnBindRoleReq {
+    return UnBindRoleReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<UnBindRoleRequest>, I>>(object: I): UnBindRoleRequest {
-    const message = createBaseUnBindRoleRequest();
+  fromPartial<I extends Exact<DeepPartial<UnBindRoleReq>, I>>(object: I): UnBindRoleReq {
+    const message = createBaseUnBindRoleReq();
     message.AccountID = object.AccountID ?? "";
     return message;
   },
 };
 
-function createBaseLoginRequest(): LoginRequest {
+function createBaseLoginReq(): LoginReq {
   return { UserName: "", Password: "" };
 }
 
-export const LoginRequest = {
-  encode(message: LoginRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const LoginReq = {
+  encode(message: LoginReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.UserName !== "") {
       writer.uint32(10).string(message.UserName);
     }
@@ -1507,10 +1507,10 @@ export const LoginRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): LoginRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): LoginReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseLoginRequest();
+    const message = createBaseLoginReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1537,14 +1537,14 @@ export const LoginRequest = {
     return message;
   },
 
-  fromJSON(object: any): LoginRequest {
+  fromJSON(object: any): LoginReq {
     return {
       UserName: isSet(object.UserName) ? globalThis.String(object.UserName) : "",
       Password: isSet(object.Password) ? globalThis.String(object.Password) : "",
     };
   },
 
-  toJSON(message: LoginRequest): unknown {
+  toJSON(message: LoginReq): unknown {
     const obj: any = {};
     if (message.UserName !== "") {
       obj.UserName = message.UserName;
@@ -1555,23 +1555,23 @@ export const LoginRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<LoginRequest>, I>>(base?: I): LoginRequest {
-    return LoginRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<LoginReq>, I>>(base?: I): LoginReq {
+    return LoginReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<LoginRequest>, I>>(object: I): LoginRequest {
-    const message = createBaseLoginRequest();
+  fromPartial<I extends Exact<DeepPartial<LoginReq>, I>>(object: I): LoginReq {
+    const message = createBaseLoginReq();
     message.UserName = object.UserName ?? "";
     message.Password = object.Password ?? "";
     return message;
   },
 };
 
-function createBaseLoginResponse(): LoginResponse {
+function createBaseLoginResp(): LoginResp {
   return { SessionID: "", Role: undefined };
 }
 
-export const LoginResponse = {
-  encode(message: LoginResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const LoginResp = {
+  encode(message: LoginResp, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.SessionID !== "") {
       writer.uint32(10).string(message.SessionID);
     }
@@ -1581,10 +1581,10 @@ export const LoginResponse = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): LoginResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): LoginResp {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseLoginResponse();
+    const message = createBaseLoginResp();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1611,14 +1611,14 @@ export const LoginResponse = {
     return message;
   },
 
-  fromJSON(object: any): LoginResponse {
+  fromJSON(object: any): LoginResp {
     return {
       SessionID: isSet(object.SessionID) ? globalThis.String(object.SessionID) : "",
       Role: isSet(object.Role) ? Role.fromJSON(object.Role) : undefined,
     };
   },
 
-  toJSON(message: LoginResponse): unknown {
+  toJSON(message: LoginResp): unknown {
     const obj: any = {};
     if (message.SessionID !== "") {
       obj.SessionID = message.SessionID;
@@ -1629,33 +1629,33 @@ export const LoginResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<LoginResponse>, I>>(base?: I): LoginResponse {
-    return LoginResponse.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<LoginResp>, I>>(base?: I): LoginResp {
+    return LoginResp.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<LoginResponse>, I>>(object: I): LoginResponse {
-    const message = createBaseLoginResponse();
+  fromPartial<I extends Exact<DeepPartial<LoginResp>, I>>(object: I): LoginResp {
+    const message = createBaseLoginResp();
     message.SessionID = object.SessionID ?? "";
     message.Role = (object.Role !== undefined && object.Role !== null) ? Role.fromPartial(object.Role) : undefined;
     return message;
   },
 };
 
-function createBaseLogoutRequest(): LogoutRequest {
+function createBaseLogoutReq(): LogoutReq {
   return { SessionID: "" };
 }
 
-export const LogoutRequest = {
-  encode(message: LogoutRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const LogoutReq = {
+  encode(message: LogoutReq, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.SessionID !== "") {
       writer.uint32(10).string(message.SessionID);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): LogoutRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): LogoutReq {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseLogoutRequest();
+    const message = createBaseLogoutReq();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1675,11 +1675,11 @@ export const LogoutRequest = {
     return message;
   },
 
-  fromJSON(object: any): LogoutRequest {
+  fromJSON(object: any): LogoutReq {
     return { SessionID: isSet(object.SessionID) ? globalThis.String(object.SessionID) : "" };
   },
 
-  toJSON(message: LogoutRequest): unknown {
+  toJSON(message: LogoutReq): unknown {
     const obj: any = {};
     if (message.SessionID !== "") {
       obj.SessionID = message.SessionID;
@@ -1687,11 +1687,11 @@ export const LogoutRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<LogoutRequest>, I>>(base?: I): LogoutRequest {
-    return LogoutRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<LogoutReq>, I>>(base?: I): LogoutReq {
+    return LogoutReq.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<LogoutRequest>, I>>(object: I): LogoutRequest {
-    const message = createBaseLogoutRequest();
+  fromPartial<I extends Exact<DeepPartial<LogoutReq>, I>>(object: I): LogoutReq {
+    const message = createBaseLogoutReq();
     message.SessionID = object.SessionID ?? "";
     return message;
   },
@@ -1703,17 +1703,17 @@ export const MainService = {
     path: "/proto.Main/Login",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: LoginRequest) => Buffer.from(LoginRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => LoginRequest.decode(value),
-    responseSerialize: (value: LoginResponse) => Buffer.from(LoginResponse.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => LoginResponse.decode(value),
+    requestSerialize: (value: LoginReq) => Buffer.from(LoginReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => LoginReq.decode(value),
+    responseSerialize: (value: LoginResp) => Buffer.from(LoginResp.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => LoginResp.decode(value),
   },
   logout: {
     path: "/proto.Main/Logout",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: LogoutRequest) => Buffer.from(LogoutRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => LogoutRequest.decode(value),
+    requestSerialize: (value: LogoutReq) => Buffer.from(LogoutReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => LogoutReq.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
@@ -1721,8 +1721,8 @@ export const MainService = {
     path: "/proto.Main/CreateAccount",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: CreateAccountRequest) => Buffer.from(CreateAccountRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => CreateAccountRequest.decode(value),
+    requestSerialize: (value: CreateAccountReq) => Buffer.from(CreateAccountReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => CreateAccountReq.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
@@ -1730,17 +1730,17 @@ export const MainService = {
     path: "/proto.Main/ListAccount",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: ListAccountRequest) => Buffer.from(ListAccountRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => ListAccountRequest.decode(value),
-    responseSerialize: (value: ListAccountResponse) => Buffer.from(ListAccountResponse.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ListAccountResponse.decode(value),
+    requestSerialize: (value: ListAccountReq) => Buffer.from(ListAccountReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => ListAccountReq.decode(value),
+    responseSerialize: (value: ListAccountResp) => Buffer.from(ListAccountResp.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => ListAccountResp.decode(value),
   },
   updateAccount: {
     path: "/proto.Main/UpdateAccount",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: UpdateAccountRequest) => Buffer.from(UpdateAccountRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => UpdateAccountRequest.decode(value),
+    requestSerialize: (value: UpdateAccountReq) => Buffer.from(UpdateAccountReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => UpdateAccountReq.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
@@ -1748,8 +1748,8 @@ export const MainService = {
     path: "/proto.Main/DeleteAccount",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: DeleteAccountRequest) => Buffer.from(DeleteAccountRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => DeleteAccountRequest.decode(value),
+    requestSerialize: (value: DeleteAccountReq) => Buffer.from(DeleteAccountReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DeleteAccountReq.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
@@ -1757,8 +1757,8 @@ export const MainService = {
     path: "/proto.Main/DeactiveAccount",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: DeleteAccountRequest) => Buffer.from(DeleteAccountRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => DeleteAccountRequest.decode(value),
+    requestSerialize: (value: DeleteAccountReq) => Buffer.from(DeleteAccountReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DeleteAccountReq.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
@@ -1766,8 +1766,8 @@ export const MainService = {
     path: "/proto.Main/ActiveAccount",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: DeleteAccountRequest) => Buffer.from(DeleteAccountRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => DeleteAccountRequest.decode(value),
+    requestSerialize: (value: DeleteAccountReq) => Buffer.from(DeleteAccountReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DeleteAccountReq.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
@@ -1775,8 +1775,8 @@ export const MainService = {
     path: "/proto.Main/CreateRole",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: CreateRoleRequest) => Buffer.from(CreateRoleRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => CreateRoleRequest.decode(value),
+    requestSerialize: (value: CreateRoleReq) => Buffer.from(CreateRoleReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => CreateRoleReq.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
@@ -1784,26 +1784,26 @@ export const MainService = {
     path: "/proto.Main/ListRole",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: ListRoleRequest) => Buffer.from(ListRoleRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => ListRoleRequest.decode(value),
-    responseSerialize: (value: ListRoleResponse) => Buffer.from(ListRoleResponse.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => ListRoleResponse.decode(value),
+    requestSerialize: (value: ListRoleReq) => Buffer.from(ListRoleReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => ListRoleReq.decode(value),
+    responseSerialize: (value: ListRoleResp) => Buffer.from(ListRoleResp.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => ListRoleResp.decode(value),
   },
   getRoleAuth: {
     path: "/proto.Main/GetRoleAuth",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: GetRoleAuthRequest) => Buffer.from(GetRoleAuthRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => GetRoleAuthRequest.decode(value),
-    responseSerialize: (value: GetRoleAuthResponse) => Buffer.from(GetRoleAuthResponse.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => GetRoleAuthResponse.decode(value),
+    requestSerialize: (value: GetRoleAuthReq) => Buffer.from(GetRoleAuthReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => GetRoleAuthReq.decode(value),
+    responseSerialize: (value: GetRoleAuthResp) => Buffer.from(GetRoleAuthResp.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => GetRoleAuthResp.decode(value),
   },
   updateRole: {
     path: "/proto.Main/UpdateRole",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: UpdateRoleRequest) => Buffer.from(UpdateRoleRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => UpdateRoleRequest.decode(value),
+    requestSerialize: (value: UpdateRoleReq) => Buffer.from(UpdateRoleReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => UpdateRoleReq.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
@@ -1811,8 +1811,8 @@ export const MainService = {
     path: "/proto.Main/DeleteRole",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: DeleteRoleRequest) => Buffer.from(DeleteRoleRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => DeleteRoleRequest.decode(value),
+    requestSerialize: (value: DeleteRoleReq) => Buffer.from(DeleteRoleReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DeleteRoleReq.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
@@ -1820,8 +1820,8 @@ export const MainService = {
     path: "/proto.Main/BindRole",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: BindRoleRequest) => Buffer.from(BindRoleRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => BindRoleRequest.decode(value),
+    requestSerialize: (value: BindRoleReq) => Buffer.from(BindRoleReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => BindRoleReq.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
@@ -1829,247 +1829,232 @@ export const MainService = {
     path: "/proto.Main/UnBindRole",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: UnBindRoleRequest) => Buffer.from(UnBindRoleRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => UnBindRoleRequest.decode(value),
+    requestSerialize: (value: UnBindRoleReq) => Buffer.from(UnBindRoleReq.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => UnBindRoleReq.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
 } as const;
 
 export interface MainServer extends UntypedServiceImplementation {
-  login: handleUnaryCall<LoginRequest, LoginResponse>;
-  logout: handleUnaryCall<LogoutRequest, Empty>;
-  createAccount: handleUnaryCall<CreateAccountRequest, Empty>;
-  listAccount: handleUnaryCall<ListAccountRequest, ListAccountResponse>;
-  updateAccount: handleUnaryCall<UpdateAccountRequest, Empty>;
-  deleteAccount: handleUnaryCall<DeleteAccountRequest, Empty>;
-  deactiveAccount: handleUnaryCall<DeleteAccountRequest, Empty>;
-  activeAccount: handleUnaryCall<DeleteAccountRequest, Empty>;
-  createRole: handleUnaryCall<CreateRoleRequest, Empty>;
-  listRole: handleUnaryCall<ListRoleRequest, ListRoleResponse>;
-  getRoleAuth: handleUnaryCall<GetRoleAuthRequest, GetRoleAuthResponse>;
-  updateRole: handleUnaryCall<UpdateRoleRequest, Empty>;
-  deleteRole: handleUnaryCall<DeleteRoleRequest, Empty>;
-  bindRole: handleUnaryCall<BindRoleRequest, Empty>;
-  unBindRole: handleUnaryCall<UnBindRoleRequest, Empty>;
+  login: handleUnaryCall<LoginReq, LoginResp>;
+  logout: handleUnaryCall<LogoutReq, Empty>;
+  createAccount: handleUnaryCall<CreateAccountReq, Empty>;
+  listAccount: handleUnaryCall<ListAccountReq, ListAccountResp>;
+  updateAccount: handleUnaryCall<UpdateAccountReq, Empty>;
+  deleteAccount: handleUnaryCall<DeleteAccountReq, Empty>;
+  deactiveAccount: handleUnaryCall<DeleteAccountReq, Empty>;
+  activeAccount: handleUnaryCall<DeleteAccountReq, Empty>;
+  createRole: handleUnaryCall<CreateRoleReq, Empty>;
+  listRole: handleUnaryCall<ListRoleReq, ListRoleResp>;
+  getRoleAuth: handleUnaryCall<GetRoleAuthReq, GetRoleAuthResp>;
+  updateRole: handleUnaryCall<UpdateRoleReq, Empty>;
+  deleteRole: handleUnaryCall<DeleteRoleReq, Empty>;
+  bindRole: handleUnaryCall<BindRoleReq, Empty>;
+  unBindRole: handleUnaryCall<UnBindRoleReq, Empty>;
 }
 
 export interface MainClient extends Client {
+  login(request: LoginReq, callback: (error: ServiceError | null, response: LoginResp) => void): ClientUnaryCall;
   login(
-    request: LoginRequest,
-    callback: (error: ServiceError | null, response: LoginResponse) => void,
-  ): ClientUnaryCall;
-  login(
-    request: LoginRequest,
+    request: LoginReq,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: LoginResponse) => void,
+    callback: (error: ServiceError | null, response: LoginResp) => void,
   ): ClientUnaryCall;
   login(
-    request: LoginRequest,
+    request: LoginReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: LoginResponse) => void,
+    callback: (error: ServiceError | null, response: LoginResp) => void,
   ): ClientUnaryCall;
-  logout(request: LogoutRequest, callback: (error: ServiceError | null, response: Empty) => void): ClientUnaryCall;
+  logout(request: LogoutReq, callback: (error: ServiceError | null, response: Empty) => void): ClientUnaryCall;
   logout(
-    request: LogoutRequest,
+    request: LogoutReq,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   logout(
-    request: LogoutRequest,
+    request: LogoutReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   createAccount(
-    request: CreateAccountRequest,
+    request: CreateAccountReq,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   createAccount(
-    request: CreateAccountRequest,
+    request: CreateAccountReq,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   createAccount(
-    request: CreateAccountRequest,
+    request: CreateAccountReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   listAccount(
-    request: ListAccountRequest,
-    callback: (error: ServiceError | null, response: ListAccountResponse) => void,
+    request: ListAccountReq,
+    callback: (error: ServiceError | null, response: ListAccountResp) => void,
   ): ClientUnaryCall;
   listAccount(
-    request: ListAccountRequest,
+    request: ListAccountReq,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ListAccountResponse) => void,
+    callback: (error: ServiceError | null, response: ListAccountResp) => void,
   ): ClientUnaryCall;
   listAccount(
-    request: ListAccountRequest,
+    request: ListAccountReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ListAccountResponse) => void,
+    callback: (error: ServiceError | null, response: ListAccountResp) => void,
   ): ClientUnaryCall;
   updateAccount(
-    request: UpdateAccountRequest,
+    request: UpdateAccountReq,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   updateAccount(
-    request: UpdateAccountRequest,
+    request: UpdateAccountReq,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   updateAccount(
-    request: UpdateAccountRequest,
+    request: UpdateAccountReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   deleteAccount(
-    request: DeleteAccountRequest,
+    request: DeleteAccountReq,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   deleteAccount(
-    request: DeleteAccountRequest,
+    request: DeleteAccountReq,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   deleteAccount(
-    request: DeleteAccountRequest,
+    request: DeleteAccountReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   deactiveAccount(
-    request: DeleteAccountRequest,
+    request: DeleteAccountReq,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   deactiveAccount(
-    request: DeleteAccountRequest,
+    request: DeleteAccountReq,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   deactiveAccount(
-    request: DeleteAccountRequest,
+    request: DeleteAccountReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   activeAccount(
-    request: DeleteAccountRequest,
+    request: DeleteAccountReq,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   activeAccount(
-    request: DeleteAccountRequest,
+    request: DeleteAccountReq,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   activeAccount(
-    request: DeleteAccountRequest,
+    request: DeleteAccountReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
+  createRole(request: CreateRoleReq, callback: (error: ServiceError | null, response: Empty) => void): ClientUnaryCall;
   createRole(
-    request: CreateRoleRequest,
-    callback: (error: ServiceError | null, response: Empty) => void,
-  ): ClientUnaryCall;
-  createRole(
-    request: CreateRoleRequest,
+    request: CreateRoleReq,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   createRole(
-    request: CreateRoleRequest,
+    request: CreateRoleReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   listRole(
-    request: ListRoleRequest,
-    callback: (error: ServiceError | null, response: ListRoleResponse) => void,
+    request: ListRoleReq,
+    callback: (error: ServiceError | null, response: ListRoleResp) => void,
   ): ClientUnaryCall;
   listRole(
-    request: ListRoleRequest,
+    request: ListRoleReq,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: ListRoleResponse) => void,
+    callback: (error: ServiceError | null, response: ListRoleResp) => void,
   ): ClientUnaryCall;
   listRole(
-    request: ListRoleRequest,
+    request: ListRoleReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: ListRoleResponse) => void,
+    callback: (error: ServiceError | null, response: ListRoleResp) => void,
   ): ClientUnaryCall;
   getRoleAuth(
-    request: GetRoleAuthRequest,
-    callback: (error: ServiceError | null, response: GetRoleAuthResponse) => void,
+    request: GetRoleAuthReq,
+    callback: (error: ServiceError | null, response: GetRoleAuthResp) => void,
   ): ClientUnaryCall;
   getRoleAuth(
-    request: GetRoleAuthRequest,
+    request: GetRoleAuthReq,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: GetRoleAuthResponse) => void,
+    callback: (error: ServiceError | null, response: GetRoleAuthResp) => void,
   ): ClientUnaryCall;
   getRoleAuth(
-    request: GetRoleAuthRequest,
+    request: GetRoleAuthReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: GetRoleAuthResponse) => void,
+    callback: (error: ServiceError | null, response: GetRoleAuthResp) => void,
   ): ClientUnaryCall;
+  updateRole(request: UpdateRoleReq, callback: (error: ServiceError | null, response: Empty) => void): ClientUnaryCall;
   updateRole(
-    request: UpdateRoleRequest,
-    callback: (error: ServiceError | null, response: Empty) => void,
-  ): ClientUnaryCall;
-  updateRole(
-    request: UpdateRoleRequest,
+    request: UpdateRoleReq,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   updateRole(
-    request: UpdateRoleRequest,
+    request: UpdateRoleReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
+  deleteRole(request: DeleteRoleReq, callback: (error: ServiceError | null, response: Empty) => void): ClientUnaryCall;
   deleteRole(
-    request: DeleteRoleRequest,
-    callback: (error: ServiceError | null, response: Empty) => void,
-  ): ClientUnaryCall;
-  deleteRole(
-    request: DeleteRoleRequest,
+    request: DeleteRoleReq,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   deleteRole(
-    request: DeleteRoleRequest,
+    request: DeleteRoleReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
-  bindRole(request: BindRoleRequest, callback: (error: ServiceError | null, response: Empty) => void): ClientUnaryCall;
+  bindRole(request: BindRoleReq, callback: (error: ServiceError | null, response: Empty) => void): ClientUnaryCall;
   bindRole(
-    request: BindRoleRequest,
+    request: BindRoleReq,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   bindRole(
-    request: BindRoleRequest,
+    request: BindRoleReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
+  unBindRole(request: UnBindRoleReq, callback: (error: ServiceError | null, response: Empty) => void): ClientUnaryCall;
   unBindRole(
-    request: UnBindRoleRequest,
-    callback: (error: ServiceError | null, response: Empty) => void,
-  ): ClientUnaryCall;
-  unBindRole(
-    request: UnBindRoleRequest,
+    request: UnBindRoleReq,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   unBindRole(
-    request: UnBindRoleRequest,
+    request: UnBindRoleReq,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,

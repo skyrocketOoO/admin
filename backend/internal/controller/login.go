@@ -18,8 +18,8 @@ import (
 
 func (s *Server) Login(
 	ctx context.Context,
-	req *api.LoginRequest,
-) (resp *api.LoginResponse, err error) {
+	req *api.LoginReq,
+) (resp *api.LoginResp, err error) {
 	account := model.Account{}
 	if err = orm.GetDb().Where("UserName = ?", req.GetUserName()).
 		Take(&account).Error; err != nil {
@@ -33,10 +33,10 @@ func (s *Server) Login(
 		return nil, Error.Unauthenticated.WithTrace(fmt.Errorf("invalid password"))
 	}
 
-	resp = &api.LoginResponse{
-		SessionID: uuid.UUID(s.SessionSvc.GetSession(account.ID)).String(),
-	}
-	if err = Struct.Scan(account.Role, &resp.Role); err != nil {
+	resp = Struct.DeepNew[api.LoginResp]()
+	resp.SessionID = uuid.UUID(s.SessionSvc.GetSession(account.ID)).String()
+
+	if err = Struct.Scan(account.Role, resp.Role); err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
@@ -45,7 +45,7 @@ func (s *Server) Login(
 
 func (s *Server) Logout(
 	ctx context.Context,
-	req *api.LogoutRequest,
+	req *api.LogoutReq,
 ) (resp *api.Empty, err error) {
 	sessionID, err := uuid.Parse(req.GetSessionID())
 	if err != nil {

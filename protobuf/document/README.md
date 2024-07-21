@@ -12,26 +12,26 @@
   
 - [main.proto](#main-proto)
     - [AccountData](#proto-AccountData)
-    - [BindRoleRequest](#proto-BindRoleRequest)
-    - [CreateAccountRequest](#proto-CreateAccountRequest)
-    - [CreateRoleRequest](#proto-CreateRoleRequest)
-    - [DeleteAccountRequest](#proto-DeleteAccountRequest)
-    - [DeleteRoleRequest](#proto-DeleteRoleRequest)
-    - [GetRoleAuthRequest](#proto-GetRoleAuthRequest)
-    - [GetRoleAuthResponse](#proto-GetRoleAuthResponse)
-    - [ListAccountRequest](#proto-ListAccountRequest)
-    - [ListAccountResponse](#proto-ListAccountResponse)
-    - [ListRoleRequest](#proto-ListRoleRequest)
-    - [ListRoleResponse](#proto-ListRoleResponse)
-    - [LoginRequest](#proto-LoginRequest)
-    - [LoginResponse](#proto-LoginResponse)
-    - [LogoutRequest](#proto-LogoutRequest)
+    - [BindRoleReq](#proto-BindRoleReq)
+    - [CreateAccountReq](#proto-CreateAccountReq)
+    - [CreateRoleReq](#proto-CreateRoleReq)
+    - [DeleteAccountReq](#proto-DeleteAccountReq)
+    - [DeleteRoleReq](#proto-DeleteRoleReq)
+    - [GetRoleAuthReq](#proto-GetRoleAuthReq)
+    - [GetRoleAuthResp](#proto-GetRoleAuthResp)
+    - [ListAccountReq](#proto-ListAccountReq)
+    - [ListAccountResp](#proto-ListAccountResp)
+    - [ListRoleReq](#proto-ListRoleReq)
+    - [ListRoleResp](#proto-ListRoleResp)
+    - [LoginReq](#proto-LoginReq)
+    - [LoginResp](#proto-LoginResp)
+    - [LogoutReq](#proto-LogoutReq)
     - [Page](#proto-Page)
     - [PageOperation](#proto-PageOperation)
     - [RoleData](#proto-RoleData)
-    - [UnBindRoleRequest](#proto-UnBindRoleRequest)
-    - [UpdateAccountRequest](#proto-UpdateAccountRequest)
-    - [UpdateRoleRequest](#proto-UpdateRoleRequest)
+    - [UnBindRoleReq](#proto-UnBindRoleReq)
+    - [UpdateAccountReq](#proto-UpdateAccountReq)
+    - [UpdateRoleReq](#proto-UpdateRoleReq)
   
     - [Main](#proto-Main)
   
@@ -156,9 +156,9 @@
 
 
 
-<a name="proto-BindRoleRequest"></a>
+<a name="proto-BindRoleReq"></a>
 
-### BindRoleRequest
+### BindRoleReq
 
 
 
@@ -172,9 +172,9 @@
 
 
 
-<a name="proto-CreateAccountRequest"></a>
+<a name="proto-CreateAccountReq"></a>
 
-### CreateAccountRequest
+### CreateAccountReq
 
 
 
@@ -189,9 +189,9 @@
 
 
 
-<a name="proto-CreateRoleRequest"></a>
+<a name="proto-CreateRoleReq"></a>
 
-### CreateRoleRequest
+### CreateRoleReq
 
 
 
@@ -205,9 +205,9 @@
 
 
 
-<a name="proto-DeleteAccountRequest"></a>
+<a name="proto-DeleteAccountReq"></a>
 
-### DeleteAccountRequest
+### DeleteAccountReq
 
 
 
@@ -221,9 +221,9 @@
 
 
 
-<a name="proto-DeleteRoleRequest"></a>
+<a name="proto-DeleteRoleReq"></a>
 
-### DeleteRoleRequest
+### DeleteRoleReq
 
 
 
@@ -236,9 +236,9 @@
 
 
 
-<a name="proto-GetRoleAuthRequest"></a>
+<a name="proto-GetRoleAuthReq"></a>
 
-### GetRoleAuthRequest
+### GetRoleAuthReq
 
 
 
@@ -251,9 +251,9 @@
 
 
 
-<a name="proto-GetRoleAuthResponse"></a>
+<a name="proto-GetRoleAuthResp"></a>
 
-### GetRoleAuthResponse
+### GetRoleAuthResp
 
 
 
@@ -266,9 +266,9 @@
 
 
 
-<a name="proto-ListAccountRequest"></a>
+<a name="proto-ListAccountReq"></a>
 
-### ListAccountRequest
+### ListAccountReq
 
 
 
@@ -281,9 +281,9 @@
 
 
 
-<a name="proto-ListAccountResponse"></a>
+<a name="proto-ListAccountResp"></a>
 
-### ListAccountResponse
+### ListAccountResp
 
 
 
@@ -297,9 +297,9 @@
 
 
 
-<a name="proto-ListRoleRequest"></a>
+<a name="proto-ListRoleReq"></a>
 
-### ListRoleRequest
+### ListRoleReq
 
 
 
@@ -312,9 +312,9 @@
 
 
 
-<a name="proto-ListRoleResponse"></a>
+<a name="proto-ListRoleResp"></a>
 
-### ListRoleResponse
+### ListRoleResp
 
 
 
@@ -328,9 +328,9 @@
 
 
 
-<a name="proto-LoginRequest"></a>
+<a name="proto-LoginReq"></a>
 
-### LoginRequest
+### LoginReq
 
 
 
@@ -344,9 +344,9 @@
 
 
 
-<a name="proto-LoginResponse"></a>
+<a name="proto-LoginResp"></a>
 
-### LoginResponse
+### LoginResp
 
 
 
@@ -360,9 +360,9 @@
 
 
 
-<a name="proto-LogoutRequest"></a>
+<a name="proto-LogoutReq"></a>
 
-### LogoutRequest
+### LogoutReq
 
 
 
@@ -426,9 +426,9 @@
 
 
 
-<a name="proto-UnBindRoleRequest"></a>
+<a name="proto-UnBindRoleReq"></a>
 
-### UnBindRoleRequest
+### UnBindRoleReq
 
 
 
@@ -441,9 +441,9 @@
 
 
 
-<a name="proto-UpdateAccountRequest"></a>
+<a name="proto-UpdateAccountReq"></a>
 
-### UpdateAccountRequest
+### UpdateAccountReq
 
 
 
@@ -458,9 +458,9 @@
 
 
 
-<a name="proto-UpdateRoleRequest"></a>
+<a name="proto-UpdateRoleReq"></a>
 
-### UpdateRoleRequest
+### UpdateRoleReq
 
 
 
@@ -488,21 +488,21 @@
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Login | [LoginRequest](#proto-LoginRequest) | [LoginResponse](#proto-LoginResponse) |  |
-| Logout | [LogoutRequest](#proto-LogoutRequest) | [Empty](#proto-Empty) |  |
-| CreateAccount | [CreateAccountRequest](#proto-CreateAccountRequest) | [Empty](#proto-Empty) |  |
-| ListAccount | [ListAccountRequest](#proto-ListAccountRequest) | [ListAccountResponse](#proto-ListAccountResponse) |  |
-| UpdateAccount | [UpdateAccountRequest](#proto-UpdateAccountRequest) | [Empty](#proto-Empty) |  |
-| DeleteAccount | [DeleteAccountRequest](#proto-DeleteAccountRequest) | [Empty](#proto-Empty) |  |
-| DeactiveAccount | [DeleteAccountRequest](#proto-DeleteAccountRequest) | [Empty](#proto-Empty) |  |
-| ActiveAccount | [DeleteAccountRequest](#proto-DeleteAccountRequest) | [Empty](#proto-Empty) |  |
-| CreateRole | [CreateRoleRequest](#proto-CreateRoleRequest) | [Empty](#proto-Empty) |  |
-| ListRole | [ListRoleRequest](#proto-ListRoleRequest) | [ListRoleResponse](#proto-ListRoleResponse) |  |
-| GetRoleAuth | [GetRoleAuthRequest](#proto-GetRoleAuthRequest) | [GetRoleAuthResponse](#proto-GetRoleAuthResponse) |  |
-| UpdateRole | [UpdateRoleRequest](#proto-UpdateRoleRequest) | [Empty](#proto-Empty) |  |
-| DeleteRole | [DeleteRoleRequest](#proto-DeleteRoleRequest) | [Empty](#proto-Empty) |  |
-| BindRole | [BindRoleRequest](#proto-BindRoleRequest) | [Empty](#proto-Empty) |  |
-| UnBindRole | [UnBindRoleRequest](#proto-UnBindRoleRequest) | [Empty](#proto-Empty) |  |
+| Login | [LoginReq](#proto-LoginReq) | [LoginResp](#proto-LoginResp) |  |
+| Logout | [LogoutReq](#proto-LogoutReq) | [Empty](#proto-Empty) |  |
+| CreateAccount | [CreateAccountReq](#proto-CreateAccountReq) | [Empty](#proto-Empty) |  |
+| ListAccount | [ListAccountReq](#proto-ListAccountReq) | [ListAccountResp](#proto-ListAccountResp) |  |
+| UpdateAccount | [UpdateAccountReq](#proto-UpdateAccountReq) | [Empty](#proto-Empty) |  |
+| DeleteAccount | [DeleteAccountReq](#proto-DeleteAccountReq) | [Empty](#proto-Empty) |  |
+| DeactiveAccount | [DeleteAccountReq](#proto-DeleteAccountReq) | [Empty](#proto-Empty) |  |
+| ActiveAccount | [DeleteAccountReq](#proto-DeleteAccountReq) | [Empty](#proto-Empty) |  |
+| CreateRole | [CreateRoleReq](#proto-CreateRoleReq) | [Empty](#proto-Empty) |  |
+| ListRole | [ListRoleReq](#proto-ListRoleReq) | [ListRoleResp](#proto-ListRoleResp) |  |
+| GetRoleAuth | [GetRoleAuthReq](#proto-GetRoleAuthReq) | [GetRoleAuthResp](#proto-GetRoleAuthResp) |  |
+| UpdateRole | [UpdateRoleReq](#proto-UpdateRoleReq) | [Empty](#proto-Empty) |  |
+| DeleteRole | [DeleteRoleReq](#proto-DeleteRoleReq) | [Empty](#proto-Empty) |  |
+| BindRole | [BindRoleReq](#proto-BindRoleReq) | [Empty](#proto-Empty) |  |
+| UnBindRole | [UnBindRoleReq](#proto-UnBindRoleReq) | [Empty](#proto-Empty) |  |
 
  
 
