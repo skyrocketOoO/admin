@@ -1,5 +1,4 @@
 'use client';
- 
 import { lusitana } from '@/global/fonts';
 import {
   AtSymbolIcon,
@@ -18,14 +17,15 @@ export default function LoginForm() {
   const router = useRouter();
 
 
-  const handleSubmit = async (event) => {
-    const formData = new FormData(event.target);
+  const onSubmit = async (form:FormData) => {
     const data = {
-      username: formData.get('username'),
-      password: formData.get('password'),
+      username: form.get('username') as string,
+      password: form.get('password') as string,
     };
+    
 
     setIsLoading(true);
+
 
     try {
       // const response = await authenticate(formData);
@@ -33,6 +33,7 @@ export default function LoginForm() {
         router.push('/auth/admin');
 
         // setErrorMessage(result.message);
+        localStorage.setItem('session', data.username);
       
     } catch (error) {
       setErrorMessage('An unexpected error occurred.');
@@ -43,7 +44,7 @@ export default function LoginForm() {
 
 
   return (
-    <form action={handleSubmit} className="space-y-3">
+    <form action={onSubmit} className="space-y-3">
       <div className="flex-1 rounded-lg bg-neutral-900 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl text-white`}>
           Please log in to continue.
@@ -62,7 +63,7 @@ export default function LoginForm() {
                 id="username"
                 type="text"
                 name="username"
-                placeholder="Enter your username"
+                placeholder="hint: admin"
                 required
               />
               <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:bg-neutral-500" />
@@ -81,7 +82,7 @@ export default function LoginForm() {
                 id="password"
                 type="password"
                 name="password"
-                placeholder="Enter password"
+                placeholder="hint: admin"
                 required
                 minLength={5}
               />

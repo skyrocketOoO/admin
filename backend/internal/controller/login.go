@@ -12,6 +12,7 @@ import (
 	"admin/internal/utils/password"
 
 	"github.com/google/uuid"
+	"github.com/skyrocketOoO/GoUtils/Struct"
 	"gorm.io/gorm"
 )
 
@@ -32,9 +33,14 @@ func (s *Server) Login(
 		return nil, Error.Unauthenticated.WithTrace(fmt.Errorf("invalid password"))
 	}
 
-	return &api.LoginResponse{
+	resp = &api.LoginResponse{
 		SessionID: uuid.UUID(s.SessionSvc.GetSession(account.ID)).String(),
-	}, nil
+	}
+	if err = Struct.Scan(account.Role, &resp.Role); err != nil {
+		return nil, Error.Internal.WithTrace(err)
+	}
+
+	return resp, nil
 }
 
 func (s *Server) Logout(

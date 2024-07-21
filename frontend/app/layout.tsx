@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <Header />
         <div className="flex">
-          <main className="flex-1 pr-14"> {/* Add padding to the right to make space for the LinkBar */}
+          <main className="flex-1 pr-0">
             {children}
           </main>
           <LinkBar />

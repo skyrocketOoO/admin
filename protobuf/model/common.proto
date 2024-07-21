@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package proto.model;
+option go_package = "admin/api/model";
+
+import "google/protobuf/timestamp.proto";
+
+message Model {
+  int64 id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  google.protobuf.Timestamp deleted_at = 4;
+}

@@ -19,19 +19,21 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Main_Login_FullMethodName         = "/proto.Main/Login"
-	Main_Logout_FullMethodName        = "/proto.Main/Logout"
-	Main_CreateAccount_FullMethodName = "/proto.Main/CreateAccount"
-	Main_ListAccount_FullMethodName   = "/proto.Main/ListAccount"
-	Main_UpdateAccount_FullMethodName = "/proto.Main/UpdateAccount"
-	Main_DeleteAccount_FullMethodName = "/proto.Main/DeleteAccount"
-	Main_CreateRole_FullMethodName    = "/proto.Main/CreateRole"
-	Main_ListRole_FullMethodName      = "/proto.Main/ListRole"
-	Main_GetRoleAuth_FullMethodName   = "/proto.Main/GetRoleAuth"
-	Main_UpdateRole_FullMethodName    = "/proto.Main/UpdateRole"
-	Main_DeleteRole_FullMethodName    = "/proto.Main/DeleteRole"
-	Main_BindRole_FullMethodName      = "/proto.Main/BindRole"
-	Main_UnBindRole_FullMethodName    = "/proto.Main/UnBindRole"
+	Main_Login_FullMethodName           = "/proto.Main/Login"
+	Main_Logout_FullMethodName          = "/proto.Main/Logout"
+	Main_CreateAccount_FullMethodName   = "/proto.Main/CreateAccount"
+	Main_ListAccount_FullMethodName     = "/proto.Main/ListAccount"
+	Main_UpdateAccount_FullMethodName   = "/proto.Main/UpdateAccount"
+	Main_DeleteAccount_FullMethodName   = "/proto.Main/DeleteAccount"
+	Main_DeactiveAccount_FullMethodName = "/proto.Main/DeactiveAccount"
+	Main_ActiveAccount_FullMethodName   = "/proto.Main/ActiveAccount"
+	Main_CreateRole_FullMethodName      = "/proto.Main/CreateRole"
+	Main_ListRole_FullMethodName        = "/proto.Main/ListRole"
+	Main_GetRoleAuth_FullMethodName     = "/proto.Main/GetRoleAuth"
+	Main_UpdateRole_FullMethodName      = "/proto.Main/UpdateRole"
+	Main_DeleteRole_FullMethodName      = "/proto.Main/DeleteRole"
+	Main_BindRole_FullMethodName        = "/proto.Main/BindRole"
+	Main_UnBindRole_FullMethodName      = "/proto.Main/UnBindRole"
 )
 
 // MainClient is the client API for Main service.
@@ -44,6 +46,8 @@ type MainClient interface {
 	ListAccount(ctx context.Context, in *ListAccountRequest, opts ...grpc.CallOption) (*ListAccountResponse, error)
 	UpdateAccount(ctx context.Context, in *UpdateAccountRequest, opts ...grpc.CallOption) (*Empty, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error)
+	DeactiveAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error)
+	ActiveAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error)
 	CreateRole(ctx context.Context, in *CreateRoleRequest, opts ...grpc.CallOption) (*Empty, error)
 	ListRole(ctx context.Context, in *ListRoleRequest, opts ...grpc.CallOption) (*ListRoleResponse, error)
 	GetRoleAuth(ctx context.Context, in *GetRoleAuthRequest, opts ...grpc.CallOption) (*GetRoleAuthResponse, error)
@@ -115,6 +119,26 @@ func (c *mainClient) DeleteAccount(ctx context.Context, in *DeleteAccountRequest
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, Main_DeleteAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *mainClient) DeactiveAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, Main_DeactiveAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *mainClient) ActiveAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, Main_ActiveAccount_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -201,6 +225,8 @@ type MainServer interface {
 	ListAccount(context.Context, *ListAccountRequest) (*ListAccountResponse, error)
 	UpdateAccount(context.Context, *UpdateAccountRequest) (*Empty, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*Empty, error)
+	DeactiveAccount(context.Context, *DeleteAccountRequest) (*Empty, error)
+	ActiveAccount(context.Context, *DeleteAccountRequest) (*Empty, error)
 	CreateRole(context.Context, *CreateRoleRequest) (*Empty, error)
 	ListRole(context.Context, *ListRoleRequest) (*ListRoleResponse, error)
 	GetRoleAuth(context.Context, *GetRoleAuthRequest) (*GetRoleAuthResponse, error)
@@ -232,6 +258,12 @@ func (UnimplementedMainServer) UpdateAccount(context.Context, *UpdateAccountRequ
 }
 func (UnimplementedMainServer) DeleteAccount(context.Context, *DeleteAccountRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
+}
+func (UnimplementedMainServer) DeactiveAccount(context.Context, *DeleteAccountRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeactiveAccount not implemented")
+}
+func (UnimplementedMainServer) ActiveAccount(context.Context, *DeleteAccountRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ActiveAccount not implemented")
 }
 func (UnimplementedMainServer) CreateRole(context.Context, *CreateRoleRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRole not implemented")
@@ -371,6 +403,42 @@ func _Main_DeleteAccount_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MainServer).DeleteAccount(ctx, req.(*DeleteAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Main_DeactiveAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MainServer).DeactiveAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Main_DeactiveAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MainServer).DeactiveAccount(ctx, req.(*DeleteAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Main_ActiveAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MainServer).ActiveAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Main_ActiveAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MainServer).ActiveAccount(ctx, req.(*DeleteAccountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -531,6 +599,14 @@ var Main_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAccount",
 			Handler:    _Main_DeleteAccount_Handler,
+		},
+		{
+			MethodName: "DeactiveAccount",
+			Handler:    _Main_DeactiveAccount_Handler,
+		},
+		{
+			MethodName: "ActiveAccount",
+			Handler:    _Main_ActiveAccount_Handler,
 		},
 		{
 			MethodName: "CreateRole",

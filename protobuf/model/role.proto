@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package proto.model;
+option go_package = "admin/api/model";
+
+import "google/protobuf/timestamp.proto";
+import "model/common.proto";
+
+message Role {
+  proto.model.Model model = 1;
+  string name = 2;
+  Page page = 3;
+}
+
+message PageOperation {
+  bool create = 1;
+  bool read = 2;
+  bool update = 3;
+  bool delete = 4;
+}
+
+message Page {
+  PageOperation role = 1;
+  PageOperation setting = 2;
+  PageOperation account = 3;
+}

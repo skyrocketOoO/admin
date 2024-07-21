@@ -19,6 +19,7 @@ import {
 } from "@grpc/grpc-js";
 import * as _m0 from "protobufjs/minimal";
 import { Empty, ListOption } from "./common";
+import { Role } from "./model/role";
 import Long = require("long");
 
 export const protobufPackage = "proto";
@@ -124,6 +125,7 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   SessionID: string;
+  Role: Role | undefined;
 }
 
 export interface LogoutRequest {
@@ -1565,13 +1567,16 @@ export const LoginRequest = {
 };
 
 function createBaseLoginResponse(): LoginResponse {
-  return { SessionID: "" };
+  return { SessionID: "", Role: undefined };
 }
 
 export const LoginResponse = {
   encode(message: LoginResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.SessionID !== "") {
       writer.uint32(10).string(message.SessionID);
+    }
+    if (message.Role !== undefined) {
+      Role.encode(message.Role, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -1590,6 +1595,13 @@ export const LoginResponse = {
 
           message.SessionID = reader.string();
           continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.Role = Role.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1600,13 +1612,19 @@ export const LoginResponse = {
   },
 
   fromJSON(object: any): LoginResponse {
-    return { SessionID: isSet(object.SessionID) ? globalThis.String(object.SessionID) : "" };
+    return {
+      SessionID: isSet(object.SessionID) ? globalThis.String(object.SessionID) : "",
+      Role: isSet(object.Role) ? Role.fromJSON(object.Role) : undefined,
+    };
   },
 
   toJSON(message: LoginResponse): unknown {
     const obj: any = {};
     if (message.SessionID !== "") {
       obj.SessionID = message.SessionID;
+    }
+    if (message.Role !== undefined) {
+      obj.Role = Role.toJSON(message.Role);
     }
     return obj;
   },
@@ -1617,6 +1635,7 @@ export const LoginResponse = {
   fromPartial<I extends Exact<DeepPartial<LoginResponse>, I>>(object: I): LoginResponse {
     const message = createBaseLoginResponse();
     message.SessionID = object.SessionID ?? "";
+    message.Role = (object.Role !== undefined && object.Role !== null) ? Role.fromPartial(object.Role) : undefined;
     return message;
   },
 };
@@ -1734,6 +1753,24 @@ export const MainService = {
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
+  deactiveAccount: {
+    path: "/proto.Main/DeactiveAccount",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: DeleteAccountRequest) => Buffer.from(DeleteAccountRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DeleteAccountRequest.decode(value),
+    responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
+  },
+  activeAccount: {
+    path: "/proto.Main/ActiveAccount",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: DeleteAccountRequest) => Buffer.from(DeleteAccountRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DeleteAccountRequest.decode(value),
+    responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
+  },
   createRole: {
     path: "/proto.Main/CreateRole",
     requestStream: false,
@@ -1806,6 +1843,8 @@ export interface MainServer extends UntypedServiceImplementation {
   listAccount: handleUnaryCall<ListAccountRequest, ListAccountResponse>;
   updateAccount: handleUnaryCall<UpdateAccountRequest, Empty>;
   deleteAccount: handleUnaryCall<DeleteAccountRequest, Empty>;
+  deactiveAccount: handleUnaryCall<DeleteAccountRequest, Empty>;
+  activeAccount: handleUnaryCall<DeleteAccountRequest, Empty>;
   createRole: handleUnaryCall<CreateRoleRequest, Empty>;
   listRole: handleUnaryCall<ListRoleRequest, ListRoleResponse>;
   getRoleAuth: handleUnaryCall<GetRoleAuthRequest, GetRoleAuthResponse>;
@@ -1898,6 +1937,36 @@ export interface MainClient extends Client {
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   deleteAccount(
+    request: DeleteAccountRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  deactiveAccount(
+    request: DeleteAccountRequest,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  deactiveAccount(
+    request: DeleteAccountRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  deactiveAccount(
+    request: DeleteAccountRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  activeAccount(
+    request: DeleteAccountRequest,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  activeAccount(
+    request: DeleteAccountRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  activeAccount(
     request: DeleteAccountRequest,
     metadata: Metadata,
     options: Partial<CallOptions>,

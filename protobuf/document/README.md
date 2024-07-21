@@ -353,6 +353,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | SessionID | [string](#string) |  |  |
+| Role | [model.Role](#proto-model-Role) |  |  |
 
 
 
@@ -493,6 +494,8 @@
 | ListAccount | [ListAccountRequest](#proto-ListAccountRequest) | [ListAccountResponse](#proto-ListAccountResponse) |  |
 | UpdateAccount | [UpdateAccountRequest](#proto-UpdateAccountRequest) | [Empty](#proto-Empty) |  |
 | DeleteAccount | [DeleteAccountRequest](#proto-DeleteAccountRequest) | [Empty](#proto-Empty) |  |
+| DeactiveAccount | [DeleteAccountRequest](#proto-DeleteAccountRequest) | [Empty](#proto-Empty) |  |
+| ActiveAccount | [DeleteAccountRequest](#proto-DeleteAccountRequest) | [Empty](#proto-Empty) |  |
 | CreateRole | [CreateRoleRequest](#proto-CreateRoleRequest) | [Empty](#proto-Empty) |  |
 | ListRole | [ListRoleRequest](#proto-ListRoleRequest) | [ListRoleResponse](#proto-ListRoleResponse) |  |
 | GetRoleAuth | [GetRoleAuthRequest](#proto-GetRoleAuthRequest) | [GetRoleAuthResponse](#proto-GetRoleAuthResponse) |  |
