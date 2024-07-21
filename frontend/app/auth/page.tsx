@@ -4,7 +4,7 @@ import LoginForm from './login-form';
 export default function LoginPage() {
   return (
     <
-      main className="flex items-center justify-center md:h-screen"
+      main className="flex items-center justify-center h-full"
       style={{ backgroundImage: "url('/auth_bg.png')" }}
     >
       <div className="absolute right-20 mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">

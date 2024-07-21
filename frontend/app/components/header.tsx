@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = () => {
         </div>
         <span className="text-gray-700 h-8 text-sm p-4 rounded-md bg-cyan-100 flex items-center justify-center mr-4">{visitCount}</span>
         <div className="w-9 h-9 relative mr-2">
-          <Image src={head} alt="Head" fill className="object-contain" />
+          <Image src={head} alt="Head" fill sizes="36px 36px,36px" className="object-contain" />
         </div>
       </div>
     </header>

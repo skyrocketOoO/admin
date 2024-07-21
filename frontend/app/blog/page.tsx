@@ -39,7 +39,7 @@ const BlogPage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex w-full h-full">
       <div className="flex flex-grow">
         <Sidebar stories={stories} onSelectPost={handleSelectPost} />
         <div className="flex-grow p-4">

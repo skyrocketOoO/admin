@@ -19,13 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} antialiased h-screen`}>
         <Header />
-        <div className="flex">
+        <div className="flex flex-row-reverse h-full">
+          <LinkBar />
           <main className="flex-1 pr-0">
             {children}
           </main>
-          <LinkBar />
         </div>
       </body>
     </html>
