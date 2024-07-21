@@ -1,11 +1,13 @@
 import { lusitana } from '@/global/fonts';
+import  AccountList from './accountList';
 
-export default async function Page() {
+export default function Page() {
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        AccountList
+        Account List
       </h1>
+      <AccountList />
     </main>
   );
 }
