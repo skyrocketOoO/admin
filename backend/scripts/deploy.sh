@@ -11,10 +11,11 @@ go build -o backend/server
 
 ssh -i "~/.ssh/home.pem" $VM_USER@$VM_HOST << 'ENDSSH'
 sudo service backend stop
-rm -rf backend
+sudo rm -rf backend
 ENDSSH
 
 cp -r manifest backend/
+cp sqlite.db backend/
 scp -r -i "~/.ssh/home.pem" backend $VM_USER@$VM_HOST:
 
 

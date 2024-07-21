@@ -5,8 +5,8 @@ VM_USER="ubuntu"
 VM_HOST="ec2-3-106-200-208.ap-southeast-2.compute.amazonaws.com"
 PROJECT_DIR_NAME="fontend" # The directory name after cloning
 
-
 # Build the project locally
+rm -rf .next
 pnpm install
 pnpm build
 
@@ -25,7 +25,7 @@ rm -rf frontend
 
 ssh -i "~/.ssh/home.pem" $VM_USER@$VM_HOST << 'ENDSSH'
 sudo service frontend stop
-rm -rf frontend
+sudo rm -rf frontend
 ENDSSH
 
 # Transfer the tarball to the VM
