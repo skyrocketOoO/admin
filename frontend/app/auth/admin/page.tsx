@@ -1,15 +1,23 @@
-'use client'
+'use client';
 import { lusitana } from '@/global/fonts';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-export default async function Page() {
+import { useEffect, useState } from 'react';
+
+export default function Page() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     if (!localStorage.getItem('session')) {
       router.push('/auth');
+    } else {
+      setIsAuthenticated(true); 
     }
-  });
+  }, [router]);
+
+  if (isAuthenticated === null) {
+    return null; 
+  }
 
   return (
     <main>
