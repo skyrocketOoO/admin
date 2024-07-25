@@ -47,7 +47,7 @@ const AccountList = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 w-full flex flex-grow">
       <form onSubmit={handleQuery} className="mb-4">
         <input
           type="text"
