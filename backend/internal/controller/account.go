@@ -24,12 +24,18 @@ func (s *Server) CreateAccount(
 		return nil, Error.Internal.WithTrace(err)
 	}
 
-	if err = orm.GetDb().Create(&model.Account{
+	tarAccount := &model.Account{
 		UserName:    req.UserName,
 		HashPass:    password.Hash(req.Password, salt),
 		Salt:        salt,
 		DisplayName: req.DisplayName,
-	}).Error; err != nil {
+	}
+
+	if req.GetRoleID() != 0 {
+		tarAccount.RoleID = uint(req.GetRoleID())
+	}
+
+	if err = orm.GetDb().Create(tarAccount).Error; err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 

@@ -183,6 +183,7 @@
 | UserName | [string](#string) |  |  |
 | Password | [string](#string) |  |  |
 | DisplayName | [string](#string) |  |  |
+| RoleID | [uint32](#uint32) | optional |  |
 
 
 

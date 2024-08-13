@@ -28,6 +28,7 @@ export interface CreateAccountReq {
   UserName: string;
   Password: string;
   DisplayName: string;
+  RoleID?: number | undefined;
 }
 
 export interface ListAccountReq {
@@ -133,7 +134,7 @@ export interface LogoutReq {
 }
 
 function createBaseCreateAccountReq(): CreateAccountReq {
-  return { UserName: "", Password: "", DisplayName: "" };
+  return { UserName: "", Password: "", DisplayName: "", RoleID: undefined };
 }
 
 export const CreateAccountReq = {
@@ -146,6 +147,9 @@ export const CreateAccountReq = {
     }
     if (message.DisplayName !== "") {
       writer.uint32(26).string(message.DisplayName);
+    }
+    if (message.RoleID !== undefined) {
+      writer.uint32(32).uint32(message.RoleID);
     }
     return writer;
   },
@@ -178,6 +182,13 @@ export const CreateAccountReq = {
 
           message.DisplayName = reader.string();
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.RoleID = reader.uint32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -192,6 +203,7 @@ export const CreateAccountReq = {
       UserName: isSet(object.UserName) ? globalThis.String(object.UserName) : "",
       Password: isSet(object.Password) ? globalThis.String(object.Password) : "",
       DisplayName: isSet(object.DisplayName) ? globalThis.String(object.DisplayName) : "",
+      RoleID: isSet(object.RoleID) ? globalThis.Number(object.RoleID) : undefined,
     };
   },
 
@@ -206,6 +218,9 @@ export const CreateAccountReq = {
     if (message.DisplayName !== "") {
       obj.DisplayName = message.DisplayName;
     }
+    if (message.RoleID !== undefined) {
+      obj.RoleID = Math.round(message.RoleID);
+    }
     return obj;
   },
 
@@ -217,6 +232,7 @@ export const CreateAccountReq = {
     message.UserName = object.UserName ?? "";
     message.Password = object.Password ?? "";
     message.DisplayName = object.DisplayName ?? "";
+    message.RoleID = object.RoleID ?? undefined;
     return message;
   },
 };

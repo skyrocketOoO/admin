@@ -30,6 +30,7 @@ message CreateAccountReq{
   string UserName = 1;
   string Password = 2;
   string DisplayName = 3;
+  optional uint32 RoleID = 4;
 }
 
 message ListAccountReq{
