@@ -23,6 +23,6 @@ message Sorter{
 
 message Query{
   bool Fuzzy = 1;
-  string Field = 2;
+  repeated string Fields = 2;
   string Value = 3;
 }
