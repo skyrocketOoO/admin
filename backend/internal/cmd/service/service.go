@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var ServiceCmd = &cobra.Command{
+var Cmd = &cobra.Command{
 	Use:   "service",
 	Short: "The main service command",
 	Long:  ``,
@@ -14,5 +14,5 @@ var ServiceCmd = &cobra.Command{
 }
 
 func init() {
-	ServiceCmd.AddCommand(run.RunCmd)
+	Cmd.AddCommand(run.Cmd)
 }

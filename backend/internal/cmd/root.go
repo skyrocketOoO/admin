@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"admin/internal/cmd/initialize"
 	"admin/internal/cmd/service"
 
 	"github.com/spf13/cobra"
@@ -23,5 +24,6 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.AddCommand(service.ServiceCmd)
+	rootCmd.AddCommand(service.Cmd)
+	rootCmd.AddCommand(initialize.Cmd)
 }
