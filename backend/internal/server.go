@@ -9,7 +9,6 @@ import (
 	"admin/internal/service/Session"
 	"admin/internal/service/orm"
 
-	errors "github.com/rotisserie/eris"
 	"google.golang.org/grpc"
 
 	"github.com/rs/zerolog/log"
@@ -18,17 +17,21 @@ import (
 
 func RunServer(cmd *cobra.Command, args []string) {
 	if err := boot.InitAll(); err != nil {
-		panic(err.Error())
+		panic(err)
 	}
 
 	dbConf, _ := cmd.Flags().GetString("database")
 	if err := orm.InitDb(dbConf); err != nil {
-		log.Fatal().Msg(errors.ToString(err, true))
+		log.Fatal().Msg(err.Error())
 	}
 	defer func() {
 		db, _ := orm.GetDb().DB()
 		db.Close()
 	}()
+
+	if err := boot.Check(); err != nil {
+		panic(err)
+	}
 
 	port, _ := cmd.Flags().GetString("port")
 	lis, err := net.Listen("tcp", port)
