@@ -4,6 +4,8 @@ import (
 	"gorm.io/gorm"
 )
 
+// Any schema change must make sure master role has all permissions
+
 type (
 	Role struct {
 		gorm.Model
