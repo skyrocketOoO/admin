@@ -8,10 +8,11 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/skyrocketOoO/GoUtils/Struct"
 	"github.com/spf13/cobra"
+	"gorm.io/gorm"
 )
 
 var Cmd = &cobra.Command{
-	Use:   "init",
+	Use:   "initialize",
 	Short: "Init the data, config...etc",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -25,15 +26,20 @@ var Cmd = &cobra.Command{
 		}()
 
 		db := orm.GetDb()
-		masterRole := model.Role{}
+		masterRole := model.Role{
+			Name: global.MasterRoleName,
+		}
 		masterRole.ID = global.MasterRoleID
-		if err := Struct.SetBoolFieldsTrue(masterRole); err != nil {
+		if err := Struct.SetBoolFieldsTrue(&masterRole); err != nil {
 			panic(err)
 		}
+		masterRole.DeletedAt = gorm.DeletedAt{}
 		if err := db.Create(&masterRole).Error; err != nil {
 			panic(err)
 		}
-		defaultRole := model.Role{}
+		defaultRole := model.Role{
+			Name: global.DefaultRoleName,
+		}
 		defaultRole.ID = global.DefaultRoleID
 		if err := db.Create(&defaultRole).Error; err != nil {
 			panic(err)

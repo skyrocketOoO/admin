@@ -45,7 +45,7 @@ func InitDb(database string) (err error) {
 		); err != nil {
 			return
 		}
-	case "sqlite":
+	case "sqlite", "":
 		log.Info().Msg("Connecting to Sqlite")
 		if db, err = gorm.Open(sqlite.Open("sqlite.db"), &config); err != nil {
 			return

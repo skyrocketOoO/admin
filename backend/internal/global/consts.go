@@ -1,6 +1,8 @@
 package global
 
 const (
-	DefaultRoleID = 1
-	MasterRoleID  = 2
+	DefaultRoleID   = 1
+	DefaultRoleName = "Default"
+	MasterRoleID    = 2
+	MasterRoleName  = "Master"
 )
