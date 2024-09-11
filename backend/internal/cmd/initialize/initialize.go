@@ -46,6 +46,3 @@ var Cmd = &cobra.Command{
 		}
 	},
 }
-
-func init() {
-}
