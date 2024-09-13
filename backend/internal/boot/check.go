@@ -18,7 +18,7 @@ func Check() (err error) {
 		Take(&masterRole).Error; err != nil {
 		return err
 	}
-	if !allBoolsTrue(masterRole) {
+	if !allBoolsTrue(masterRole.Page) {
 		return errors.New("master role must has all permissions")
 	}
 
@@ -28,7 +28,7 @@ func Check() (err error) {
 		Take(&defaultRole).Error; err != nil {
 		return err
 	}
-	if !allBoolsFalse(defaultRole) {
+	if !allBoolsFalse(defaultRole.Page) {
 		return errors.New("default role must has no permissions")
 	}
 
