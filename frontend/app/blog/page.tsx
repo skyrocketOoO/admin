@@ -41,8 +41,10 @@ const BlogPage = () => {
   return (
     <div className="flex w-full h-full">
       <div className="flex flex-grow">
-        <Sidebar stories={stories} onSelectPost={handleSelectPost} />
-        <div className="flex-grow p-4">
+        <div className="flex w-1/4"> {/* Sidebar takes 25% of width */}
+          <Sidebar stories={stories} onSelectPost={handleSelectPost} />
+        </div>
+        <div className="flex-grow p-4 w-3/4">
           {selectedPost ? (
             <BlogStory
               title={selectedPost.title}

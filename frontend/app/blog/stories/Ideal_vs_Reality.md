@@ -11,13 +11,13 @@ I suggested a test flow:
 I don't talk about the pros and cons here, but this suggesion is rejected by my colleague, who thinks it violates the "separation of frontend and backend" because frontend need to run it on his own machine.
 
 So, I asked the chatGPT, it's answer is:
-```
+
 Does this violate the separation of backend and frontend?
 
 Not necessarily. Here’s why:
 Frontend-Backend separation typically refers to keeping the codebases, responsibilities, and concerns distinct. Frontend deals with user interfaces and interaction, while backend focuses on business logic, databases, and APIs.
 In your scenario, the codebases are still separate, and each team is responsible for its respective part (frontend or backend).
-```
+
 
 That is what I think, but in fact, those all are conventions, not absolutely. So I can understand the difference about the boundaries of frontend and backend.
 
