@@ -4,6 +4,7 @@ import (
 	"admin/internal/global"
 	"admin/internal/model"
 	"admin/internal/service/orm"
+	"admin/internal/utils/password"
 
 	"github.com/rs/zerolog/log"
 	"github.com/skyrocketOoO/GoUtils/Struct"
@@ -26,6 +27,7 @@ var Cmd = &cobra.Command{
 		}()
 
 		db := orm.GetDb()
+
 		masterRole := model.Role{
 			Name: global.MasterRoleName,
 		}
@@ -42,6 +44,21 @@ var Cmd = &cobra.Command{
 		}
 		defaultRole.ID = global.DefaultRoleID
 		if err := db.Create(&defaultRole).Error; err != nil {
+			panic(err)
+		}
+
+		salt, err := password.GenSalt()
+		if err != nil {
+			panic(err)
+		}
+		masterAccount := &model.Account{
+			UserName:    "admin",
+			HashPass:    password.Hash("admin", salt),
+			Salt:        salt,
+			DisplayName: "admin",
+			RoleID:      global.MasterRoleID,
+		}
+		if err = orm.GetDb().Create(masterAccount).Error; err != nil {
 			panic(err)
 		}
 	},
