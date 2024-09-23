@@ -8,11 +8,10 @@ export default function SideNav() {
   const router = useRouter();
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2 bg-gray-50 dark:bg-gray-800">
-      <div className="w-32 text-white md:w-40">
+      <div className="w-full text-white">
         <div
-          className={`${lusitana.className} flex flex-row items-center leading-none text-white`}
+          className={`${lusitana.className} items-center leading-none text-black`}
         >
-          {/* <img src="lb-hole.png" alt="Logo" className="h-10 w-10" /> */}
           <p className="text-[26px]">Admin</p>
         </div>
       </div>
