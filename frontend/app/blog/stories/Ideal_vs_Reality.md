@@ -14,7 +14,7 @@ So, I asked the chatGPT, it's answer is:
 
 Does this violate the separation of backend and frontend?
 
-Not necessarily. Here’s why:
+Not necessarily. Here's why:
 Frontend-Backend separation typically refers to keeping the codebases, responsibilities, and concerns distinct. Frontend deals with user interfaces and interaction, while backend focuses on business logic, databases, and APIs.
 In your scenario, the codebases are still separate, and each team is responsible for its respective part (frontend or backend).
 
