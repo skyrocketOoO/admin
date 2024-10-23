@@ -11,6 +11,7 @@ import (
 	"admin/internal/service/orm"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
@@ -44,6 +45,7 @@ func RunServer(cmd *cobra.Command, args []string) {
 		grpc.UnaryInterceptor(middleware.UnaryServerInterceptor),
 		grpc.StreamInterceptor(middleware.StreamServerInterceptor),
 	)
+	reflection.Register(s)
 	sessionSvc := Session.NewSessionSvc()
 	api.RegisterMainServer(s, controller.NewServer(sessionSvc))
 	log.Info().Msgf("Listen to %s", port)
