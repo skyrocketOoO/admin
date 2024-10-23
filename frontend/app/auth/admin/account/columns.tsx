@@ -40,6 +40,10 @@ export const columns: ColumnDef<Account>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "ID",
+    header: "ID",
+  },
+  {
     accessorKey: "UserName",  // Make sure this matches your proto field name
     header: ({ column }) => {
       return (
