@@ -6,6 +6,7 @@ import (
 	"admin/api"
 	"admin/internal/boot"
 	"admin/internal/controller"
+	"admin/internal/middleware"
 	"admin/internal/service/Session"
 	"admin/internal/service/orm"
 
@@ -39,7 +40,10 @@ func RunServer(cmd *cobra.Command, args []string) {
 		log.Fatal().Msgf("Failed to listen: %v", err)
 	}
 
-	s := grpc.NewServer()
+	s := grpc.NewServer(
+		grpc.UnaryInterceptor(middleware.UnaryServerInterceptor),
+		grpc.StreamInterceptor(middleware.StreamServerInterceptor),
+	)
 	sessionSvc := Session.NewSessionSvc()
 	api.RegisterMainServer(s, controller.NewServer(sessionSvc))
 	log.Info().Msgf("Listen to %s", port)
