@@ -1,90 +1,38 @@
-import { Payment, columns } from "./columns"
+import { columns } from "./columns"
 import { DataTable } from "./data-table"
+import { ListAccountReq, ListAccountResp, AccountData } from '@/proto/main'; // Adjust the import according to your project structure
+import { MainClient } from '@/proto/main';
+import * as grpc from '@grpc/grpc-js';
 
-async function getData(): Promise<Payment[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "1",
-      amount: 1,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "2",
-      amount: 2,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "3",
-      amount: 3,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "4",
-      amount: 4,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "5",
-      amount: 5,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "6",
-      amount: 6,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "7",
-      amount: 7,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "8",
-      amount: 8,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "9",
-      amount: 9,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "10",
-      amount: 10,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "11",
-      amount: 11,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "12",
-      amount: 12,
-      status: "pending",
-      email: "m@example.com",
-    },
-  ]
+async function getData(listReq: ListAccountReq): Promise<ListAccountResp> {
+  const client = new MainClient('localhost:50051', grpc.credentials.createInsecure());
+
+  // Simulate fetching account data from an API
+  return new Promise((resolve, reject) => {
+    client.listAccount(listReq, (error, response) => {
+      if (error) {
+        return reject(error);  // Reject the promise if an error occurs
+      }
+      resolve(response);  // Resolve the promise with the response data
+    });
+  });
 }
 
-export default async function DemoPage() {
-  const data = await getData()
 
+export default async function DemoPage() {
+  const  page = 1, size = 10, sortField = "UserName", sortOrder = "asc", query = "UserName";
+  const listReq: ListAccountReq = {
+    Option: {
+      Pager: { Number: Number(page), Size: Number(size) },
+      Sorter: { Asc: sortOrder === 'asc', Field: sortField as string },
+      Query: query ? [{ Fuzzy: true, Field: 'UserName', Value: query as string }] : [],
+    },
+  };
+  const listAccountResp = await getData(listReq);
+  console.log(listAccountResp)
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={listAccountResp.List} />
     </div>
   )
 }
