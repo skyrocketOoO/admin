@@ -17,8 +17,6 @@ func UnaryServerInterceptor(
 	info *grpc.UnaryServerInfo,
 	handler grpc.UnaryHandler,
 ) (any, error) {
-	log.Info().Msgf("Unary API called: %s, Request: %v", info.FullMethod, req)
-
 	// Call the handler to execute the actual gRPC method
 	resp, err := handler(ctx, req)
 
@@ -27,9 +25,9 @@ func UnaryServerInterceptor(
 
 	// Log the response, error, and status code
 	if err != nil {
-		log.Info().Msgf("Unary API Error: %s, Status: %s, Error: %v", info.FullMethod, colorizeStatus(st.Code().String()), err)
+		log.Info().Msgf("%s %s Error: %v", info.FullMethod, colorizeStatus(st.Code().String()), err)
 	} else {
-		log.Info().Msgf("Unary API Response: %s, Status: %s, Response: %v", info.FullMethod, colorizeStatus(st.Code().String()), resp)
+		log.Info().Msgf("%s %s", info.FullMethod, colorizeStatus(st.Code().String()))
 	}
 
 	return resp, err
@@ -42,8 +40,6 @@ func StreamServerInterceptor(
 	info *grpc.StreamServerInfo,
 	handler grpc.StreamHandler,
 ) error {
-	log.Info().Msgf("Streaming API called: %s", info.FullMethod)
-
 	// Retrieve and log metadata (optional)
 	md, ok := metadata.FromIncomingContext(ss.Context())
 	if ok {
@@ -58,9 +54,9 @@ func StreamServerInterceptor(
 
 	// Log the error and status code if any
 	if err != nil {
-		log.Info().Msgf("Streaming API Error: %s, Status: %s, Error: %v", info.FullMethod, colorizeStatus(st.Code().String()), err)
+		log.Info().Msgf("%s, Status: %s, Error: %v", info.FullMethod, colorizeStatus(st.Code().String()), err)
 	} else {
-		log.Info().Msgf("Streaming API completed: %s, Status: %s", info.FullMethod, colorizeStatus(st.Code().String()))
+		log.Info().Msgf("%s, Status: %s", info.FullMethod, colorizeStatus(st.Code().String()))
 	}
 
 	return err
