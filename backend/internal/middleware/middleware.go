@@ -2,57 +2,79 @@ package middleware
 
 import (
 	"context"
-	"log"
+	"fmt"
 
+	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
-// UnaryServerInterceptor logs the API calls
+// UnaryServerInterceptor logs the API calls and status code
 func UnaryServerInterceptor(
 	ctx context.Context,
-	req interface{},
+	req any,
 	info *grpc.UnaryServerInfo,
 	handler grpc.UnaryHandler,
-) (interface{}, error) {
-	log.Printf("Unary API called: %s, Request: %v", info.FullMethod, req)
+) (any, error) {
+	log.Info().Msgf("Unary API called: %s, Request: %v", info.FullMethod, req)
 
 	// Call the handler to execute the actual gRPC method
 	resp, err := handler(ctx, req)
 
-	// Log the response and error if any
+	// Extract the gRPC status code
+	st, _ := status.FromError(err)
+
+	// Log the response, error, and status code
 	if err != nil {
-		log.Printf("Unary API Error: %s, Error: %v", info.FullMethod, err)
+		log.Info().Msgf("Unary API Error: %s, Status: %s, Error: %v", info.FullMethod, colorizeStatus(st.Code().String()), err)
 	} else {
-		log.Printf("Unary API Response: %s, Response: %v", info.FullMethod, resp)
+		log.Info().Msgf("Unary API Response: %s, Status: %s, Response: %v", info.FullMethod, colorizeStatus(st.Code().String()), resp)
 	}
 
 	return resp, err
 }
 
-// StreamServerInterceptor logs the API calls for streaming RPCs
+// StreamServerInterceptor logs the API calls, metadata, and status code for streaming RPCs
 func StreamServerInterceptor(
-	srv interface{},
+	srv any,
 	ss grpc.ServerStream,
 	info *grpc.StreamServerInfo,
 	handler grpc.StreamHandler,
 ) error {
-	log.Printf("Streaming API called: %s", info.FullMethod)
+	log.Info().Msgf("Streaming API called: %s", info.FullMethod)
 
 	// Retrieve and log metadata (optional)
 	md, ok := metadata.FromIncomingContext(ss.Context())
 	if ok {
-		log.Printf("Metadata: %v", md)
+		log.Info().Msgf("Metadata: %v", md)
 	}
 
 	// Call the handler to process the stream
 	err := handler(srv, ss)
 
+	// Extract the gRPC status code
+	st, _ := status.FromError(err)
+
+	// Log the error and status code if any
 	if err != nil {
-		log.Printf("Streaming API Error: %s, Error: %v", info.FullMethod, err)
+		log.Info().Msgf("Streaming API Error: %s, Status: %s, Error: %v", info.FullMethod, colorizeStatus(st.Code().String()), err)
 	} else {
-		log.Printf("Streaming API completed: %s", info.FullMethod)
+		log.Info().Msgf("Streaming API completed: %s, Status: %s", info.FullMethod, colorizeStatus(st.Code().String()))
 	}
 
 	return err
+}
+
+func colorizeStatus(statusCode string) string {
+	switch statusCode {
+	case "OK":
+		return fmt.Sprintf("\033[32m%s\033[0m", statusCode) // Green for OK
+	case "INVALID_ARGUMENT":
+		return fmt.Sprintf("\033[33m%s\033[0m", statusCode) // Yellow for warnings
+	case "INTERNAL":
+		return fmt.Sprintf("\033[31m%s\033[0m", statusCode) // Red for errors
+	default:
+		return fmt.Sprintf("\033[34m%s\033[0m", statusCode) // Blue for other status codes
+	}
 }
