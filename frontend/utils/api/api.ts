@@ -1,5 +1,5 @@
 'use server'
-import { MainClient, AccountData, ListAccountReq, ListAccountResp } from '@/proto/main';
+import { MainClient, ListAccountReq, ListAccountResp } from '@/proto/main';
 import * as grpc from '@grpc/grpc-js';
 
 const client = new MainClient("localhost:50051", grpc.credentials.createInsecure());
