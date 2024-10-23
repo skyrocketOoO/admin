@@ -8,7 +8,10 @@ PROJECT_DIR_NAME="fontend" # The directory name after cloning
 # Build the project locally
 rm -rf .next
 pnpm install
-pnpm build
+if ! pnpm build; then
+  echo "Build failed. Exiting..."
+  exit 1
+fi
 
 # Create a tarball of the build and necessary files
 mkdir -p frontend
