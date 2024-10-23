@@ -37,14 +37,15 @@ message ListAccountReq{
   optional ListOption Option = 1;
 }
 message ListAccountResp{
-  repeated AccountData List = 1;
+  repeated Account List = 1;
   int64 Total = 2;
 }
-message AccountData {
-  string UserName = 1;
-  string DisplayName = 2;
-  string Email = 3;
-  int32 State = 4;
+message Account{
+  int32 ID = 1;
+  string UserName = 2;
+  string DisplayName = 3;
+  string Email = 4;
+  int32 State = 5;
 }
 
 message UpdateAccountReq{

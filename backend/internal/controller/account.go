@@ -60,9 +60,9 @@ func (s *Server) ListAccount(
 		return nil, Error.Internal.WithTrace(err)
 	}
 
-	resp.List = make([]*api.AccountData, len(accounts))
+	resp.List = make([]*api.Account, len(accounts))
 	for i, account := range accounts {
-		resp.List[i] = Struct.DeepNew[api.AccountData]()
+		resp.List[i] = Struct.DeepNew[api.Account]()
 		if err = Struct.Scan(&account, resp.List[i]); err != nil {
 			return nil, Error.Internal.WithTrace(err)
 		}

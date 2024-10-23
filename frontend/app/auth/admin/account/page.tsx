@@ -1,6 +1,6 @@
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
-import { ListAccountReq, ListAccountResp, AccountData } from '@/proto/main'; // Adjust the import according to your project structure
+import { ListAccountReq, ListAccountResp } from '@/proto/main'; // Adjust the import according to your project structure
 import { MainClient } from '@/proto/main';
 import * as grpc from '@grpc/grpc-js';
 
@@ -25,7 +25,7 @@ export default async function DemoPage() {
     Option: {
       Pager: { Number: Number(page), Size: Number(size) },
       Sorter: { Asc: sortOrder === 'asc', Field: sortField as string },
-      Query: query ? [{ Fuzzy: true, Field: 'UserName', Value: query as string }] : [],
+      Query: query ? [{ Fuzzy: true, Fields: ['UserName'], Value: query as string }] : [],
     },
   };
   const listAccountResp = await getData(listReq);

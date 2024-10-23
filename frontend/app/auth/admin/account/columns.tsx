@@ -14,9 +14,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { number } from "zod"
-import { AccountData } from '@/proto/main';
+import { Account } from '@/proto/main';
 
-export const columns: ColumnDef<AccountData>[] = [
+export const columns: ColumnDef<Account>[] = [
   {
     id: "select",
     header: ({ table }) => (

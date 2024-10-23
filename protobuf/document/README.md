@@ -11,7 +11,7 @@
     - [Sorter](#proto-Sorter)
   
 - [main.proto](#main-proto)
-    - [AccountData](#proto-AccountData)
+    - [Account](#proto-Account)
     - [BindRoleReq](#proto-BindRoleReq)
     - [CreateAccountReq](#proto-CreateAccountReq)
     - [CreateRoleReq](#proto-CreateRoleReq)
@@ -98,7 +98,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Fuzzy | [bool](#bool) |  |  |
-| Field | [string](#string) |  |  |
+| Fields | [string](#string) | repeated |  |
 | Value | [string](#string) |  |  |
 
 
@@ -138,14 +138,15 @@
 
 
 
-<a name="proto-AccountData"></a>
+<a name="proto-Account"></a>
 
-### AccountData
+### Account
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
+| ID | [int32](#int32) |  |  |
 | UserName | [string](#string) |  |  |
 | DisplayName | [string](#string) |  |  |
 | Email | [string](#string) |  |  |
@@ -290,7 +291,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| List | [AccountData](#proto-AccountData) | repeated |  |
+| List | [Account](#proto-Account) | repeated |  |
 | Total | [int64](#int64) |  |  |
 
 
