@@ -18,7 +18,6 @@ async function getData(listReq: ListAccountReq): Promise<ListAccountResp> {
   });
 }
 
-
 export default async function Page() {
   const  page = 1, size = 10, sortField = "UserName", sortOrder = "asc", query = "UserName";
   const listReq: ListAccountReq = {
