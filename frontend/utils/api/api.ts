@@ -4,20 +4,13 @@ import * as grpc from '@grpc/grpc-js';
 
 const client = new MainClient("localhost:50051", grpc.credentials.createInsecure());
 
-export async function listAccount(req: ListAccountReq): Promise<ListAccountResp | null> {
-  try {
-    const resp = await new Promise<ListAccountResp>((resolve, reject) => {
-      client.listAccount(req, (error: grpc.ServiceError | null, resp: ListAccountResp) => {
-        if (error) {
-          reject(new Error('Failed to fetch accounts.'));
-        } else {
-          resolve(resp);
-        }
-      });
+export async function listAccount(listReq: ListAccountReq): Promise<ListAccountResp> {
+  return new Promise((resolve, reject) => {
+    client.listAccount(listReq, (error, response) => {
+      if (error) {
+        return reject(error); 
+      }
+      resolve(response);
     });
-    return resp;
-  } catch (err) {
-    console.error('Error fetching accounts:', err);
-    return null;
-  }
+  });
 }
