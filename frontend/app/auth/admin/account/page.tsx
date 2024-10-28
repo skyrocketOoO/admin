@@ -5,10 +5,10 @@ import { listAccount } from "@/utils/api/api";
 
 export default async function Page() {
   const page = 1,
-    size = 10,
-    sortField = "UserName",
-    sortOrder = "asc",
-    query = "UserName";
+        size = 10,
+        sortField = "UserName",
+        sortOrder = "asc",
+        query = "UserName";
   
   const listReq: ListAccountReq = {
     Option: {

@@ -15,8 +15,8 @@ type (
 	}
 
 	Pager struct {
-		Number int
-		Size   int
+		Number int32
+		Size   int32
 	}
 
 	Sorter struct {
@@ -58,7 +58,7 @@ func ListWithPager(db *gorm.DB, option ListOption, src any) (total int64, err er
 	}
 
 	if option.Pager != (Pager{}) {
-		db.Offset(option.Pager.Size * (option.Pager.Number - 1)).Limit(option.Pager.Size)
+		db.Offset(int(option.Pager.Size * (option.Pager.Number - 1))).Limit(int(option.Pager.Size))
 	}
 
 	err = db.Find(src).Error

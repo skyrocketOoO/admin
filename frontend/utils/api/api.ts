@@ -1,4 +1,3 @@
-'use server'
 import { MainClient, ListAccountReq, ListAccountResp } from '@/proto/main';
 import * as grpc from '@grpc/grpc-js';
 
