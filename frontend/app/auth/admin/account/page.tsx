@@ -30,3 +30,19 @@ export default async function Page() {
     return <div>Error loading data. Please try again later.</div>;
   }
 }
+
+import { MainClient } from '@/proto/main';
+import { grpc } from '@improbable-eng/grpc-web';
+
+const client = new MainClient("localhost:50051", grpc);
+
+export async function listAccount(listReq: ListAccountReq): Promise<ListAccountResp> {
+  return new Promise((resolve, reject) => {
+    client.listAccount(listReq, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      resolve(response);
+    });
+  });
+}
