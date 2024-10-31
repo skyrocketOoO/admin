@@ -9,8 +9,14 @@ importers:
   .:
     dependencies:
       '@bufbuild/protobuf':
-        specifier: ^2.2.0
-        version: 2.2.0
+        specifier: ^1.10.0
+        version: 1.10.0
+      '@connectrpc/connect':
+        specifier: ^1.6.1
+        version: 1.6.1(@bufbuild/protobuf@1.10.0)
+      '@connectrpc/connect-web':
+        specifier: ^1.6.1
+        version: 1.6.1(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0))
       '@grpc/grpc-js':
         specifier: ^1.12.2
         version: 1.12.2
@@ -144,8 +150,19 @@ packages:
       nodemailer:
         optional: true
 
-  '@bufbuild/protobuf@2.2.0':
-    resolution: {integrity: sha512-+imAQkHf7U/Rwvu0wk1XWgsP3WnpCWmK7B48f0XqSNzgk64+grljTKC7pnO/xBiEMUziF7vKRfbBnOQhg126qQ==}
+  '@bufbuild/protobuf@1.10.0':
+    resolution: {integrity: sha512-QDdVFLoN93Zjg36NoQPZfsVH9tZew7wKDKyV5qRdj8ntT4wQCOradQjRaTdwMhWUYsgKsvCINKKm87FdEk96Ag==}
+
+  '@connectrpc/connect-web@1.6.1':
+    resolution: {integrity: sha512-GVfxQOmt3TtgTaKeXLS/EA2IHa3nHxwe2BCHT7X0Q/0hohM+nP5DDnIItGEjGrGdt3LTTqWqE4s70N4h+qIMlQ==}
+    peerDependencies:
+      '@bufbuild/protobuf': ^1.10.0
+      '@connectrpc/connect': 1.6.1
+
+  '@connectrpc/connect@1.6.1':
+    resolution: {integrity: sha512-KchMDNtU4CDTdkyf0qG7ugJ6qHTOR/aI7XebYn3OTCNagaDYWiZUVKgRgwH79yeMkpNgvEUaXSK7wKjaBK9b/Q==}
+    peerDependencies:
+      '@bufbuild/protobuf': ^1.10.0
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -3550,7 +3567,16 @@ snapshots:
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
 
-  '@bufbuild/protobuf@2.2.0': {}
+  '@bufbuild/protobuf@1.10.0': {}
+
+  '@connectrpc/connect-web@1.6.1(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0))':
+    dependencies:
+      '@bufbuild/protobuf': 1.10.0
+      '@connectrpc/connect': 1.6.1(@bufbuild/protobuf@1.10.0)
+
+  '@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0)':
+    dependencies:
+      '@bufbuild/protobuf': 1.10.0
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -4308,17 +4334,17 @@ snapshots:
       '@webassemblyjs/ast': 1.12.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@2.1.1(webpack-cli@5.1.4)(webpack@5.92.1)':
+  '@webpack-cli/configtest@2.1.1(webpack-cli@5.1.4(webpack@5.92.1))(webpack@5.92.1(webpack-cli@5.1.4))':
     dependencies:
       webpack: 5.92.1(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack@5.92.1)
 
-  '@webpack-cli/info@2.0.2(webpack-cli@5.1.4)(webpack@5.92.1)':
+  '@webpack-cli/info@2.0.2(webpack-cli@5.1.4(webpack@5.92.1))(webpack@5.92.1(webpack-cli@5.1.4))':
     dependencies:
       webpack: 5.92.1(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack@5.92.1)
 
-  '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4)(webpack@5.92.1)':
+  '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4(webpack@5.92.1))(webpack@5.92.1(webpack-cli@5.1.4))':
     dependencies:
       webpack: 5.92.1(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack@5.92.1)
@@ -7012,7 +7038,7 @@ snapshots:
 
   tapable@2.2.1: {}
 
-  terser-webpack-plugin@5.3.10(webpack@5.92.1):
+  terser-webpack-plugin@5.3.10(webpack@5.92.1(webpack-cli@5.1.4)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -7256,9 +7282,9 @@ snapshots:
   webpack-cli@5.1.4(webpack@5.92.1):
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
-      '@webpack-cli/configtest': 2.1.1(webpack-cli@5.1.4)(webpack@5.92.1)
-      '@webpack-cli/info': 2.0.2(webpack-cli@5.1.4)(webpack@5.92.1)
-      '@webpack-cli/serve': 2.0.5(webpack-cli@5.1.4)(webpack@5.92.1)
+      '@webpack-cli/configtest': 2.1.1(webpack-cli@5.1.4(webpack@5.92.1))(webpack@5.92.1(webpack-cli@5.1.4))
+      '@webpack-cli/info': 2.0.2(webpack-cli@5.1.4(webpack@5.92.1))(webpack@5.92.1(webpack-cli@5.1.4))
+      '@webpack-cli/serve': 2.0.5(webpack-cli@5.1.4(webpack@5.92.1))(webpack@5.92.1(webpack-cli@5.1.4))
       colorette: 2.0.20
       commander: 10.0.1
       cross-spawn: 7.0.3
@@ -7301,7 +7327,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(webpack@5.92.1)
+      terser-webpack-plugin: 5.3.10(webpack@5.92.1(webpack-cli@5.1.4))
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     optionalDependencies:

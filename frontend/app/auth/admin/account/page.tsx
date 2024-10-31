@@ -1,7 +1,7 @@
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import { ListAccountReq, ListAccountResp } from '@/proto/main'; // Adjust the import according to your project structure
-import { listAccount } from "@/utils/api/api";
+import { ListAccountReq } from "@/proto/main_pb";
+import { listAccount, serverSideClient } from "@/utils/api/api";
 
 export default async function Page() {
   const page = 1,
@@ -19,7 +19,7 @@ export default async function Page() {
   };
 
   try {
-    const listAccountResp = await listAccount(listReq);
+    const listAccountResp = await listAccount(serverSideClient, listReq);
     return (
       <div className="container mx-auto py-10">
         <DataTable columns={columns} data={listAccountResp.List} />

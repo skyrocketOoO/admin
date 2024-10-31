@@ -12,24 +12,33 @@ plugins:
     opt: markdown,README.md,source_relative
     out: document
 
+  - remote: buf.build/grpc/go:v1.5.1
+    out: ../backend/api
+    opt: paths=source_relative
+  # dependencies
   - remote: buf.build/protocolbuffers/go:v1.34.2
     out: ../backend/api
     opt: paths=source_relative
 
-  - remote: buf.build/grpc/go
-    out: ../backend/api
-    opt: paths=source_relative
-
-  - remote: buf.build/community/stephenh-ts-proto
+  - remote: buf.build/connectrpc/es:v1.6.1
     out: ../frontend/proto
     opt:
-      - outputServices=grpc-js
-      - env=node
-      - paths=source_relative
+      - target=ts
+      # - import_extension=.ts
+  # dependencies
+  - remote: buf.build/bufbuild/es:v1.10.0
+    out: ../frontend/proto
+    # opt:
+    #   - target=ts
+    #   - import_extension=.ts
 
-  - remote: buf.build/community/stephenh-ts-proto
+  - remote: buf.build/connectrpc/es:v1.6.1
     out: ../k6/proto
     opt:
-      - outputServices=grpc-js
-      - env=node
-      - paths=source_relative
+      - target=ts
+      - import_extension=ts
+  # dependencies
+  - remote: buf.build/bufbuild/es:v1.10.0
+    out: ../k6/proto
+    opt:
+      - target=ts
