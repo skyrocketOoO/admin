@@ -1,12 +1,12 @@
 syntax = "proto3";
 
 package proto;
-option go_package = "admin/api";
+option go_package = "admin/proto";
 
 import "common.proto";
 import "model/role.proto";
 
-service Main{
+service MainService{
   rpc Login(LoginReq) returns (LoginResp);
   rpc Logout(LogoutReq) returns (Empty);
 

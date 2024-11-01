@@ -4,11 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	"admin/api"
 	"admin/internal/model"
 	"admin/internal/service/orm"
 	"admin/internal/utils/dao"
 	"admin/internal/utils/password"
+	"admin/proto"
+
+	"connectrpc.com/connect"
 
 	"admin/internal/domain/Error"
 
@@ -17,18 +19,19 @@ import (
 
 func (s *Server) CreateAccount(
 	ctx context.Context,
-	req *api.CreateAccountReq,
-) (resp *api.Empty, err error) {
+	connReq *connect.Request[proto.CreateAccountReq],
+) (connResp *connect.Response[proto.Empty], err error) {
+	req := connReq.Msg
 	salt, err := password.GenSalt()
 	if err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
 	tarAccount := &model.Account{
-		UserName:    req.UserName,
-		HashPass:    password.Hash(req.Password, salt),
+		UserName:    req.GetUserName(),
+		HashPass:    password.Hash(req.GetPassword(), salt),
 		Salt:        salt,
-		DisplayName: req.DisplayName,
+		DisplayName: req.GetDisplayName(),
 	}
 
 	if req.GetRoleID() != 0 {
@@ -44,8 +47,9 @@ func (s *Server) CreateAccount(
 
 func (s *Server) ListAccount(
 	ctx context.Context,
-	req *api.ListAccountReq,
-) (resp *api.ListAccountResp, err error) {
+	connReq *connect.Request[proto.ListAccountReq],
+) (connResp *connect.Response[proto.ListAccountResp], err error) {
+	req := connReq.Msg
 	option := Struct.DeepNew[dao.ListOption]()
 	if req.GetOption() != nil {
 		if err = Struct.Scan(req.Option, option); err != nil {
@@ -54,27 +58,28 @@ func (s *Server) ListAccount(
 	}
 
 	db := orm.GetDb().Model(&model.Account{})
-	resp = Struct.DeepNew[api.ListAccountResp]()
+	resp := Struct.DeepNew[proto.ListAccountResp]()
 	accounts := []model.Account{}
 	if resp.Total, err = dao.ListWithPager(db, *option, &accounts); err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
-	resp.List = make([]*api.Account, len(accounts))
+	resp.List = make([]*proto.Account, len(accounts))
 	for i, account := range accounts {
-		resp.List[i] = Struct.DeepNew[api.Account]()
+		resp.List[i] = Struct.DeepNew[proto.Account]()
 		if err = Struct.Scan(&account, resp.List[i]); err != nil {
 			return nil, Error.Internal.WithTrace(err)
 		}
 	}
 
-	return
+	return connect.NewResponse(resp), nil
 }
 
 func (s *Server) UpdateAccount(
 	ctx context.Context,
-	req *api.UpdateAccountReq,
-) (resp *api.Empty, err error) {
+	connReq *connect.Request[proto.UpdateAccountReq],
+) (connResp *connect.Response[proto.Empty], err error) {
+	req := connReq.Msg
 	tx := orm.GetDb().
 		Model(&model.Account{}).
 		Where("ID = ?", req.GetID()).
@@ -95,8 +100,9 @@ func (s *Server) UpdateAccount(
 
 func (s *Server) DeleteAccount(
 	ctx context.Context,
-	req *api.DeleteAccountReq,
-) (resp *api.Empty, err error) {
+	connReq *connect.Request[proto.DeleteAccountReq],
+) (connResp *connect.Response[proto.Empty], err error) {
+	req := connReq.Msg
 	if err = orm.GetDb().Delete(&model.Account{}, req.GetID()).Error; err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}

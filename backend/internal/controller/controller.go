@@ -1,13 +1,13 @@
 package controller
 
 import (
-	"admin/api"
 	"admin/internal/service/Session"
+	"admin/proto/protoconnect"
 )
 
 type (
 	Server struct {
-		api.UnimplementedMainServer
+		protoconnect.UnimplementedMainServiceHandler
 		SessionSvc *Session.SessionSvc
 	}
 )

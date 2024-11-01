@@ -4,62 +4,34 @@ import (
 	"context"
 	"fmt"
 
+	"connectrpc.com/connect"
 	"github.com/rs/zerolog/log"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
-	"google.golang.org/grpc/status"
 )
 
-// UnaryServerInterceptor logs the API calls and status code
-func UnaryServerInterceptor(
-	ctx context.Context,
-	req any,
-	info *grpc.UnaryServerInfo,
-	handler grpc.UnaryHandler,
-) (any, error) {
-	// Call the handler to execute the actual gRPC method
-	resp, err := handler(ctx, req)
+func NewLogRouteUnaryInterceptor() connect.UnaryInterceptorFunc {
+	interceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
+		return connect.UnaryFunc(func(
+			ctx context.Context,
+			req connect.AnyRequest,
+		) (connect.AnyResponse, error) {
+			// Call the next handler to get the response and error
+			resp, err := next(ctx, req)
 
-	// Extract the gRPC status code
-	st, _ := status.FromError(err)
+			// Log the method name and response status
+			method := req.Spec().Procedure // Retrieve the fully qualified method name
+			statusCode := connect.CodeOf(err)
 
-	// Log the response, error, and status code
-	if err != nil {
-		log.Info().Msgf("%s %s Error: %v", info.FullMethod, colorizeStatus(st.Code().String()), err)
-	} else {
-		log.Info().Msgf("%s %s", info.FullMethod, colorizeStatus(st.Code().String()))
+			// Log with error handling and status
+			if err != nil {
+				log.Info().Msgf("%s %s Error: %v", method, colorizeStatus(statusCode.String()), err)
+			} else {
+				log.Info().Msgf("%s %s", method, colorizeStatus(statusCode.String()))
+			}
+
+			return resp, err
+		})
 	}
-
-	return resp, err
-}
-
-// StreamServerInterceptor logs the API calls, metadata, and status code for streaming RPCs
-func StreamServerInterceptor(
-	srv any,
-	ss grpc.ServerStream,
-	info *grpc.StreamServerInfo,
-	handler grpc.StreamHandler,
-) error {
-	// Retrieve and log metadata (optional)
-	md, ok := metadata.FromIncomingContext(ss.Context())
-	if ok {
-		log.Info().Msgf("Metadata: %v", md)
-	}
-
-	// Call the handler to process the stream
-	err := handler(srv, ss)
-
-	// Extract the gRPC status code
-	st, _ := status.FromError(err)
-
-	// Log the error and status code if any
-	if err != nil {
-		log.Info().Msgf("%s, Status: %s, Error: %v", info.FullMethod, colorizeStatus(st.Code().String()), err)
-	} else {
-		log.Info().Msgf("%s, Status: %s", info.FullMethod, colorizeStatus(st.Code().String()))
-	}
-
-	return err
+	return connect.UnaryInterceptorFunc(interceptor)
 }
 
 func colorizeStatus(statusCode string) string {

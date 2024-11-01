@@ -4,21 +4,23 @@ import (
 	"context"
 	"fmt"
 
-	"admin/api"
 	"admin/internal/model"
 	"admin/internal/service/orm"
 	"admin/internal/utils/dao"
+	"admin/proto"
 
 	"admin/internal/domain/Error"
 
+	"connectrpc.com/connect"
 	"github.com/skyrocketOoO/GoUtils/Struct"
 	"gorm.io/gorm"
 )
 
 func (s *Server) CreateRole(
 	ctx context.Context,
-	req *api.CreateRoleReq,
-) (resp *api.Empty, err error) {
+	connReq *connect.Request[proto.CreateRoleReq],
+) (connResp *connect.Response[proto.Empty], err error) {
+	req := connReq.Msg
 	role := Struct.DeepNew[model.Role]()
 	if err = Struct.Scan(req, req); err != nil {
 		return nil, Error.Internal.WithTrace(err)
@@ -32,52 +34,55 @@ func (s *Server) CreateRole(
 
 func (s *Server) ListRole(
 	ctx context.Context,
-	req *api.ListRoleReq,
-) (resp *api.ListRoleResp, err error) {
+	connReq *connect.Request[proto.ListRoleReq],
+) (connResp *connect.Response[proto.ListRoleResp], err error) {
+	req := connReq.Msg
 	option := Struct.DeepNew[dao.ListOption]()
 	if err = Struct.Scan(req.Option, option); err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
 	db := orm.GetDb().Model(&model.Role{}).Select("ID", "Name")
-	resp = Struct.DeepNew[api.ListRoleResp]()
+	resp := Struct.DeepNew[proto.ListRoleResp]()
 	Roles := []model.Role{}
 	if resp.Total, err = dao.ListWithPager(db, *option, &Roles); err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
-	resp.List = make([]*api.RoleData, len(Roles))
+	resp.List = make([]*proto.RoleData, len(Roles))
 	for i, Role := range Roles {
-		resp.List[i] = Struct.DeepNew[api.RoleData]()
+		resp.List[i] = Struct.DeepNew[proto.RoleData]()
 		if err = Struct.Scan(&Role, resp.List[i]); err != nil {
 			return nil, Error.Internal.WithTrace(err)
 		}
 	}
 
-	return
+	return connect.NewResponse(resp), nil
 }
 
 func (s *Server) GetRoleAuth(
 	ctx context.Context,
-	req *api.GetRoleAuthReq,
-) (resp *api.GetRoleAuthResp, err error) {
+	connReq *connect.Request[proto.GetRoleAuthReq],
+) (connResp *connect.Response[proto.GetRoleAuthResp], err error) {
+	req := connReq.Msg
 	role := model.Role{}
 	if err = orm.GetDb().Where("ID =?", req.GetID()).Take(&role).Error; err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
-	resp = Struct.DeepNew[api.GetRoleAuthResp]()
+	resp := Struct.DeepNew[proto.GetRoleAuthResp]()
 	if err = Struct.Scan(role.Page, resp.Page); err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
-	return
+	return connect.NewResponse(resp), nil
 }
 
 func (s *Server) UpdateRole(
 	ctx context.Context,
-	req *api.UpdateRoleReq,
-) (resp *api.Empty, err error) {
+	connReq *connect.Request[proto.UpdateRoleReq],
+) (connResp *connect.Response[proto.Empty], err error) {
+	req := connReq.Msg
 	update := Struct.DeepNew[model.Role]()
 	if err = Struct.Scan(req, update); err != nil {
 		return nil, Error.Internal.WithTrace(err)
@@ -100,8 +105,9 @@ func (s *Server) UpdateRole(
 
 func (s *Server) DeleteRole(
 	ctx context.Context,
-	req *api.DeleteRoleReq,
-) (resp *api.Empty, err error) {
+	connReq *connect.Request[proto.DeleteRoleReq],
+) (connResp *connect.Response[proto.Empty], err error) {
+	req := connReq.Msg
 	if err = orm.GetDb().Delete(&model.Role{}, req.GetID()).Error; err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
@@ -110,8 +116,9 @@ func (s *Server) DeleteRole(
 
 func (s *Server) BindRole(
 	ctx context.Context,
-	req *api.BindRoleReq,
-) (resp *api.Empty, err error) {
+	connReq *connect.Request[proto.BindRoleReq],
+) (connResp *connect.Response[proto.Empty], err error) {
+	req := connReq.Msg
 	db := orm.GetDb()
 
 	if err = db.Transaction(func(tx *gorm.DB) error {
@@ -141,8 +148,9 @@ func (s *Server) BindRole(
 
 func (s *Server) UnBindRole(
 	ctx context.Context,
-	req *api.UnBindRoleReq,
-) (resp *api.Empty, err error) {
+	connReq *connect.Request[proto.UnBindRoleReq],
+) (connResp *connect.Response[proto.Empty], err error) {
+	req := connReq.Msg
 	db := orm.GetDb()
 
 	if err = db.Transaction(func(tx *gorm.DB) error {

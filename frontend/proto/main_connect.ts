@@ -8,13 +8,13 @@ import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "./common_pb.js";
 
 /**
- * @generated from service proto.Main
+ * @generated from service proto.MainService
  */
-export const Main = {
-  typeName: "proto.Main",
+export const MainService = {
+  typeName: "proto.MainService",
   methods: {
     /**
-     * @generated from rpc proto.Main.Login
+     * @generated from rpc proto.MainService.Login
      */
     login: {
       name: "Login",
@@ -23,7 +23,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.Logout
+     * @generated from rpc proto.MainService.Logout
      */
     logout: {
       name: "Logout",
@@ -32,7 +32,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.CreateAccount
+     * @generated from rpc proto.MainService.CreateAccount
      */
     createAccount: {
       name: "CreateAccount",
@@ -41,7 +41,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.ListAccount
+     * @generated from rpc proto.MainService.ListAccount
      */
     listAccount: {
       name: "ListAccount",
@@ -50,7 +50,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.UpdateAccount
+     * @generated from rpc proto.MainService.UpdateAccount
      */
     updateAccount: {
       name: "UpdateAccount",
@@ -59,7 +59,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.DeleteAccount
+     * @generated from rpc proto.MainService.DeleteAccount
      */
     deleteAccount: {
       name: "DeleteAccount",
@@ -68,7 +68,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.DeactiveAccount
+     * @generated from rpc proto.MainService.DeactiveAccount
      */
     deactiveAccount: {
       name: "DeactiveAccount",
@@ -77,7 +77,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.ActiveAccount
+     * @generated from rpc proto.MainService.ActiveAccount
      */
     activeAccount: {
       name: "ActiveAccount",
@@ -86,7 +86,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.CreateRole
+     * @generated from rpc proto.MainService.CreateRole
      */
     createRole: {
       name: "CreateRole",
@@ -95,7 +95,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.ListRole
+     * @generated from rpc proto.MainService.ListRole
      */
     listRole: {
       name: "ListRole",
@@ -104,7 +104,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.GetRoleAuth
+     * @generated from rpc proto.MainService.GetRoleAuth
      */
     getRoleAuth: {
       name: "GetRoleAuth",
@@ -113,7 +113,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.UpdateRole
+     * @generated from rpc proto.MainService.UpdateRole
      */
     updateRole: {
       name: "UpdateRole",
@@ -122,7 +122,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.DeleteRole
+     * @generated from rpc proto.MainService.DeleteRole
      */
     deleteRole: {
       name: "DeleteRole",
@@ -131,7 +131,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.BindRole
+     * @generated from rpc proto.MainService.BindRole
      */
     bindRole: {
       name: "BindRole",
@@ -140,7 +140,7 @@ export const Main = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc proto.Main.UnBindRole
+     * @generated from rpc proto.MainService.UnBindRole
      */
     unBindRole: {
       name: "UnBindRole",
