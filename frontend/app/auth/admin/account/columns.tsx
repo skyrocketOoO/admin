@@ -13,8 +13,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { number } from "zod"
-import { Account } from '@/proto/main';
+import { number } from "zod";
+
+export type Account = {
+  ID: number;
+  UserName: string;
+  DisplayName: string;
+  Email: string;
+  State: number;
+}
 
 export const columns: ColumnDef<Account>[] = [
   {

@@ -32,8 +32,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { listAccount } from "@/utils/proto/client";
-import { ListAccountReq } from "@/proto/main";
+import { ListAccountReq } from "@/proto/main_pb";
+import { serverSideClient } from "@/utils/proto/client";
+import { ListOption, Pager, Sorter, Query } from "@/proto/common_pb";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -74,16 +75,16 @@ export function DataTable<TData, TValue>({
   // Fetch data whenever filter query changes
   React.useEffect(() => {
     const fetchData = async () => {
-      const listReq: ListAccountReq = {
-        Option: {
-          Pager: { Number: 1, Size: 10 },
-          Sorter: { Asc: sorting[0]?.desc !== true, Field: sorting[0]?.id ?? "UserName" },
+      const listReq = new ListAccountReq({
+        Option: new ListOption({
+          Pager: new Pager({ Number: 1, Size: 10 }),
+          Sorter: new Sorter({ Asc: sorting[0]?.desc !== true, Field: sorting[0]?.id ?? "UserName" }),
           Query: filterQuery ? [{ Fuzzy: true, Fields: ["UserName"], Value: filterQuery }] : [],
-        },
-      };
+        })
+      });
 
       try {
-        const listAccountResp = await listAccount(listReq);
+        const listAccountResp = await serverSideClient.listAccount(listReq);
         setData(listAccountResp.List);
       } catch (err) {
         console.error("Error fetching data:", err);
