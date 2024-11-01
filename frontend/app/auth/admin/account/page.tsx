@@ -24,11 +24,18 @@ export default async function Page() {
   try {
     // Execute gRPC request
     const listAccountResp = await serverSideClient.listAccount(listReq);
+    const accountData = listAccountResp.List.map(account => ({
+      ID: account.ID,
+      UserName: account.UserName,
+      DisplayName: account.DisplayName,
+      Email: account.Email,
+      State: account.State,
+    }));
 
     // Render data table with results
     return (
       <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={listAccountResp.List} />
+        <DataTable columns={columns} data={accountData} />
       </div>
     );
   } catch (err) {

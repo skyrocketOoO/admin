@@ -43,9 +43,9 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({
   columns,
-  data: initialData,
+  data,
 }: DataTableProps<TData, TValue>) {
-  const [data, setData] = React.useState(initialData);
+  // const [data, setData] = React.useState(initData);
   const [filterQuery, setFilterQuery] = React.useState("");
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -72,27 +72,27 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  // Fetch data whenever filter query changes
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const listReq = new ListAccountReq({
-        Option: new ListOption({
-          Pager: new Pager({ Number: 1, Size: 10 }),
-          Sorter: new Sorter({ Asc: sorting[0]?.desc !== true, Field: sorting[0]?.id ?? "UserName" }),
-          Query: filterQuery ? [{ Fuzzy: true, Fields: ["UserName"], Value: filterQuery }] : [],
-        })
-      });
+  // // Fetch data whenever filter query changes
+  // React.useEffect(() => {
+  //   const fetchData = async () => {
+  //     const listReq = new ListAccountReq({
+  //       Option: new ListOption({
+  //         Pager: new Pager({ Number: 1, Size: 10 }),
+  //         Sorter: new Sorter({ Asc: sorting[0]?.desc !== true, Field: sorting[0]?.id ?? "UserName" }),
+  //         Query: filterQuery ? [{ Fuzzy: true, Fields: ["UserName"], Value: filterQuery }] : [],
+  //       })
+  //     });
 
-      try {
-        const listAccountResp = await serverSideClient.listAccount(listReq);
-        setData(listAccountResp.List);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-      }
-    };
+  //     try {
+  //       const listAccountResp = await serverSideClient.listAccount(listReq);
+  //       setData(listAccountResp.List);
+  //     } catch (err) {
+  //       console.error("Error fetching data:", err);
+  //     }
+  //   };
 
-    fetchData();
-  }, [filterQuery, sorting]);
+  //   fetchData();
+  // }, [filterQuery, sorting]);
 
   return (
     <div>

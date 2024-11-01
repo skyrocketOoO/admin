@@ -23,9 +23,10 @@ func NewLogRouteUnaryInterceptor() connect.UnaryInterceptorFunc {
 
 			// Log with error handling and status
 			if err != nil {
-				log.Info().Msgf("%s %s Error: %v", method, colorizeStatus(statusCode.String()), err)
+				log.Info().
+					Msgf("%s %s Error: %v", method, colorizeStatus(statusCode.String()), err)
 			} else {
-				log.Info().Msgf("%s %s", method, colorizeStatus(statusCode.String()))
+				log.Info().Msgf("%s", method)
 			}
 
 			return resp, err
