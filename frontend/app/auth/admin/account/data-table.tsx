@@ -32,7 +32,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { listAccount } from "@/utils/api/api";
+import { listAccount } from "@/utils/proto/client";
 import { ListAccountReq } from "@/proto/main";
 
 interface DataTableProps<TData, TValue> {
