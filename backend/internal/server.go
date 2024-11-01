@@ -44,15 +44,13 @@ func RunServer(cmd *cobra.Command, args []string) {
 
 	port, err := cmd.Flags().GetString("port")
 	if err != nil || port == "" {
-		port = "50051" // Fallback to default port if not set
+		port = "50051"
 	}
 
 	mux := setupMux()
 
-	// Configure CORS
 	corsHandler := configureCORS()
 
-	// Start the server with graceful shutdown support
 	server := &http.Server{
 		Addr:    port,
 		Handler: corsHandler.Handler(h2c.NewHandler(mux, &http2.Server{})),
