@@ -32,10 +32,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { ListAccountReq } from "@/proto/main_pb";
-import { serverSideClient } from "@/utils/proto/client";
-import { ListOption, Pager, Sorter, Query } from "@/proto/common_pb";
-
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -45,14 +41,12 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  // const [data, setData] = React.useState(initData);
   const [filterQuery, setFilterQuery] = React.useState("");
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  // Create a table instance with react-table
   const table = useReactTable({
     data,
     columns,
@@ -71,28 +65,6 @@ export function DataTable<TData, TValue>({
       columnVisibility,
     },
   });
-
-  // // Fetch data whenever filter query changes
-  // React.useEffect(() => {
-  //   const fetchData = async () => {
-  //     const listReq = new ListAccountReq({
-  //       Option: new ListOption({
-  //         Pager: new Pager({ Number: 1, Size: 10 }),
-  //         Sorter: new Sorter({ Asc: sorting[0]?.desc !== true, Field: sorting[0]?.id ?? "UserName" }),
-  //         Query: filterQuery ? [{ Fuzzy: true, Fields: ["UserName"], Value: filterQuery }] : [],
-  //       })
-  //     });
-
-  //     try {
-  //       const listAccountResp = await serverSideClient.listAccount(listReq);
-  //       setData(listAccountResp.List);
-  //     } catch (err) {
-  //       console.error("Error fetching data:", err);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [filterQuery, sorting]);
 
   return (
     <div>
