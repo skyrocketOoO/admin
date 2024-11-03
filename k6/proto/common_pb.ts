@@ -7,6 +7,26 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Message, proto3 } from "@bufbuild/protobuf";
 
 /**
+ * @generated from enum proto.Operator
+ */
+export enum Operator {
+  /**
+   * @generated from enum value: AND = 0;
+   */
+  AND = 0,
+
+  /**
+   * @generated from enum value: OR = 1;
+   */
+  OR = 1,
+}
+// Retrieve enum metadata with: proto3.getEnumType(Operator)
+proto3.util.setEnumType(Operator, "proto.Operator", [
+  { no: 0, name: "AND" },
+  { no: 1, name: "OR" },
+]);
+
+/**
  * @generated from message proto.Empty
  */
 export class Empty extends Message<Empty> {
@@ -42,19 +62,21 @@ export class Empty extends Message<Empty> {
  */
 export class ListOption extends Message<ListOption> {
   /**
-   * @generated from field: optional proto.Pager Pager = 1;
+   * @generated from field: optional proto.Pager pager = 1;
    */
-  Pager?: Pager;
+  pager?: Pager;
 
   /**
-   * @generated from field: optional proto.Sorter Sorter = 2;
+   * @generated from field: repeated proto.Sorter sorters = 2;
    */
-  Sorter?: Sorter;
+  sorters: Sorter[] = [];
 
   /**
-   * @generated from field: repeated proto.Query Query = 3;
+   * Root of filter expressions.
+   *
+   * @generated from field: optional proto.FilterGroup filterGroup = 3;
    */
-  Query: Query[] = [];
+  filterGroup?: FilterGroup;
 
   constructor(data?: PartialMessage<ListOption>) {
     super();
@@ -64,9 +86,9 @@ export class ListOption extends Message<ListOption> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "proto.ListOption";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "Pager", kind: "message", T: Pager, opt: true },
-    { no: 2, name: "Sorter", kind: "message", T: Sorter, opt: true },
-    { no: 3, name: "Query", kind: "message", T: Query, repeated: true },
+    { no: 1, name: "pager", kind: "message", T: Pager, opt: true },
+    { no: 2, name: "sorters", kind: "message", T: Sorter, repeated: true },
+    { no: 3, name: "filterGroup", kind: "message", T: FilterGroup, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListOption {
@@ -91,14 +113,14 @@ export class ListOption extends Message<ListOption> {
  */
 export class Pager extends Message<Pager> {
   /**
-   * @generated from field: int32 Number = 1;
+   * @generated from field: int32 number = 1;
    */
-  Number = 0;
+  number = 0;
 
   /**
-   * @generated from field: int32 Size = 2;
+   * @generated from field: int32 size = 2;
    */
-  Size = 0;
+  size = 0;
 
   constructor(data?: PartialMessage<Pager>) {
     super();
@@ -108,8 +130,8 @@ export class Pager extends Message<Pager> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "proto.Pager";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "Number", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 2, name: "Size", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 1, name: "number", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 2, name: "size", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Pager {
@@ -134,14 +156,14 @@ export class Pager extends Message<Pager> {
  */
 export class Sorter extends Message<Sorter> {
   /**
-   * @generated from field: bool Asc = 1;
+   * @generated from field: bool ascending = 1;
    */
-  Asc = false;
+  ascending = false;
 
   /**
-   * @generated from field: string Field = 2;
+   * @generated from field: string field = 2;
    */
-  Field = "";
+  field = "";
 
   constructor(data?: PartialMessage<Sorter>) {
     super();
@@ -151,8 +173,8 @@ export class Sorter extends Message<Sorter> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "proto.Sorter";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "Asc", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "Field", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "ascending", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Sorter {
@@ -173,51 +195,108 @@ export class Sorter extends Message<Sorter> {
 }
 
 /**
- * @generated from message proto.Query
+ * @generated from message proto.Filter
  */
-export class Query extends Message<Query> {
+export class Filter extends Message<Filter> {
   /**
-   * @generated from field: bool Fuzzy = 1;
+   * @generated from field: string field = 1;
    */
-  Fuzzy = false;
+  field = "";
 
   /**
-   * @generated from field: repeated string Fields = 2;
+   * @generated from field: string value = 2;
    */
-  Fields: string[] = [];
+  value = "";
 
   /**
-   * @generated from field: string Value = 3;
+   * @generated from field: bool fuzzy = 3;
    */
-  Value = "";
+  fuzzy = false;
 
-  constructor(data?: PartialMessage<Query>) {
+  constructor(data?: PartialMessage<Filter>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "proto.Query";
+  static readonly typeName = "proto.Filter";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "Fuzzy", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "Fields", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
-    { no: 3, name: "Value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "fuzzy", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Query {
-    return new Query().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Filter {
+    return new Filter().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Query {
-    return new Query().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Filter {
+    return new Filter().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Query {
-    return new Query().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Filter {
+    return new Filter().fromJsonString(jsonString, options);
   }
 
-  static equals(a: Query | PlainMessage<Query> | undefined, b: Query | PlainMessage<Query> | undefined): boolean {
-    return proto3.util.equals(Query, a, b);
+  static equals(a: Filter | PlainMessage<Filter> | undefined, b: Filter | PlainMessage<Filter> | undefined): boolean {
+    return proto3.util.equals(Filter, a, b);
+  }
+}
+
+/**
+ * Group of filters with a logical operator.
+ *
+ * @generated from message proto.FilterGroup
+ */
+export class FilterGroup extends Message<FilterGroup> {
+  /**
+   * Logical operator (AND/OR) to combine filters.
+   *
+   * @generated from field: proto.Operator operator = 1;
+   */
+  operator = Operator.AND;
+
+  /**
+   * List of individual filters.
+   *
+   * @generated from field: repeated proto.Filter filters = 2;
+   */
+  filters: Filter[] = [];
+
+  /**
+   * Nested filter groups for recursive logic.
+   *
+   * @generated from field: repeated proto.FilterGroup nestedGroups = 3;
+   */
+  nestedGroups: FilterGroup[] = [];
+
+  constructor(data?: PartialMessage<FilterGroup>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "proto.FilterGroup";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "operator", kind: "enum", T: proto3.getEnumType(Operator) },
+    { no: 2, name: "filters", kind: "message", T: Filter, repeated: true },
+    { no: 3, name: "nestedGroups", kind: "message", T: FilterGroup, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): FilterGroup {
+    return new FilterGroup().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): FilterGroup {
+    return new FilterGroup().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): FilterGroup {
+    return new FilterGroup().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: FilterGroup | PlainMessage<FilterGroup> | undefined, b: FilterGroup | PlainMessage<FilterGroup> | undefined): boolean {
+    return proto3.util.equals(FilterGroup, a, b);
   }
 }
 

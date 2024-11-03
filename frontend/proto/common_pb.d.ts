@@ -7,6 +7,21 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Message, proto3 } from "@bufbuild/protobuf";
 
 /**
+ * @generated from enum proto.Operator
+ */
+export declare enum Operator {
+  /**
+   * @generated from enum value: AND = 0;
+   */
+  AND = 0,
+
+  /**
+   * @generated from enum value: OR = 1;
+   */
+  OR = 1,
+}
+
+/**
  * @generated from message proto.Empty
  */
 export declare class Empty extends Message<Empty> {
@@ -30,19 +45,21 @@ export declare class Empty extends Message<Empty> {
  */
 export declare class ListOption extends Message<ListOption> {
   /**
-   * @generated from field: optional proto.Pager Pager = 1;
+   * @generated from field: optional proto.Pager pager = 1;
    */
-  Pager?: Pager;
+  pager?: Pager;
 
   /**
-   * @generated from field: optional proto.Sorter Sorter = 2;
+   * @generated from field: repeated proto.Sorter sorters = 2;
    */
-  Sorter?: Sorter;
+  sorters: Sorter[];
 
   /**
-   * @generated from field: repeated proto.Query Query = 3;
+   * Root of filter expressions.
+   *
+   * @generated from field: optional proto.FilterGroup filterGroup = 3;
    */
-  Query: Query[];
+  filterGroup?: FilterGroup;
 
   constructor(data?: PartialMessage<ListOption>);
 
@@ -64,14 +81,14 @@ export declare class ListOption extends Message<ListOption> {
  */
 export declare class Pager extends Message<Pager> {
   /**
-   * @generated from field: int32 Number = 1;
+   * @generated from field: int32 number = 1;
    */
-  Number: number;
+  number: number;
 
   /**
-   * @generated from field: int32 Size = 2;
+   * @generated from field: int32 size = 2;
    */
-  Size: number;
+  size: number;
 
   constructor(data?: PartialMessage<Pager>);
 
@@ -93,14 +110,14 @@ export declare class Pager extends Message<Pager> {
  */
 export declare class Sorter extends Message<Sorter> {
   /**
-   * @generated from field: bool Asc = 1;
+   * @generated from field: bool ascending = 1;
    */
-  Asc: boolean;
+  ascending: boolean;
 
   /**
-   * @generated from field: string Field = 2;
+   * @generated from field: string field = 2;
    */
-  Field: string;
+  field: string;
 
   constructor(data?: PartialMessage<Sorter>);
 
@@ -118,36 +135,78 @@ export declare class Sorter extends Message<Sorter> {
 }
 
 /**
- * @generated from message proto.Query
+ * @generated from message proto.Filter
  */
-export declare class Query extends Message<Query> {
+export declare class Filter extends Message<Filter> {
   /**
-   * @generated from field: bool Fuzzy = 1;
+   * @generated from field: string field = 1;
    */
-  Fuzzy: boolean;
+  field: string;
 
   /**
-   * @generated from field: repeated string Fields = 2;
+   * @generated from field: string value = 2;
    */
-  Fields: string[];
+  value: string;
 
   /**
-   * @generated from field: string Value = 3;
+   * @generated from field: bool fuzzy = 3;
    */
-  Value: string;
+  fuzzy: boolean;
 
-  constructor(data?: PartialMessage<Query>);
+  constructor(data?: PartialMessage<Filter>);
 
   static readonly runtime: typeof proto3;
-  static readonly typeName = "proto.Query";
+  static readonly typeName = "proto.Filter";
   static readonly fields: FieldList;
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Query;
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Filter;
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Query;
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Filter;
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Query;
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Filter;
 
-  static equals(a: Query | PlainMessage<Query> | undefined, b: Query | PlainMessage<Query> | undefined): boolean;
+  static equals(a: Filter | PlainMessage<Filter> | undefined, b: Filter | PlainMessage<Filter> | undefined): boolean;
+}
+
+/**
+ * Group of filters with a logical operator.
+ *
+ * @generated from message proto.FilterGroup
+ */
+export declare class FilterGroup extends Message<FilterGroup> {
+  /**
+   * Logical operator (AND/OR) to combine filters.
+   *
+   * @generated from field: proto.Operator operator = 1;
+   */
+  operator: Operator;
+
+  /**
+   * List of individual filters.
+   *
+   * @generated from field: repeated proto.Filter filters = 2;
+   */
+  filters: Filter[];
+
+  /**
+   * Nested filter groups for recursive logic.
+   *
+   * @generated from field: repeated proto.FilterGroup nestedGroups = 3;
+   */
+  nestedGroups: FilterGroup[];
+
+  constructor(data?: PartialMessage<FilterGroup>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "proto.FilterGroup";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): FilterGroup;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): FilterGroup;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): FilterGroup;
+
+  static equals(a: FilterGroup | PlainMessage<FilterGroup> | undefined, b: FilterGroup | PlainMessage<FilterGroup> | undefined): boolean;
 }
 

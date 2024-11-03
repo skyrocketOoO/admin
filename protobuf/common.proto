@@ -3,6 +3,8 @@ syntax = "proto3";
 package proto;
 option go_package = "admin/proto";
 
+message Empty {}
+
 message ListOption {
   optional Pager pager = 1;
   repeated Sorter sorters = 2;

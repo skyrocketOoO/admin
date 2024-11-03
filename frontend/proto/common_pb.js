@@ -6,6 +6,17 @@
 import { proto3 } from "@bufbuild/protobuf";
 
 /**
+ * @generated from enum proto.Operator
+ */
+export const Operator = /*@__PURE__*/ proto3.makeEnum(
+  "proto.Operator",
+  [
+    {no: 0, name: "AND"},
+    {no: 1, name: "OR"},
+  ],
+);
+
+/**
  * @generated from message proto.Empty
  */
 export const Empty = /*@__PURE__*/ proto3.makeMessageType(
@@ -19,9 +30,9 @@ export const Empty = /*@__PURE__*/ proto3.makeMessageType(
 export const ListOption = /*@__PURE__*/ proto3.makeMessageType(
   "proto.ListOption",
   () => [
-    { no: 1, name: "Pager", kind: "message", T: Pager, opt: true },
-    { no: 2, name: "Sorter", kind: "message", T: Sorter, opt: true },
-    { no: 3, name: "Query", kind: "message", T: Query, repeated: true },
+    { no: 1, name: "pager", kind: "message", T: Pager, opt: true },
+    { no: 2, name: "sorters", kind: "message", T: Sorter, repeated: true },
+    { no: 3, name: "filterGroup", kind: "message", T: FilterGroup, opt: true },
   ],
 );
 
@@ -31,8 +42,8 @@ export const ListOption = /*@__PURE__*/ proto3.makeMessageType(
 export const Pager = /*@__PURE__*/ proto3.makeMessageType(
   "proto.Pager",
   () => [
-    { no: 1, name: "Number", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 2, name: "Size", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 1, name: "number", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 2, name: "size", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
   ],
 );
 
@@ -42,20 +53,34 @@ export const Pager = /*@__PURE__*/ proto3.makeMessageType(
 export const Sorter = /*@__PURE__*/ proto3.makeMessageType(
   "proto.Sorter",
   () => [
-    { no: 1, name: "Asc", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "Field", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "ascending", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
 /**
- * @generated from message proto.Query
+ * @generated from message proto.Filter
  */
-export const Query = /*@__PURE__*/ proto3.makeMessageType(
-  "proto.Query",
+export const Filter = /*@__PURE__*/ proto3.makeMessageType(
+  "proto.Filter",
   () => [
-    { no: 1, name: "Fuzzy", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "Fields", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
-    { no: 3, name: "Value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "fuzzy", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ],
+);
+
+/**
+ * Group of filters with a logical operator.
+ *
+ * @generated from message proto.FilterGroup
+ */
+export const FilterGroup = /*@__PURE__*/ proto3.makeMessageType(
+  "proto.FilterGroup",
+  () => [
+    { no: 1, name: "operator", kind: "enum", T: proto3.getEnumType(Operator) },
+    { no: 2, name: "filters", kind: "message", T: Filter, repeated: true },
+    { no: 3, name: "nestedGroups", kind: "message", T: FilterGroup, repeated: true },
   ],
 );
 
