@@ -3,26 +3,36 @@ syntax = "proto3";
 package proto;
 option go_package = "admin/proto";
 
-message Empty{}
-
-message ListOption{
-  optional Pager Pager = 1;
-  optional Sorter Sorter = 2;
-  repeated Query Query = 3;
+message ListOption {
+  optional Pager pager = 1;
+  repeated Sorter sorters = 2;
+  optional FilterGroup filterGroup = 3; // Root of filter expressions.
 }
 
-message Pager{
-  int32 Number = 1;
-  int32 Size = 2;
+message Pager {
+  int32 number = 1;
+  int32 size = 2;
 }
 
-message Sorter{
-  bool Asc = 1;;
-  string Field = 2;
+message Sorter {
+  bool ascending = 1;
+  string field = 2;
 }
 
-message Query{
-  bool Fuzzy = 1;
-  repeated string Fields = 2;
-  string Value = 3;
+message Filter {
+  string field = 1;        
+  string value = 2;     
+  bool fuzzy = 3;         
+}
+
+enum Operator {
+  AND = 0;
+  OR = 1;
+}
+
+// Group of filters with a logical operator.
+message FilterGroup {
+  Operator operator = 1;                 // Logical operator (AND/OR) to combine filters.
+  repeated Filter filters = 2;           // List of individual filters.
+  repeated FilterGroup nestedGroups = 3; // Nested filter groups for recursive logic.
 }
