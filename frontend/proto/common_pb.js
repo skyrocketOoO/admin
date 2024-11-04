@@ -6,10 +6,10 @@
 import { proto3 } from "@bufbuild/protobuf";
 
 /**
- * @generated from enum proto.Operator
+ * @generated from enum proto.Concator
  */
-export const Operator = /*@__PURE__*/ proto3.makeEnum(
-  "proto.Operator",
+export const Concator = /*@__PURE__*/ proto3.makeEnum(
+  "proto.Concator",
   [
     {no: 0, name: "AND"},
     {no: 1, name: "OR"},
@@ -32,7 +32,7 @@ export const ListOption = /*@__PURE__*/ proto3.makeMessageType(
   () => [
     { no: 1, name: "pager", kind: "message", T: Pager, opt: true },
     { no: 2, name: "sorters", kind: "message", T: Sorter, repeated: true },
-    { no: 3, name: "filterGroup", kind: "message", T: FilterGroup, opt: true },
+    { no: 3, name: "conditionGroup", kind: "message", T: ConditionGroup, opt: true },
   ],
 );
 
@@ -59,28 +59,28 @@ export const Sorter = /*@__PURE__*/ proto3.makeMessageType(
 );
 
 /**
- * @generated from message proto.Filter
+ * @generated from message proto.Condition
  */
-export const Filter = /*@__PURE__*/ proto3.makeMessageType(
-  "proto.Filter",
+export const Condition = /*@__PURE__*/ proto3.makeMessageType(
+  "proto.Condition",
   () => [
     { no: 1, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "fuzzy", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "operator", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
 /**
  * Group of filters with a logical operator.
  *
- * @generated from message proto.FilterGroup
+ * @generated from message proto.ConditionGroup
  */
-export const FilterGroup = /*@__PURE__*/ proto3.makeMessageType(
-  "proto.FilterGroup",
+export const ConditionGroup = /*@__PURE__*/ proto3.makeMessageType(
+  "proto.ConditionGroup",
   () => [
-    { no: 1, name: "operator", kind: "enum", T: proto3.getEnumType(Operator) },
-    { no: 2, name: "filters", kind: "message", T: Filter, repeated: true },
-    { no: 3, name: "nestedGroups", kind: "message", T: FilterGroup, repeated: true },
+    { no: 1, name: "concator", kind: "enum", T: proto3.getEnumType(Concator) },
+    { no: 2, name: "conditions", kind: "message", T: Condition, repeated: true },
+    { no: 3, name: "nestedGroups", kind: "message", T: ConditionGroup, repeated: true },
   ],
 );
 

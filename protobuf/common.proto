@@ -8,7 +8,7 @@ message Empty {}
 message ListOption {
   optional Pager pager = 1;
   repeated Sorter sorters = 2;
-  optional FilterGroup filterGroup = 3; // Root of filter expressions.
+  optional ConditionGroup conditionGroup = 3; // Root of filter expressions.
 }
 
 message Pager {
@@ -21,20 +21,20 @@ message Sorter {
   string field = 2;
 }
 
-message Filter {
-  optional string field = 1; // filed not set = query all fields
-  string value = 2;     
-  bool fuzzy = 3;
-}
-
-enum Operator {
+enum Concator {
   AND = 0;
   OR = 1;
 }
 
+message Condition {
+  optional string field = 1;
+  string operator = 2; // same as sql operator
+  string value = 3;
+}
+
 // Group of filters with a logical operator.
-message FilterGroup {
-  Operator operator = 1;                 // Logical operator (AND/OR) to combine filters.
-  repeated Filter filters = 2;           // List of individual filters.
-  repeated FilterGroup nestedGroups = 3; // Nested filter groups for recursive logic.
+message ConditionGroup {
+  Concator concator = 1;                 // Logical operator (AND/OR) to combine filters.
+  repeated Condition conditions = 2;           // List of individual filters.
+  repeated ConditionGroup nestedGroups = 3; // Nested filter groups for recursive logic.
 }
