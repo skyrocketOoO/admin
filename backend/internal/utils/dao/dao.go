@@ -11,7 +11,7 @@ import (
 
 // Get page items with total count, src must pass the pointer of item
 func ListWithPager(
-	db *gorm.DB,
+	tx *gorm.DB,
 	option *proto.ListOption,
 	src any,
 ) (total int64, err error) {
@@ -51,8 +51,7 @@ func ListWithPager(
 	return
 }
 
-func ParseConditionGroup(db *gorm.DB, condGroup *proto.ConditionGroup) {
-
+func ParseConditionGroup(tx *gorm.DB, condGroup *proto.ConditionGroup) {
 }
 
 func Ping(db *gorm.DB, ctx context.Context) error {
