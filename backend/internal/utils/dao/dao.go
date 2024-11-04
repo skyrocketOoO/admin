@@ -10,7 +10,11 @@ import (
 )
 
 // Get page items with total count, src must pass the pointer of item
-func ListWithPager(db *gorm.DB, option *proto.ListOption, src any) (total int64, err error) {
+func ListWithPager(
+	db *gorm.DB,
+	option *proto.ListOption,
+	src any,
+) (total int64, err error) {
 	// Assemble order
 	if len(option.Sorters) != 0 {
 		for _, sorter := range option.Sorters {
@@ -39,14 +43,17 @@ func ListWithPager(db *gorm.DB, option *proto.ListOption, src any) (total int64,
 	}
 
 	if option.Pager != (Pager{}) {
-		db.Offset(int(option.Pager.Size * (option.Pager.Number - 1))).Limit(int(option.Pager.Size))
+		db.Offset(int(option.Pager.Size * (option.Pager.Number - 1))).
+			Limit(int(option.Pager.Size))
 	}
 
 	err = db.Find(src).Error
 	return
 }
 
-func Parse
+func ParseConditionGroup(db *gorm.DB, condGroup *proto.ConditionGroup) {
+
+}
 
 func Ping(db *gorm.DB, ctx context.Context) error {
 	sqlDb, err := db.DB()
