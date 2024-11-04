@@ -64,7 +64,7 @@ export const Sorter = /*@__PURE__*/ proto3.makeMessageType(
 export const Filter = /*@__PURE__*/ proto3.makeMessageType(
   "proto.Filter",
   () => [
-    { no: 1, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "fuzzy", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ],

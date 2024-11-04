@@ -4,46 +4,27 @@ import (
 	"context"
 	"time"
 
+	"admin/proto"
+
 	"gorm.io/gorm"
 )
 
-type (
-	ListOption struct {
-		Pager  Pager
-		Sorter Sorter
-		Query  []Query
-	}
-
-	Pager struct {
-		Number int32
-		Size   int32
-	}
-
-	Sorter struct {
-		Field string
-		Asc   bool
-	}
-
-	Query struct {
-		Field string
-		Value string
-		Fuzzy bool
-	}
-)
-
 // Get page items with total count, src must pass the pointer of item
-func ListWithPager(db *gorm.DB, option ListOption, src any) (total int64, err error) {
-	if option.Sorter != (Sorter{}) {
-		expr := option.Sorter.Field
-		if !option.Sorter.Asc {
-			expr += " desc"
+func ListWithPager(db *gorm.DB, option *proto.ListOption, src any) (total int64, err error) {
+	// Assemble order
+	if len(option.Sorters) != 0 {
+		for _, sorter := range option.Sorters {
+			expr := sorter.Field
+			if !sorter.Ascending {
+				expr += " desc"
+			}
+			db = db.Order(expr)
 		}
-		db = db.Order(expr)
 	} else {
 		db = db.Order("CreatedAt DESC")
 	}
 
-	if option.Query != nil {
+	if option.FilterGroup != nil {
 		for _, q := range option.Query {
 			if q.Fuzzy {
 				db = db.Where(q.Field+" LIKE ?", "%"+q.Value+"%")
@@ -64,6 +45,8 @@ func ListWithPager(db *gorm.DB, option ListOption, src any) (total int64, err er
 	err = db.Find(src).Error
 	return
 }
+
+func Parse
 
 func Ping(db *gorm.DB, ctx context.Context) error {
 	sqlDb, err := db.DB()

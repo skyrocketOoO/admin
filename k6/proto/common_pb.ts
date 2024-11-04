@@ -199,9 +199,11 @@ export class Sorter extends Message<Sorter> {
  */
 export class Filter extends Message<Filter> {
   /**
-   * @generated from field: string field = 1;
+   * filed not set = query all fields
+   *
+   * @generated from field: optional string field = 1;
    */
-  field = "";
+  field?: string;
 
   /**
    * @generated from field: string value = 2;
@@ -221,7 +223,7 @@ export class Filter extends Message<Filter> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "proto.Filter";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "fuzzy", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);

@@ -139,9 +139,11 @@ export declare class Sorter extends Message<Sorter> {
  */
 export declare class Filter extends Message<Filter> {
   /**
-   * @generated from field: string field = 1;
+   * filed not set = query all fields
+   *
+   * @generated from field: optional string field = 1;
    */
-  field: string;
+  field?: string;
 
   /**
    * @generated from field: string value = 2;

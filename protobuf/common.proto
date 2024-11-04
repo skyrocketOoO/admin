@@ -22,9 +22,9 @@ message Sorter {
 }
 
 message Filter {
-  string field = 1;        
+  optional string field = 1; // filed not set = query all fields
   string value = 2;     
-  bool fuzzy = 3;         
+  bool fuzzy = 3;
 }
 
 enum Operator {
