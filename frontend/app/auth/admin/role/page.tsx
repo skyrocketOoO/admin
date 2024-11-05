@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { serverSideClient } from "@/utils/proto/client";
 import { ListAccountReq } from "@/proto/main_pb";
-import { ListOption, Pager, Sorter, Query } from "@/proto/common_pb";
+import { ListOption, Pager, Sorter, ConditionGroup, Condition } from "@/proto/common_pb";
 
 // Define the type for account data
 interface AccountData {
@@ -37,9 +37,9 @@ export default function Page() {
 
       const listReq = new ListAccountReq({
         Option: new ListOption({
-          Pager: new Pager({ Number: page, Size: pageSize }),
-          Sorter: new Sorter({ Asc: sortOrder === "asc", Field: sortField }),
-          Query: query ? [new Query({ Fuzzy: true, Fields: ["UserName"], Value: query })] : []
+          pager: new Pager({ number: page, size: pageSize }),
+          sorters: [new Sorter({ ascending: sortOrder === "asc", field: sortField })],
+          // conditionGroup: 
         })
       });
 
