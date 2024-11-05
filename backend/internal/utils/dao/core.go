@@ -41,7 +41,7 @@ func parseConditionGroup(db *gorm.DB, condGroup *proto.ConditionGroup, model any
 
 	for _, cond := range condGroup.Conditions {
 		if cond.GetField() == "" {
-			fields := GetModelFields(model)
+			fields, _ := GetModelFields(model)
 			nestedQuery := db
 			for _, field := range fields {
 				exp := fmt.Sprintf("%s %s ?", field, cond.GetOperator())
@@ -74,14 +74,29 @@ func parseConditionGroup(db *gorm.DB, condGroup *proto.ConditionGroup, model any
 	return db
 }
 
-func GetModelFields(model any) []string {
+func GetModelFields(model interface{}) ([]string, error) {
 	var fields []string
 	modelType := reflect.TypeOf(model)
+
+	// Check if the model is a slice
+	if modelType.Kind() == reflect.Slice {
+		// Get the element type of the slice (e.g., Model in []Model)
+		modelType = modelType.Elem()
+	}
+
+	// Check if it's a pointer to a struct
 	if modelType.Kind() == reflect.Ptr {
 		modelType = modelType.Elem()
 	}
+
+	// Ensure we're working with a struct type
+	if modelType.Kind() != reflect.Struct {
+		return nil, fmt.Errorf("model must be a struct or a slice of structs, got %v", modelType.Kind())
+	}
+
+	// Extract field names from the struct type
 	for i := 0; i < modelType.NumField(); i++ {
 		fields = append(fields, modelType.Field(i).Name)
 	}
-	return fields
+	return fields, nil
 }
