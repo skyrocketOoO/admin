@@ -34,7 +34,11 @@ func parseSorter(db *gorm.DB, seqSorters []*proto.Sorter) *gorm.DB {
 	return db
 }
 
-func parseConditionGroup(db *gorm.DB, condGroup *proto.ConditionGroup, model any) *gorm.DB {
+func parseConditionGroup(
+	db *gorm.DB,
+	condGroup *proto.ConditionGroup,
+	model any,
+) *gorm.DB {
 	if condGroup == nil {
 		return db
 	}
@@ -74,7 +78,8 @@ func parseConditionGroup(db *gorm.DB, condGroup *proto.ConditionGroup, model any
 	return db
 }
 
-func GetModelFields(model interface{}) ([]string, error) {
+// TODO: Not support for embedded and nested
+func GetModelFields(model any) ([]string, error) {
 	var fields []string
 	modelType := reflect.TypeOf(model)
 
@@ -91,11 +96,17 @@ func GetModelFields(model interface{}) ([]string, error) {
 
 	// Ensure we're working with a struct type
 	if modelType.Kind() != reflect.Struct {
-		return nil, fmt.Errorf("model must be a struct or a slice of structs, got %v", modelType.Kind())
+		return nil, fmt.Errorf(
+			"model must be a struct or a slice of structs, got %v",
+			modelType.Kind(),
+		)
 	}
 
 	// Extract field names from the struct type
 	for i := 0; i < modelType.NumField(); i++ {
+		if modelType.Field(i).Anonymous || modelType.Kind() == reflect.Struct {
+			continue
+		}
 		fields = append(fields, modelType.Field(i).Name)
 	}
 	return fields, nil
