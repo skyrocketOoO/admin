@@ -2,6 +2,7 @@ package dao
 
 import (
 	"fmt"
+	"reflect"
 
 	"admin/proto"
 
@@ -33,22 +34,36 @@ func parseSorter(db *gorm.DB, seqSorters []*proto.Sorter) *gorm.DB {
 	return db
 }
 
-func parseConditionGroup(db *gorm.DB, condGroup *proto.ConditionGroup) *gorm.DB {
+func parseConditionGroup(db *gorm.DB, condGroup *proto.ConditionGroup, model any) *gorm.DB {
 	if condGroup == nil {
 		return db
 	}
 
 	for _, cond := range condGroup.Conditions {
-		exp := fmt.Sprintf("%s %s ?", cond.GetField(), cond.GetOperator())
-		if condGroup.Concator == proto.Concator_AND {
-			db = db.Where(exp, cond.GetValue())
+		if cond.GetField() == "" {
+			fields := GetModelFields(model)
+			nestedQuery := db
+			for _, field := range fields {
+				exp := fmt.Sprintf("%s %s ?", field, cond.GetOperator())
+				nestedQuery = nestedQuery.Or(exp, cond.GetValue())
+			}
+			if condGroup.Concator == proto.Concator_AND {
+				db = db.Where(nestedQuery)
+			} else {
+				db = db.Or(nestedQuery)
+			}
 		} else {
-			db = db.Or(exp, cond.GetValue())
+			exp := fmt.Sprintf("%s %s ?", cond.GetField(), cond.GetOperator())
+			if condGroup.Concator == proto.Concator_AND {
+				db = db.Where(exp, cond.GetValue())
+			} else {
+				db = db.Or(exp, cond.GetValue())
+			}
 		}
 	}
 
 	for _, nestGroup := range condGroup.ConditionGroups {
-		nestedDB := parseConditionGroup(db, nestGroup)
+		nestedDB := parseConditionGroup(db, nestGroup, model)
 		if condGroup.Concator == proto.Concator_AND {
 			db = db.Where(nestedDB)
 		} else {
@@ -57,4 +72,16 @@ func parseConditionGroup(db *gorm.DB, condGroup *proto.ConditionGroup) *gorm.DB 
 	}
 
 	return db
+}
+
+func GetModelFields(model any) []string {
+	var fields []string
+	modelType := reflect.TypeOf(model)
+	if modelType.Kind() == reflect.Ptr {
+		modelType = modelType.Elem()
+	}
+	for i := 0; i < modelType.NumField(); i++ {
+		fields = append(fields, modelType.Field(i).Name)
+	}
+	return fields
 }

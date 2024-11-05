@@ -41,7 +41,7 @@ func (s *Server) ListRole(
 	db := orm.GetDb().Model(&model.Role{}).Select("ID", "Name")
 	resp := Struct.DeepNew[proto.ListRoleResp]()
 	Roles := []model.Role{}
-	if resp.Total, err = dao.ListWithPager(db, req.GetOption(), &Roles); err != nil {
+	if resp.Total, err = dao.ListWithPager(db, req.GetOption(), &Roles, &model.Role{}); err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 

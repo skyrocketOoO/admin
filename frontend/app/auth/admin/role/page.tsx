@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { serverSideClient } from "@/utils/proto/client";
 import { ListAccountReq } from "@/proto/main_pb";
-import { ListOption, Pager, Sorter, ConditionGroup, Condition } from "@/proto/common_pb";
+import { ListOption, Pager, Sorter, ConditionGroup, Condition, Concator } from "@/proto/common_pb";
 
-// Define the type for account data
 interface AccountData {
   ID: number;
   UserName: string;
@@ -14,12 +13,10 @@ interface AccountData {
   State: number;
 }
 
-
 export default function Page() {
   const columns = ["ID", "UserName", "DisplayName", "Email", "State"];
   const pageSize = 10;
 
-  // Specify the type for accountData as AccountData[]
   const [accountData, setAccountData] = useState<AccountData[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -32,14 +29,22 @@ export default function Page() {
 
       const
         sortField = "UserName",
-        sortOrder = "asc",
-        query = "UserName";
+        sortOrder = "asc"
 
       const listReq = new ListAccountReq({
         Option: new ListOption({
           pager: new Pager({ number: page, size: pageSize }),
           sorters: [new Sorter({ ascending: sortOrder === "asc", field: sortField })],
-          // conditionGroup: 
+          conditionGroup: new ConditionGroup({
+            concator: Concator.AND,
+            conditions: [
+              new Condition({
+                field: "",
+                operator: "=",
+                value: filter
+              })
+            ]
+          })
         })
       });
 

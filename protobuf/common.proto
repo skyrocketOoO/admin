@@ -27,7 +27,7 @@ enum Concator {
 }
 
 message Condition {
-  optional string field = 1;
+  optional string field = 1; // if field == "" means all fields
   string operator = 2; // same as sql operator
   string value = 3;
 }

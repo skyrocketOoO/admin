@@ -54,7 +54,7 @@ func (s *Server) ListAccount(
 	db := orm.GetDb().Model(&model.Account{})
 	resp := Struct.DeepNew[proto.ListAccountResp]()
 	accounts := []model.Account{}
-	if resp.Total, err = dao.ListWithPager(db, req.GetOption(), &accounts); err != nil {
+	if resp.Total, err = dao.ListWithPager(db, req.GetOption(), &accounts, &model.Account{}); err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
