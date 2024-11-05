@@ -50,17 +50,11 @@ func (s *Server) ListAccount(
 	connReq *connect.Request[proto.ListAccountReq],
 ) (connResp *connect.Response[proto.ListAccountResp], err error) {
 	req := connReq.Msg
-	option := Struct.DeepNew[dao.ListOption]()
-	if req.GetOption() != nil {
-		if err = Struct.Scan(req.Option, option); err != nil {
-			return nil, Error.Internal.WithTrace(err)
-		}
-	}
 
 	db := orm.GetDb().Model(&model.Account{})
 	resp := Struct.DeepNew[proto.ListAccountResp]()
 	accounts := []model.Account{}
-	if resp.Total, err = dao.ListWithPager(db, *option, &accounts); err != nil {
+	if resp.Total, err = dao.ListWithPager(db, req.GetOption(), &accounts); err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 

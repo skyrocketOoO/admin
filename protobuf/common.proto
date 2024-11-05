@@ -36,5 +36,5 @@ message Condition {
 message ConditionGroup {
   Concator concator = 1;                 // Logical operator (AND/OR) to combine filters.
   repeated Condition conditions = 2;           // List of individual filters.
-  repeated ConditionGroup nestedGroups = 3; // Nested filter groups for recursive logic.
+  repeated ConditionGroup conditionGroups = 3; // Nested filter groups for recursive logic.
 }

@@ -80,7 +80,7 @@ export const ConditionGroup = /*@__PURE__*/ proto3.makeMessageType(
   () => [
     { no: 1, name: "concator", kind: "enum", T: proto3.getEnumType(Concator) },
     { no: 2, name: "conditions", kind: "message", T: Condition, repeated: true },
-    { no: 3, name: "nestedGroups", kind: "message", T: ConditionGroup, repeated: true },
+    { no: 3, name: "conditionGroups", kind: "message", T: ConditionGroup, repeated: true },
   ],
 );
 

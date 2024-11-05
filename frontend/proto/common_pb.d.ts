@@ -193,9 +193,9 @@ export declare class ConditionGroup extends Message<ConditionGroup> {
   /**
    * Nested filter groups for recursive logic.
    *
-   * @generated from field: repeated proto.ConditionGroup nestedGroups = 3;
+   * @generated from field: repeated proto.ConditionGroup conditionGroups = 3;
    */
-  nestedGroups: ConditionGroup[];
+  conditionGroups: ConditionGroup[];
 
   constructor(data?: PartialMessage<ConditionGroup>);
 

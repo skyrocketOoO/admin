@@ -268,9 +268,9 @@ export class ConditionGroup extends Message<ConditionGroup> {
   /**
    * Nested filter groups for recursive logic.
    *
-   * @generated from field: repeated proto.ConditionGroup nestedGroups = 3;
+   * @generated from field: repeated proto.ConditionGroup conditionGroups = 3;
    */
-  nestedGroups: ConditionGroup[] = [];
+  conditionGroups: ConditionGroup[] = [];
 
   constructor(data?: PartialMessage<ConditionGroup>) {
     super();
@@ -282,7 +282,7 @@ export class ConditionGroup extends Message<ConditionGroup> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "concator", kind: "enum", T: proto3.getEnumType(Concator) },
     { no: 2, name: "conditions", kind: "message", T: Condition, repeated: true },
-    { no: 3, name: "nestedGroups", kind: "message", T: ConditionGroup, repeated: true },
+    { no: 3, name: "conditionGroups", kind: "message", T: ConditionGroup, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ConditionGroup {

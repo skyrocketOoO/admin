@@ -37,15 +37,11 @@ func (s *Server) ListRole(
 	connReq *connect.Request[proto.ListRoleReq],
 ) (connResp *connect.Response[proto.ListRoleResp], err error) {
 	req := connReq.Msg
-	option := Struct.DeepNew[dao.ListOption]()
-	if err = Struct.Scan(req.Option, option); err != nil {
-		return nil, Error.Internal.WithTrace(err)
-	}
 
 	db := orm.GetDb().Model(&model.Role{}).Select("ID", "Name")
 	resp := Struct.DeepNew[proto.ListRoleResp]()
 	Roles := []model.Role{}
-	if resp.Total, err = dao.ListWithPager(db, *option, &Roles); err != nil {
+	if resp.Total, err = dao.ListWithPager(db, req.GetOption(), &Roles); err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
