@@ -61,6 +61,7 @@ func (s *Server) ListAccount(
 	resp.List = make([]*proto.Account, len(accounts))
 	for i, account := range accounts {
 		resp.List[i] = Struct.DeepNew[proto.Account]()
+		resp.List[i].ID = int32(account.ID)
 		if err = Struct.Scan(&account, resp.List[i]); err != nil {
 			return nil, Error.Internal.WithTrace(err)
 		}

@@ -9,12 +9,11 @@ interface AccountData {
   ID: number;
   UserName: string;
   DisplayName: string;
-  Email: string;
   State: number;
 }
 
 export default function Page() {
-  const columns = ["ID", "UserName", "DisplayName", "Email", "State"];
+  const columns = ["ID", "UserName", "DisplayName", "State"];
   const pageSize = 10;
 
   const [accountData, setAccountData] = useState<AccountData[]>([]);
@@ -22,32 +21,37 @@ export default function Page() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [filter, setFilter] = useState("");
+  const [debouncedFilter, setDebouncedFilter] = useState(filter);
+
+  // debounce
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedFilter(filter);
+    }, 800);
+    return () => clearTimeout(handler);
+  }, [filter]);
 
   useEffect(() => {
     const fetchAccountData = async () => {
       setLoading(true);
 
-      const
-        sortField = "UserName",
-        sortOrder = "asc"
-
       const listReq = new ListAccountReq({
         Option: new ListOption({
           pager: new Pager({ number: page, size: pageSize }),
-          sorters: [new Sorter({ ascending: sortOrder === "asc", field: sortField })],
-          // conditionGroup: new ConditionGroup({
-          //   concator: Concator.AND,
-          //   conditions: [
-          //     new Condition({
-          //       field: "",
-          //       operator: "=",
-          //       value: filter
-          //     })
-          //   ]
-          // })
         })
       });
 
+      if (debouncedFilter != ""){
+        listReq.Option = listReq.Option || new ListOption();
+        listReq.Option.conditionGroup = new ConditionGroup({
+          concator: Concator.OR,
+          conditions: columns.map((column) => new Condition({
+            field: column,
+            operator: "LIKE",
+            value: "%"+debouncedFilter+"%"
+          })),
+        });        
+      }
       try {
         const listAccountResp = await serverSideClient.listAccount(listReq);
         const formattedData: AccountData[] = listAccountResp.List.map(account => ({
@@ -68,7 +72,7 @@ export default function Page() {
     };
 
     fetchAccountData();
-  }, [page, filter]);
+  }, [page, debouncedFilter]);
 
   const handleNextPage = () => {
     if (page < totalPages) {
@@ -118,7 +122,6 @@ export default function Page() {
                   <td className={cn("p-2 align-middle")}>{row.ID}</td>
                   <td className={cn("p-2 align-middle")}>{row.UserName}</td>
                   <td className={cn("p-2 align-middle")}>{row.DisplayName}</td>
-                  <td className={cn("p-2 align-middle")}>{row.Email}</td>
                   <td className={cn("p-2 align-middle")}>{row.State}</td>
                 </tr>
               ))}
