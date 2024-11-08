@@ -14,10 +14,9 @@ func ListWithPager(
 	db *gorm.DB,
 	option *proto.ListOption,
 	src any,
-	model any,
 ) (total int64, err error) {
 	db = parseSorter(db, option.GetSorters())
-	db = parseConditionGroup(db, option.GetConditionGroup(), model)
+	db = parseConditionGroup(db, option.GetConditionGroup())
 
 	if err = db.Count(&total).Error; err != nil {
 		return

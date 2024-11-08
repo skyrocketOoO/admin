@@ -64,7 +64,7 @@ export const Sorter = /*@__PURE__*/ proto3.makeMessageType(
 export const Condition = /*@__PURE__*/ proto3.makeMessageType(
   "proto.Condition",
   () => [
-    { no: 1, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 1, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "operator", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],

@@ -139,9 +139,9 @@ export declare class Sorter extends Message<Sorter> {
  */
 export declare class Condition extends Message<Condition> {
   /**
-   * @generated from field: optional string field = 1;
+   * @generated from field: string field = 1;
    */
-  field?: string;
+  field: string;
 
   /**
    * same as sql operator

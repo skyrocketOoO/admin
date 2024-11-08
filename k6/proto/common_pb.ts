@@ -199,9 +199,9 @@ export class Sorter extends Message<Sorter> {
  */
 export class Condition extends Message<Condition> {
   /**
-   * @generated from field: optional string field = 1;
+   * @generated from field: string field = 1;
    */
-  field?: string;
+  field = "";
 
   /**
    * same as sql operator
@@ -223,7 +223,7 @@ export class Condition extends Message<Condition> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "proto.Condition";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 1, name: "field", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "operator", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
