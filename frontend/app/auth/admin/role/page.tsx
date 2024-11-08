@@ -35,16 +35,16 @@ export default function Page() {
         Option: new ListOption({
           pager: new Pager({ number: page, size: pageSize }),
           sorters: [new Sorter({ ascending: sortOrder === "asc", field: sortField })],
-          conditionGroup: new ConditionGroup({
-            concator: Concator.AND,
-            conditions: [
-              new Condition({
-                field: "",
-                operator: "=",
-                value: filter
-              })
-            ]
-          })
+          // conditionGroup: new ConditionGroup({
+          //   concator: Concator.AND,
+          //   conditions: [
+          //     new Condition({
+          //       field: "",
+          //       operator: "=",
+          //       value: filter
+          //     })
+          //   ]
+          // })
         })
       });
 

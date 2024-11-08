@@ -14,9 +14,15 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-var db *gorm.DB
+var (
+	db    *gorm.DB
+	Debug bool
+)
 
 func GetDb() *gorm.DB {
+	if Debug {
+		return db.Debug()
+	}
 	return db
 }
 
