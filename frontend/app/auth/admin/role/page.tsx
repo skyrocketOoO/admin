@@ -22,6 +22,10 @@ export default function Page() {
   const [totalPages, setTotalPages] = useState(1);
   const [filter, setFilter] = useState("");
   const [debouncedFilter, setDebouncedFilter] = useState(filter);
+  // Sorting state
+  const [sortedData, setSortedData] = useState<AccountData[]>([]);
+  const [sortColumn, setSortColumn] = useState<keyof AccountData | null>(null);
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   // debounce
   useEffect(() => {
@@ -63,6 +67,7 @@ export default function Page() {
         }));
 
         setAccountData(formattedData);
+        setSortedData(formattedData);
         setTotalPages(Math.ceil(Number(listAccountResp.Total)/ pageSize));
       } catch (error) {
         console.error("Error fetching account data:", error);
@@ -86,6 +91,30 @@ export default function Page() {
     }
   };
 
+  // Sort data based on current column and direction
+  useEffect(() => {
+    const sorted = [...accountData].sort((a, b) => {
+      if (!sortColumn) return 0;
+      const valueA = a[sortColumn];
+      const valueB = b[sortColumn];
+
+      if (valueA < valueB) return sortDirection === "asc" ? -1 : 1;
+      if (valueA > valueB) return sortDirection === "asc" ? 1 : -1;
+      return 0;
+    });
+    setSortedData(sorted);
+  }, [sortColumn, sortDirection, accountData]);
+
+  // Handle sort toggle
+  const handleSort = (column: keyof AccountData) => {
+    if (sortColumn === column) {
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortColumn(column);
+      setSortDirection("asc");
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center py-4">
@@ -106,6 +135,7 @@ export default function Page() {
                 {columns.map((column) => (
                   <th
                     key={column}
+                    onClick={() => handleSort(column as keyof AccountData)}
                     className={cn("h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]")}
                   >
                     {column}
@@ -114,7 +144,7 @@ export default function Page() {
               </tr>
             </thead>
             <tbody className={cn("[&_tr:last-child]:border-0")}>
-              {accountData.map((row) => (
+              {sortedData.map((row) => (
                 <tr
                   key={row.ID}
                   className={cn("border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted")}
