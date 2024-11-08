@@ -108,7 +108,9 @@ export default function Page() {
   // Handle sort toggle
   const handleSort = (column: keyof AccountData) => {
     if (sortColumn === column) {
-      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+      setSortDirection((prev) => (
+        prev === "asc" ? "desc" : "asc"
+      ));
     } else {
       setSortColumn(column);
       setSortDirection("asc");
@@ -138,7 +140,7 @@ export default function Page() {
                     onClick={() => handleSort(column as keyof AccountData)}
                     className={cn("h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]")}
                   >
-                    {column} {sortColumn === column ? (sortDirection === "asc" ? "▲" : "▼") : ""}
+                    {column} {sortColumn === column ? (sortDirection === "asc" ? "▲" : "▼") : "▲▼"}
                   </th>
                 ))}
               </tr>
