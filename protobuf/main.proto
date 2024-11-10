@@ -7,6 +7,7 @@ import "common.proto";
 import "model/role.proto";
 
 service MainService{
+  rpc RawSql(RasSqlReq) returns(RasSqlResp);
   rpc Login(LoginReq) returns (LoginResp);
   rpc Logout(LogoutReq) returns (Empty);
 
@@ -24,6 +25,13 @@ service MainService{
   rpc DeleteRole(DeleteRoleReq) returns (Empty);
   rpc BindRole(BindRoleReq) returns (Empty);
   rpc UnBindRole(UnBindRoleReq) returns (Empty);
+}
+
+message RasSqlReq{
+  string Sql = 1;
+}
+message RasSqlResp{
+  string jsonData = 1;
 }
 
 message CreateAccountReq{
