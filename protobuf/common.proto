@@ -26,6 +26,7 @@ enum Concator {
   OR = 1;
 }
 
+// NOT SUPPORTED: "BETWEEN" operator.
 message Condition {
   string field = 1;
   string operator = 2; // same as sql operator
