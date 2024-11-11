@@ -148,7 +148,7 @@ export default function Page() {
         ))}
         <div>
           <button className="mr-3" onClick={addFilter}>+</button>
-          <button onClick={removeFilter} disabled={filters.length <= 1}>--</button>
+          <button onClick={removeFilter}>-</button>
         </div>
       </div>
       <div className="rounded-md border">
