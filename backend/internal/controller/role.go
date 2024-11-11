@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"admin/gen/column"
 	"admin/internal/model"
 	"admin/internal/service/orm"
 	"admin/internal/utils/dao"
@@ -13,6 +14,8 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/skyrocketOoO/GoUtils/Struct"
+	"github.com/skyrocketOoO/gorm-enhance-plugin/operator"
+	"github.com/skyrocketOoO/gorm-enhance-plugin/query"
 	"gorm.io/gorm"
 )
 
@@ -38,7 +41,7 @@ func (s *Server) ListRole(
 ) (connResp *connect.Response[proto.ListRoleResp], err error) {
 	req := connReq.Msg
 
-	db := orm.GetDb().Model(&model.Role{}).Select("ID", "Name")
+	db := orm.GetDb().Model(&model.Role{}).Select(column.Roles.ID, column.Roles.Name)
 	resp := Struct.DeepNew[proto.ListRoleResp]()
 	Roles := []model.Role{}
 	if resp.Total, err = dao.ListWithPager(db, req.GetOption(), &Roles); err != nil {
@@ -62,7 +65,9 @@ func (s *Server) GetRoleAuth(
 ) (connResp *connect.Response[proto.GetRoleAuthResp], err error) {
 	req := connReq.Msg
 	role := model.Role{}
-	if err = orm.GetDb().Where("ID =?", req.GetID()).Take(&role).Error; err != nil {
+	if err = orm.GetDb().
+		Where(query.Build(column.Roles.ID, operator.Equal), req.GetID()).
+		Take(&role).Error; err != nil {
 		return nil, Error.Internal.WithTrace(err)
 	}
 
@@ -86,7 +91,7 @@ func (s *Server) UpdateRole(
 
 	tx := orm.GetDb().
 		Model(&model.Role{}).
-		Where("ID = ?", req.GetID()).
+		Where(query.Build(column.Roles.ID, operator.Equal), req.GetID()).
 		Updates(update)
 	if tx.Error != nil {
 		return nil, Error.Internal.WithTrace(tx.Error)
@@ -119,13 +124,17 @@ func (s *Server) BindRole(
 
 	if err = db.Transaction(func(tx *gorm.DB) error {
 		role := model.Role{}
-		if err = tx.Take(&role, "ID = ?", req.GetRoleID()).Error; err != nil {
+		if err = tx.Take(
+			&role,
+			query.Build(column.Roles.ID, operator.Equal),
+			req.GetRoleID(),
+		).Error; err != nil {
 			return Error.Internal.WithTrace(tx.Error)
 		}
 
 		tx = tx.Model(&model.Account{}).
-			Where("ID = ?", req.GetAccountID()).
-			Update("RoleID", req.GetRoleID())
+			Where(query.Build(column.Accounts.ID, operator.Equal), req.GetAccountID()).
+			Update(column.Accounts.RoleID, req.GetRoleID())
 		if tx.Error != nil {
 			return Error.Internal.WithTrace(tx.Error)
 		}
@@ -151,8 +160,8 @@ func (s *Server) UnBindRole(
 
 	if err = db.Transaction(func(tx *gorm.DB) error {
 		tx = tx.Model(&model.Account{}).
-			Where("ID = ?", req.GetAccountID()).
-			Update("RoleID", 0)
+			Where(query.Build(column.Accounts.ID, operator.Equal), req.GetAccountID()).
+			Update(column.Accounts.RoleID, 0)
 		if tx.Error != nil {
 			return Error.Internal.WithTrace(tx.Error)
 		}

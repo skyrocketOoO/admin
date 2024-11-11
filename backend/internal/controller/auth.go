@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"admin/gen/column"
 	"admin/internal/domain/Error"
 	"admin/internal/model"
 	"admin/internal/service/Session"
@@ -14,6 +15,8 @@ import (
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
 	"github.com/skyrocketOoO/GoUtils/Struct"
+	"github.com/skyrocketOoO/gorm-enhance-plugin/operator"
+	"github.com/skyrocketOoO/gorm-enhance-plugin/query"
 	"gorm.io/gorm"
 )
 
@@ -23,7 +26,8 @@ func (s *Server) Login(
 ) (connResp *connect.Response[proto.LoginResp], err error) {
 	req := connReq.Msg
 	account := model.Account{}
-	if err = orm.GetDb().Where("UserName = ?", req.GetUserName()).
+	if err = orm.GetDb().
+		Where(query.Build(column.Accounts.UserName, operator.Equal), req.GetUserName()).
 		Take(&account).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return nil, Error.NotFound.WithTrace(err)
