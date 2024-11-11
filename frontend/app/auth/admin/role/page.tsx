@@ -26,6 +26,8 @@ export default function Page() {
   const [sortedData, setSortedData] = useState<AccountData[]>([]);
   const [sortColumn, setSortColumn] = useState<keyof AccountData | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [filterCount, setFilterCount] = useState(3);
+  const [filters, setFilters] = useState<string[]>([]);
 
   // debounce
   useEffect(() => {
@@ -117,15 +119,37 @@ export default function Page() {
     }
   };
 
+  const addFilter = () => {
+    let c = filterCount + 1;
+    setFilterCount(c);
+  };
+
+  // Function to remove the last filter input
+  const removeFilter = () => {
+    let c = filterCount - 1;
+    setFilterCount(c);
+  };
+
   return (
     <div>
       <div className="flex items-center py-4">
-        <input 
-          className="max-w-sm" 
-          placeholder="Filter all..." 
-          value={filter} 
-          onChange={(e) => setFilter(e.target.value)} 
-        />
+        {Array.from({ length: filterCount }, (_, index) => (
+          <input
+            key={index}
+            className="max-w-sm"
+            placeholder={`Filter ${index + 1}...`}
+            value={filter[index] || ""}
+            onChange={(e) => {
+              const newFilters = [...filter];
+              newFilters[index] = e.target.value;
+              setFilters(newFilters);
+            }}
+          />
+        ))}
+        <div>
+          <button className="mr-3" onClick={addFilter}>+</button>
+          <button onClick={removeFilter} disabled={filters.length <= 1}>--</button>
+        </div>
       </div>
       <div className="rounded-md border">
         {loading ? (
