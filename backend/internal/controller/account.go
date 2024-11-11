@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"admin/gen/column"
 	"admin/internal/model"
 	"admin/internal/service/orm"
 	"admin/internal/utils/dao"
@@ -15,6 +16,8 @@ import (
 	"admin/internal/domain/Error"
 
 	"github.com/skyrocketOoO/GoUtils/Struct"
+	"github.com/skyrocketOoO/gorm-enhance-plugin/operator"
+	"github.com/skyrocketOoO/gorm-enhance-plugin/query"
 )
 
 func (s *Server) CreateAccount(
@@ -77,7 +80,7 @@ func (s *Server) UpdateAccount(
 	req := connReq.Msg
 	tx := orm.GetDb().
 		Model(&model.Account{}).
-		Where("ID = ?", req.GetID()).
+		Where(query.Build(column.Accounts.ID, operator.Equal), req.GetID()).
 		Updates(model.Account{
 			DisplayName: req.GetDisplayName(),
 			State:       req.GetState(),
