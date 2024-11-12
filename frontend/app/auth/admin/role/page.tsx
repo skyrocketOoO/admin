@@ -20,22 +20,20 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [filter, setFilter] = useState("");
-  const [debouncedFilter, setDebouncedFilter] = useState(filter);
   // Sorting state
   const [sortedData, setSortedData] = useState<AccountData[]>([]);
   const [sortColumn, setSortColumn] = useState<keyof AccountData | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [filterCount, setFilterCount] = useState(3);
   const [filters, setFilters] = useState<string[]>([]);
-
+  const [debouncedFilters, setDebouncedFilters] = useState(filters);
   // debounce
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedFilter(filter);
+      setDebouncedFilters(filters);
     }, 800);
     return () => clearTimeout(handler);
-  }, [filter]);
+  }, [filters]);
 
   useEffect(() => {
     const fetchAccountData = async () => {
@@ -47,16 +45,31 @@ export default function Page() {
         })
       });
 
-      if (debouncedFilter != ""){
+      if (debouncedFilters.length > 0){
         listReq.Option = listReq.Option || new ListOption();
         listReq.Option.conditionGroup = new ConditionGroup({
-          concator: Concator.OR,
-          conditions: columns.map((column) => new Condition({
-            field: column,
-            operator: "LIKE",
-            value: "%"+debouncedFilter+"%"
-          })),
-        });        
+          concator: Concator.AND,
+          conditionGroups: []
+          // conditions: columns.map((column) => new Condition({
+          //   field: column,
+          //   operator: "LIKE",
+          //   value: "%"+debouncedFilter+"%"
+          // })),
+        });   
+        for (const v of filters){
+          if (v == ""){
+            continue;
+          }
+          let condGroup = new ConditionGroup({
+            concator: Concator.OR,
+            conditions: columns.map((column) => new Condition({
+              field: column,
+              operator: "LIKE",
+              value: "%"+v+"%"
+            })),
+          })
+          listReq.Option.conditionGroup.conditionGroups.push(condGroup);
+        }     
       }
       try {
         const listAccountResp = await serverSideClient.listAccount(listReq);
@@ -79,7 +92,7 @@ export default function Page() {
     };
 
     fetchAccountData();
-  }, [page, debouncedFilter]);
+  }, [page, debouncedFilters]);
 
   const handleNextPage = () => {
     if (page < totalPages) {
@@ -122,12 +135,18 @@ export default function Page() {
   const addFilter = () => {
     let c = filterCount + 1;
     setFilterCount(c);
+    let newFilters = filters;
+    newFilters.push("");
+    setFilters(newFilters);
   };
 
   // Function to remove the last filter input
   const removeFilter = () => {
     let c = filterCount - 1;
     setFilterCount(c);
+    let newFilters = filters;
+    newFilters.pop();
+    setFilters(newFilters);
   };
 
   return (
@@ -138,9 +157,9 @@ export default function Page() {
             key={index}
             className="max-w-sm"
             placeholder={`Filter ${index + 1}...`}
-            value={filter[index] || ""}
+            value={filters[index] || ""}
             onChange={(e) => {
-              const newFilters = [...filter];
+              const newFilters = [...filters];
               newFilters[index] = e.target.value;
               setFilters(newFilters);
             }}
@@ -148,7 +167,7 @@ export default function Page() {
         ))}
         <div>
           <button className="mr-3" onClick={addFilter}>+</button>
-          <button onClick={removeFilter}>-</button>
+          <button onClick={removeFilter} disabled={filterCount == 0}>-</button>
         </div>
       </div>
       <div className="rounded-md border">
