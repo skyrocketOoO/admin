@@ -15,14 +15,14 @@ func ListWithPager(
 	option *proto.ListOption,
 	src any,
 ) (total int64, err error) {
-	db = parseSorter(db, option.GetSorters())
-	db = parseConditionGroup(db, option.GetConditionGroup())
+	db = applySorter(db, option.GetSorters())
+	db = applyConditionGroup(db, option.GetConditionGroup())
 
 	if err = db.Count(&total).Error; err != nil {
 		return
 	}
 
-	db = parsePager(db, option.GetPager())
+	db = applyPager(db, option.GetPager())
 
 	err = db.Find(src).Error
 	return

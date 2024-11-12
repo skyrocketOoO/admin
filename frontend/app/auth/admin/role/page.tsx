@@ -71,6 +71,7 @@ export default function Page() {
           listReq.Option.conditionGroup.conditionGroups.push(condGroup);
         }     
       }
+      console.log(listReq);
       try {
         const listAccountResp = await serverSideClient.listAccount(listReq);
         const formattedData: AccountData[] = listAccountResp.List.map(account => ({

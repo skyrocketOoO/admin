@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"reflect"
 
+	"admin/internal/service/orm"
 	"admin/proto"
 
+	"github.com/skyrocketOoO/gorm-enhance-plugin/query"
 	"gorm.io/gorm"
 )
 
-func parsePager(db *gorm.DB, pager *proto.Pager) *gorm.DB {
+func applyPager(db *gorm.DB, pager *proto.Pager) *gorm.DB {
 	if pager == nil {
 		return db
 	}
@@ -19,7 +21,7 @@ func parsePager(db *gorm.DB, pager *proto.Pager) *gorm.DB {
 		Limit(int(pager.Size))
 }
 
-func parseSorter(db *gorm.DB, seqSorters []*proto.Sorter) *gorm.DB {
+func applySorter(db *gorm.DB, seqSorters []*proto.Sorter) *gorm.DB {
 	if len(seqSorters) == 0 {
 		return db.Order("CreatedAt DESC")
 	}
@@ -34,7 +36,7 @@ func parseSorter(db *gorm.DB, seqSorters []*proto.Sorter) *gorm.DB {
 	return db
 }
 
-func parseConditionGroup(
+func applyConditionGroup(
 	db *gorm.DB,
 	condGroup *proto.ConditionGroup,
 ) *gorm.DB {
@@ -42,8 +44,8 @@ func parseConditionGroup(
 		return db
 	}
 
-	for _, cond := range condGroup.Conditions {
-		exp := fmt.Sprintf("%s %s ?", cond.GetField(), cond.GetOperator())
+	for _, cond := range condGroup.GetConditions() {
+		exp := query.Build(cond.GetField(), cond.GetOperator())
 		if condGroup.Concator == proto.Concator_AND {
 			db = db.Where(exp, cond.GetValue())
 		} else {
@@ -51,8 +53,12 @@ func parseConditionGroup(
 		}
 	}
 
-	for _, nestGroup := range condGroup.ConditionGroups {
-		nestedDB := parseConditionGroup(db, nestGroup)
+	// For nested groups
+	blankDb := orm.GetDb()
+	for _, nestGroup := range condGroup.GetConditionGroups() {
+		nestedDB := blankDb.Session(&gorm.Session{NewDB: true})
+		nestedDB = applyConditionGroup(nestedDB, nestGroup)
+
 		if condGroup.Concator == proto.Concator_AND {
 			db = db.Where(nestedDB)
 		} else {
