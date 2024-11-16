@@ -7,7 +7,7 @@ import "common.proto";
 import "model/role.proto";
 
 service MainService{
-  rpc RawSql(RasSqlReq) returns(RasSqlResp);
+  rpc RawSql(RasSqlReq) returns (RasSqlResp);
   rpc Login(LoginReq) returns (LoginResp);
   rpc Logout(LogoutReq) returns (Empty);
 

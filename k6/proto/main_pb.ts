@@ -9,6 +9,80 @@ import { ListOption } from "./common_pb.js";
 import { Role } from "./model/role_pb.js";
 
 /**
+ * @generated from message proto.RasSqlReq
+ */
+export class RasSqlReq extends Message<RasSqlReq> {
+  /**
+   * @generated from field: string Sql = 1;
+   */
+  Sql = "";
+
+  constructor(data?: PartialMessage<RasSqlReq>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "proto.RasSqlReq";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "Sql", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RasSqlReq {
+    return new RasSqlReq().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RasSqlReq {
+    return new RasSqlReq().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RasSqlReq {
+    return new RasSqlReq().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RasSqlReq | PlainMessage<RasSqlReq> | undefined, b: RasSqlReq | PlainMessage<RasSqlReq> | undefined): boolean {
+    return proto3.util.equals(RasSqlReq, a, b);
+  }
+}
+
+/**
+ * @generated from message proto.RasSqlResp
+ */
+export class RasSqlResp extends Message<RasSqlResp> {
+  /**
+   * @generated from field: string jsonData = 1;
+   */
+  jsonData = "";
+
+  constructor(data?: PartialMessage<RasSqlResp>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "proto.RasSqlResp";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "jsonData", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RasSqlResp {
+    return new RasSqlResp().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RasSqlResp {
+    return new RasSqlResp().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RasSqlResp {
+    return new RasSqlResp().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RasSqlResp | PlainMessage<RasSqlResp> | undefined, b: RasSqlResp | PlainMessage<RasSqlResp> | undefined): boolean {
+    return proto3.util.equals(RasSqlResp, a, b);
+  }
+}
+
+/**
  * @generated from message proto.CreateAccountReq
  */
 export class CreateAccountReq extends Message<CreateAccountReq> {

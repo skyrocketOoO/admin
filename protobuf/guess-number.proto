@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package proto;
+option go_package = "admin/proto";
+
+service SideProjectService {
+  rpc GuessNumber(GuessNumberReq) returns (GuessNubmerResp);
+}
+
+message GuessNumberReq {
+  int32 lowerBound = 1;
+  int32 upperBound = 2;
+  repeated Proportion proportions = 3;
+}
+
+message Proportion {
+  repeated float values = 1;
+}
+
+message GuessNubmerResp {
+  repeated int32 possibleResults = 1;
+}

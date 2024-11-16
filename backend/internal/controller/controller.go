@@ -5,15 +5,21 @@ import (
 	"admin/proto/protoconnect"
 )
 
-type (
-	Server struct {
-		protoconnect.UnimplementedMainServiceHandler
-		SessionSvc *Session.SessionSvc
-	}
-)
+type MainServer struct {
+	protoconnect.UnimplementedMainServiceHandler
+	SessionSvc *Session.SessionSvc
+}
 
-func NewServer(sessionSvc *Session.SessionSvc) (sv *Server) {
-	return &Server{
+func NewMainServer(sessionSvc *Session.SessionSvc) (sv *MainServer) {
+	return &MainServer{
 		SessionSvc: sessionSvc,
 	}
+}
+
+type SideProjectServer struct {
+	protoconnect.UnimplementedSideProjectServiceHandler
+}
+
+func NewSideProjectServer() (sv *SideProjectServer) {
+	return &SideProjectServer{}
 }

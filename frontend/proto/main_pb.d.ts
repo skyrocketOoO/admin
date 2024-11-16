@@ -9,6 +9,54 @@ import type { ListOption } from "./common_pb.js";
 import type { Role } from "./model/role_pb.js";
 
 /**
+ * @generated from message proto.RasSqlReq
+ */
+export declare class RasSqlReq extends Message<RasSqlReq> {
+  /**
+   * @generated from field: string Sql = 1;
+   */
+  Sql: string;
+
+  constructor(data?: PartialMessage<RasSqlReq>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "proto.RasSqlReq";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RasSqlReq;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RasSqlReq;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RasSqlReq;
+
+  static equals(a: RasSqlReq | PlainMessage<RasSqlReq> | undefined, b: RasSqlReq | PlainMessage<RasSqlReq> | undefined): boolean;
+}
+
+/**
+ * @generated from message proto.RasSqlResp
+ */
+export declare class RasSqlResp extends Message<RasSqlResp> {
+  /**
+   * @generated from field: string jsonData = 1;
+   */
+  jsonData: string;
+
+  constructor(data?: PartialMessage<RasSqlResp>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "proto.RasSqlResp";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RasSqlResp;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RasSqlResp;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RasSqlResp;
+
+  static equals(a: RasSqlResp | PlainMessage<RasSqlResp> | undefined, b: RasSqlResp | PlainMessage<RasSqlResp> | undefined): boolean;
+}
+
+/**
  * @generated from message proto.CreateAccountReq
  */
 export declare class CreateAccountReq extends Message<CreateAccountReq> {

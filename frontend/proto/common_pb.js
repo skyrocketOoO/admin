@@ -59,6 +59,8 @@ export const Sorter = /*@__PURE__*/ proto3.makeMessageType(
 );
 
 /**
+ * NOT SUPPORTED: "BETWEEN" operator.
+ *
  * @generated from message proto.Condition
  */
 export const Condition = /*@__PURE__*/ proto3.makeMessageType(

@@ -33,6 +33,8 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// MainServiceRawSqlProcedure is the fully-qualified name of the MainService's RawSql RPC.
+	MainServiceRawSqlProcedure = "/proto.MainService/RawSql"
 	// MainServiceLoginProcedure is the fully-qualified name of the MainService's Login RPC.
 	MainServiceLoginProcedure = "/proto.MainService/Login"
 	// MainServiceLogoutProcedure is the fully-qualified name of the MainService's Logout RPC.
@@ -73,6 +75,7 @@ const (
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
 var (
 	mainServiceServiceDescriptor               = proto.File_main_proto.Services().ByName("MainService")
+	mainServiceRawSqlMethodDescriptor          = mainServiceServiceDescriptor.Methods().ByName("RawSql")
 	mainServiceLoginMethodDescriptor           = mainServiceServiceDescriptor.Methods().ByName("Login")
 	mainServiceLogoutMethodDescriptor          = mainServiceServiceDescriptor.Methods().ByName("Logout")
 	mainServiceCreateAccountMethodDescriptor   = mainServiceServiceDescriptor.Methods().ByName("CreateAccount")
@@ -92,6 +95,7 @@ var (
 
 // MainServiceClient is a client for the proto.MainService service.
 type MainServiceClient interface {
+	RawSql(context.Context, *connect.Request[proto.RasSqlReq]) (*connect.Response[proto.RasSqlResp], error)
 	Login(context.Context, *connect.Request[proto.LoginReq]) (*connect.Response[proto.LoginResp], error)
 	Logout(context.Context, *connect.Request[proto.LogoutReq]) (*connect.Response[proto.Empty], error)
 	CreateAccount(context.Context, *connect.Request[proto.CreateAccountReq]) (*connect.Response[proto.Empty], error)
@@ -119,6 +123,12 @@ type MainServiceClient interface {
 func NewMainServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) MainServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &mainServiceClient{
+		rawSql: connect.NewClient[proto.RasSqlReq, proto.RasSqlResp](
+			httpClient,
+			baseURL+MainServiceRawSqlProcedure,
+			connect.WithSchema(mainServiceRawSqlMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 		login: connect.NewClient[proto.LoginReq, proto.LoginResp](
 			httpClient,
 			baseURL+MainServiceLoginProcedure,
@@ -214,6 +224,7 @@ func NewMainServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 
 // mainServiceClient implements MainServiceClient.
 type mainServiceClient struct {
+	rawSql          *connect.Client[proto.RasSqlReq, proto.RasSqlResp]
 	login           *connect.Client[proto.LoginReq, proto.LoginResp]
 	logout          *connect.Client[proto.LogoutReq, proto.Empty]
 	createAccount   *connect.Client[proto.CreateAccountReq, proto.Empty]
@@ -229,6 +240,11 @@ type mainServiceClient struct {
 	deleteRole      *connect.Client[proto.DeleteRoleReq, proto.Empty]
 	bindRole        *connect.Client[proto.BindRoleReq, proto.Empty]
 	unBindRole      *connect.Client[proto.UnBindRoleReq, proto.Empty]
+}
+
+// RawSql calls proto.MainService.RawSql.
+func (c *mainServiceClient) RawSql(ctx context.Context, req *connect.Request[proto.RasSqlReq]) (*connect.Response[proto.RasSqlResp], error) {
+	return c.rawSql.CallUnary(ctx, req)
 }
 
 // Login calls proto.MainService.Login.
@@ -308,6 +324,7 @@ func (c *mainServiceClient) UnBindRole(ctx context.Context, req *connect.Request
 
 // MainServiceHandler is an implementation of the proto.MainService service.
 type MainServiceHandler interface {
+	RawSql(context.Context, *connect.Request[proto.RasSqlReq]) (*connect.Response[proto.RasSqlResp], error)
 	Login(context.Context, *connect.Request[proto.LoginReq]) (*connect.Response[proto.LoginResp], error)
 	Logout(context.Context, *connect.Request[proto.LogoutReq]) (*connect.Response[proto.Empty], error)
 	CreateAccount(context.Context, *connect.Request[proto.CreateAccountReq]) (*connect.Response[proto.Empty], error)
@@ -331,6 +348,12 @@ type MainServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewMainServiceHandler(svc MainServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	mainServiceRawSqlHandler := connect.NewUnaryHandler(
+		MainServiceRawSqlProcedure,
+		svc.RawSql,
+		connect.WithSchema(mainServiceRawSqlMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	mainServiceLoginHandler := connect.NewUnaryHandler(
 		MainServiceLoginProcedure,
 		svc.Login,
@@ -423,6 +446,8 @@ func NewMainServiceHandler(svc MainServiceHandler, opts ...connect.HandlerOption
 	)
 	return "/proto.MainService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case MainServiceRawSqlProcedure:
+			mainServiceRawSqlHandler.ServeHTTP(w, r)
 		case MainServiceLoginProcedure:
 			mainServiceLoginHandler.ServeHTTP(w, r)
 		case MainServiceLogoutProcedure:
@@ -461,6 +486,10 @@ func NewMainServiceHandler(svc MainServiceHandler, opts ...connect.HandlerOption
 
 // UnimplementedMainServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedMainServiceHandler struct{}
+
+func (UnimplementedMainServiceHandler) RawSql(context.Context, *connect.Request[proto.RasSqlReq]) (*connect.Response[proto.RasSqlResp], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("proto.MainService.RawSql is not implemented"))
+}
 
 func (UnimplementedMainServiceHandler) Login(context.Context, *connect.Request[proto.LoginReq]) (*connect.Response[proto.LoginResp], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("proto.MainService.Login is not implemented"))

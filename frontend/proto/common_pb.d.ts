@@ -135,6 +135,8 @@ export declare class Sorter extends Message<Sorter> {
 }
 
 /**
+ * NOT SUPPORTED: "BETWEEN" operator.
+ *
  * @generated from message proto.Condition
  */
 export declare class Condition extends Message<Condition> {

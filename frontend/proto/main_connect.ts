@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { BindRoleReq, CreateAccountReq, CreateRoleReq, DeleteAccountReq, DeleteRoleReq, GetRoleAuthReq, GetRoleAuthResp, ListAccountReq, ListAccountResp, ListRoleReq, ListRoleResp, LoginReq, LoginResp, LogoutReq, UnBindRoleReq, UpdateAccountReq, UpdateRoleReq } from "./main_pb.js";
+import { BindRoleReq, CreateAccountReq, CreateRoleReq, DeleteAccountReq, DeleteRoleReq, GetRoleAuthReq, GetRoleAuthResp, ListAccountReq, ListAccountResp, ListRoleReq, ListRoleResp, LoginReq, LoginResp, LogoutReq, RasSqlReq, RasSqlResp, UnBindRoleReq, UpdateAccountReq, UpdateRoleReq } from "./main_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "./common_pb.js";
 
@@ -13,6 +13,15 @@ import { Empty } from "./common_pb.js";
 export const MainService = {
   typeName: "proto.MainService",
   methods: {
+    /**
+     * @generated from rpc proto.MainService.RawSql
+     */
+    rawSql: {
+      name: "RawSql",
+      I: RasSqlReq,
+      O: RasSqlResp,
+      kind: MethodKind.Unary,
+    },
     /**
      * @generated from rpc proto.MainService.Login
      */

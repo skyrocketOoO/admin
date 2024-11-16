@@ -8,6 +8,26 @@ import { ListOption } from "./common_pb.js";
 import { Role } from "./model/role_pb.js";
 
 /**
+ * @generated from message proto.RasSqlReq
+ */
+export const RasSqlReq = /*@__PURE__*/ proto3.makeMessageType(
+  "proto.RasSqlReq",
+  () => [
+    { no: 1, name: "Sql", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
+ * @generated from message proto.RasSqlResp
+ */
+export const RasSqlResp = /*@__PURE__*/ proto3.makeMessageType(
+  "proto.RasSqlResp",
+  () => [
+    { no: 1, name: "jsonData", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
  * @generated from message proto.CreateAccountReq
  */
 export const CreateAccountReq = /*@__PURE__*/ proto3.makeMessageType(

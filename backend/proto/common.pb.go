@@ -277,6 +277,7 @@ func (x *Sorter) GetField() string {
 	return ""
 }
 
+// NOT SUPPORTED: "BETWEEN" operator.
 type Condition struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

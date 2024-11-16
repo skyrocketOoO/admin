@@ -20,7 +20,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func (s *Server) Login(
+func (s *MainServer) Login(
 	ctx context.Context,
 	connReq *connect.Request[proto.LoginReq],
 ) (connResp *connect.Response[proto.LoginResp], err error) {
@@ -49,7 +49,7 @@ func (s *Server) Login(
 	return connect.NewResponse(resp), nil
 }
 
-func (s *Server) Logout(
+func (s *MainServer) Logout(
 	ctx context.Context,
 	connReq *connect.Request[proto.LogoutReq],
 ) (connResp *connect.Response[proto.Empty], err error) {

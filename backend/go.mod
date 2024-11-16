@@ -10,6 +10,7 @@ require (
 	github.com/rs/cors v1.11.1
 	github.com/rs/zerolog v1.32.0
 	github.com/skyrocketOoO/GoUtils v0.0.1
+	github.com/skyrocketOoO/Guess-number v1.0.1
 	github.com/skyrocketOoO/gorm-enhance-plugin v0.0.3
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2

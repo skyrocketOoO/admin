@@ -20,7 +20,7 @@ import (
 	"github.com/skyrocketOoO/gorm-enhance-plugin/query"
 )
 
-func (s *Server) CreateAccount(
+func (s *MainServer) CreateAccount(
 	ctx context.Context,
 	connReq *connect.Request[proto.CreateAccountReq],
 ) (connResp *connect.Response[proto.Empty], err error) {
@@ -48,7 +48,7 @@ func (s *Server) CreateAccount(
 	return
 }
 
-func (s *Server) ListAccount(
+func (s *MainServer) ListAccount(
 	ctx context.Context,
 	connReq *connect.Request[proto.ListAccountReq],
 ) (connResp *connect.Response[proto.ListAccountResp], err error) {
@@ -73,7 +73,7 @@ func (s *Server) ListAccount(
 	return connect.NewResponse(resp), nil
 }
 
-func (s *Server) UpdateAccount(
+func (s *MainServer) UpdateAccount(
 	ctx context.Context,
 	connReq *connect.Request[proto.UpdateAccountReq],
 ) (connResp *connect.Response[proto.Empty], err error) {
@@ -96,7 +96,7 @@ func (s *Server) UpdateAccount(
 	return
 }
 
-func (s *Server) DeleteAccount(
+func (s *MainServer) DeleteAccount(
 	ctx context.Context,
 	connReq *connect.Request[proto.DeleteAccountReq],
 ) (connResp *connect.Response[proto.Empty], err error) {

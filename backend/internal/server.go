@@ -75,12 +75,20 @@ func setupMux() *http.ServeMux {
 	sessionSvc := Session.NewSessionSvc()
 
 	interceptors := connect.WithInterceptors(middleware.NewLogRouteUnaryInterceptor())
-	mux.Handle(protoconnect.NewMainServiceHandler(controller.NewServer(sessionSvc), interceptors))
+	mux.Handle(
+		protoconnect.NewMainServiceHandler(controller.NewMainServer(sessionSvc), interceptors),
+	)
 
-	// Set up reflection with specified services
-	reflector := grpcreflect.NewStaticReflector("proto.MainService")
-	mux.Handle(grpcreflect.NewHandlerV1(reflector))
-	mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
+	mux.Handle(
+		protoconnect.NewSideProjectServiceHandler(controller.NewSideProjectServer(), interceptors),
+	)
+
+	for _, service := range []string{"proto.MainService", "proto.SideProjectService"} {
+		// Set up reflection with specified services
+		reflector := grpcreflect.NewStaticReflector(service)
+		mux.Handle(grpcreflect.NewHandlerV1(reflector))
+		mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
+	}
 
 	return mux
 }

@@ -19,7 +19,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func (s *Server) CreateRole(
+func (s *MainServer) CreateRole(
 	ctx context.Context,
 	connReq *connect.Request[proto.CreateRoleReq],
 ) (connResp *connect.Response[proto.Empty], err error) {
@@ -35,7 +35,7 @@ func (s *Server) CreateRole(
 	return
 }
 
-func (s *Server) ListRole(
+func (s *MainServer) ListRole(
 	ctx context.Context,
 	connReq *connect.Request[proto.ListRoleReq],
 ) (connResp *connect.Response[proto.ListRoleResp], err error) {
@@ -59,7 +59,7 @@ func (s *Server) ListRole(
 	return connect.NewResponse(resp), nil
 }
 
-func (s *Server) GetRoleAuth(
+func (s *MainServer) GetRoleAuth(
 	ctx context.Context,
 	connReq *connect.Request[proto.GetRoleAuthReq],
 ) (connResp *connect.Response[proto.GetRoleAuthResp], err error) {
@@ -79,7 +79,7 @@ func (s *Server) GetRoleAuth(
 	return connect.NewResponse(resp), nil
 }
 
-func (s *Server) UpdateRole(
+func (s *MainServer) UpdateRole(
 	ctx context.Context,
 	connReq *connect.Request[proto.UpdateRoleReq],
 ) (connResp *connect.Response[proto.Empty], err error) {
@@ -104,7 +104,7 @@ func (s *Server) UpdateRole(
 	return
 }
 
-func (s *Server) DeleteRole(
+func (s *MainServer) DeleteRole(
 	ctx context.Context,
 	connReq *connect.Request[proto.DeleteRoleReq],
 ) (connResp *connect.Response[proto.Empty], err error) {
@@ -115,7 +115,7 @@ func (s *Server) DeleteRole(
 	return
 }
 
-func (s *Server) BindRole(
+func (s *MainServer) BindRole(
 	ctx context.Context,
 	connReq *connect.Request[proto.BindRoleReq],
 ) (connResp *connect.Response[proto.Empty], err error) {
@@ -151,7 +151,7 @@ func (s *Server) BindRole(
 	return
 }
 
-func (s *Server) UnBindRole(
+func (s *MainServer) UnBindRole(
 	ctx context.Context,
 	connReq *connect.Request[proto.UnBindRoleReq],
 ) (connResp *connect.Response[proto.Empty], err error) {
