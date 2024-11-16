@@ -24,7 +24,7 @@ interface AccountData {
 }
 
 interface Filter {
-  
+  vague: boolean;
   column: string;
   value: string;
 }
@@ -44,14 +44,17 @@ export default function Page() {
   const [filterCount, setFilterCount] = useState(3);
   const [filters, setFilters] = useState<Filter[]>([
     {
+      vague: true,
       column: "Any column",
       value: "",
     },
     {
+      vague: true,
       column: "Any column",
       value: "",
     },
     {
+      vague: true,
       column: "Any column",
       value: "",
     },
@@ -178,6 +181,7 @@ export default function Page() {
     setFilterCount(c);
     let newFilters = filters;
     newFilters.push({
+      vague: true,
       column: "Any column",
       value: "",
     });
@@ -222,7 +226,15 @@ export default function Page() {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
-              <button>abc</button>
+              <button
+                onClick={() => {
+                  const updatedFilters = [...filters]; // Create a copy of the filters array
+                  updatedFilters[index].vague = !updatedFilters[index].vague; // Toggle the vague value
+                  setFilters(updatedFilters); // Update the state
+                }}
+              >
+                {filters[index].vague == true ? "vague": "exact"}
+              </button>
             </div>
             <input
               key={index}
