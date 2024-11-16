@@ -4,12 +4,29 @@ import { cn } from "@/lib/utils";
 import { serverSideClient } from "@/utils/proto/client";
 import { ListAccountReq } from "@/proto/main_pb";
 import { ListOption, Pager, Sorter, ConditionGroup, Condition, Concator } from "@/proto/common_pb";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuGroup,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Filter } from "lucide-react";
+
 
 interface AccountData {
   ID: number;
   UserName: string;
   DisplayName: string;
   State: number;
+}
+
+interface Filter {
+  
+  column: string;
+  value: string;
 }
 
 export default function Page() {
@@ -25,7 +42,20 @@ export default function Page() {
   const [sortColumn, setSortColumn] = useState<keyof AccountData | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [filterCount, setFilterCount] = useState(3);
-  const [filters, setFilters] = useState<string[]>([]);
+  const [filters, setFilters] = useState<Filter[]>([
+    {
+      column: "Any column",
+      value: "",
+    },
+    {
+      column: "Any column",
+      value: "",
+    },
+    {
+      column: "Any column",
+      value: "",
+    },
+  ]);
   const [debouncedFilters, setDebouncedFilters] = useState(filters);
   // debounce
   useEffect(() => {
@@ -50,24 +80,34 @@ export default function Page() {
         listReq.Option.conditionGroup = new ConditionGroup({
           concator: Concator.AND,
           conditionGroups: []
-          // conditions: columns.map((column) => new Condition({
-          //   field: column,
-          //   operator: "LIKE",
-          //   value: "%"+debouncedFilter+"%"
-          // })),
         });   
-        for (const v of filters){
-          if (v == ""){
+        for (const filter of filters){
+          if (filter.value == ""){
             continue;
           }
+          
           let condGroup = new ConditionGroup({
             concator: Concator.OR,
             conditions: columns.map((column) => new Condition({
               field: column,
               operator: "LIKE",
-              value: "%"+v+"%"
+              value: "%"+filter.value+"%"
             })),
           })
+          if (filter.column == "Any column"){
+            condGroup.conditions = columns.map((column) => new Condition({
+              field: column,
+              operator: "LIKE",
+              value: "%"+filter.value+"%"
+            }))
+          }else{
+            condGroup.conditions = [new Condition({
+              field: filter.column,
+              operator: "LIKE",
+              value: "%"+filter.value+"%"
+            })]
+          }
+
           listReq.Option.conditionGroup.conditionGroups.push(condGroup);
         }     
       }
@@ -137,7 +177,10 @@ export default function Page() {
     let c = filterCount + 1;
     setFilterCount(c);
     let newFilters = filters;
-    newFilters.push("");
+    newFilters.push({
+      column: "Any column",
+      value: "",
+    });
     setFilters(newFilters);
   };
 
@@ -154,17 +197,45 @@ export default function Page() {
     <div>
       <div className="flex items-center py-4">
         {Array.from({ length: filterCount }, (_, index) => (
-          <input
-            key={index}
-            className="max-w-sm"
-            placeholder={`Filter ${index + 1}...`}
-            value={filters[index] || ""}
-            onChange={(e) => {
-              const newFilters = [...filters];
-              newFilters[index] = e.target.value;
-              setFilters(newFilters);
-            }}
-          />
+          <div>
+            <div className="flex items-center space-x-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger>{filters[index].column}</DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem
+                  onClick={() => {
+                    const newFilters = [...filters];
+                    newFilters[index] = newFilters[index] || { column: "", value: "" }; // Ensure the object exists
+                    newFilters[index].column = "Any column";
+                    setFilters(newFilters);
+                  }}
+                  >Any column</DropdownMenuItem>
+                  {columns.map((column) => (
+                    <DropdownMenuItem 
+                    onClick={() => {
+                      const newFilters = [...filters];
+                      newFilters[index] = newFilters[index] || { column: "", value: "" }; // Ensure the object exists
+                      newFilters[index].column = column;
+                      setFilters(newFilters);
+                    }}
+                    >{column}</DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <button>abc</button>
+            </div>
+            <input
+              key={index}
+              className="max-w-sm"
+              placeholder={`Filter ${index + 1}...`}
+              value={filters[index].value || ""}
+              onChange={(e) => {
+                const newFilters = [...filters];
+                newFilters[index].value = e.target.value;
+                setFilters(newFilters);
+              }}
+            />
+          </div>
         ))}
         <div>
           <button className="mr-3" onClick={addFilter}>+</button>
