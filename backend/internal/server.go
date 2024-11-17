@@ -8,7 +8,8 @@ import (
 	"time"
 
 	"admin/internal/boot"
-	"admin/internal/controller"
+	httpCtl "admin/internal/controller/http"
+	"admin/internal/controller/rpc"
 	"admin/internal/middleware"
 	"admin/internal/service/Session"
 	"admin/internal/service/orm"
@@ -16,6 +17,7 @@ import (
 
 	"connectrpc.com/connect"
 	"connectrpc.com/grpcreflect"
+	"github.com/gin-gonic/gin"
 	"github.com/rs/cors"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
@@ -41,6 +43,11 @@ func RunServer(cmd *cobra.Command, args []string) {
 	if err := boot.Check(); err != nil {
 		log.Fatal().Msgf("System check failed: %v", err)
 	}
+
+	r := gin.Default()
+	httpServer := httpCtl.NewHttpServer()
+	r.GET("/stream", httpServer.Stream)
+	go r.Run(":8080")
 
 	port, err := cmd.Flags().GetString("port")
 	if err != nil || port == "" {
@@ -76,19 +83,21 @@ func setupMux() *http.ServeMux {
 
 	interceptors := connect.WithInterceptors(middleware.NewLogRouteUnaryInterceptor())
 	mux.Handle(
-		protoconnect.NewMainServiceHandler(controller.NewMainServer(sessionSvc), interceptors),
+		protoconnect.NewMainServiceHandler(rpc.NewMainServer(sessionSvc), interceptors),
 	)
 
 	mux.Handle(
-		protoconnect.NewSideProjectServiceHandler(controller.NewSideProjectServer(), interceptors),
+		protoconnect.NewSideProjectServiceHandler(rpc.NewSideProjectServer(), interceptors),
 	)
 
-	for _, service := range []string{"proto.MainService", "proto.SideProjectService"} {
-		// Set up reflection with specified services
-		reflector := grpcreflect.NewStaticReflector(service)
-		mux.Handle(grpcreflect.NewHandlerV1(reflector))
-		mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
-	}
+	services := []string{"proto.MainService", "proto.SideProjectService"}
+
+	// Create a single StaticReflector for all services
+	reflector := grpcreflect.NewStaticReflector(services...)
+
+	// Register handlers only once
+	mux.Handle(grpcreflect.NewHandlerV1(reflector))
+	mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
 
 	return mux
 }
